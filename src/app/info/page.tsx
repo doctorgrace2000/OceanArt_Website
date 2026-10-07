@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
+import PageBanner from "@/components/ui/PageBanner";
 import { Container, SectionTitle } from "@/components/ui/Section";
 import { awardCount, exhibitions, exhibitionsByYear } from "@/data/exhibitions";
 import { site, whatsappDisplay, whatsappUrl } from "@/lib/site";
@@ -23,7 +24,7 @@ const FAQ = [
   ],
   [
     "¿Cuánto tarda una obra a pedido?",
-    "Entre 3 y 8 semanas según el tamaño y la complejidad. Te vamos mandando fotos del proceso.",
+    "Dependiendo del tamaño, suele ser 10 días hábiles de producción. Te vamos mandando fotos del proceso.",
   ],
   [
     "¿Cómo cuido mi pieza?",
@@ -38,6 +39,7 @@ const FAQ = [
 export default function InfoPage() {
   return (
     <>
+      <PageBanner title="info" image="/img/agua-2.jpg" />
       <Container className="py-14 md:py-20">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
@@ -52,16 +54,15 @@ export default function InfoPage() {
           </div>
           <div>
             <SectionTitle align="left" hand="la persona detrás">Verónica Orlando</SectionTitle>
-            <div className="mt-6 space-y-4 text-[17px] leading-relaxed text-ink/90">
+            <p className="mt-2 text-lg font-medium text-sea">
+              Artista textil y fundadora de Ocean Art.
+            </p>
+            <div className="mt-5 space-y-4 text-[17px] leading-relaxed text-ink/90">
               <p>
-                Artista textil y fundadora de Ocean Art. Trabaja con tufting, tejido y bordado para
-                traducir al textil lo que observa en la naturaleza: líquenes sobre rocas, hongos en
-                troncos caídos, raíces aéreas, la superficie del agua.
-              </p>
-              <p>
-                Cada obra parte de la observación directa y de un archivo propio de fotografías y
-                dibujos. De ahí salen las formas, las paletas y los relieves que después se tuftean
-                a mano, hebra por hebra, en el taller.
+                Ocean Art es su proyecto personal. Nació como una búsqueda de disfrute, de juego con
+                la materia y el color, y con el tiempo se convirtió en su manera de interpretar
+                artísticamente la naturaleza: cada obra es una exploración libre de formas, texturas
+                y relieves, hecha a mano en su taller.
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -71,6 +72,31 @@ export default function InfoPage() {
           </div>
         </div>
       </Container>
+
+      {/* BIOGRAFÍA */}
+      <section id="biografia" className="scroll-mt-24 border-t border-foam/70 py-16 md:py-20">
+        <Container narrow>
+          <SectionTitle align="left">Biografía</SectionTitle>
+          <div className="mt-6 space-y-4 text-[17px] leading-relaxed text-ink/90">
+            <p>
+              Verónica Orlando nació en Buenos Aires, Argentina, en 1970, donde vive y trabaja
+              actualmente. Estudió la carrera de Diseño Gráfico en la Universidad de Buenos Aires en
+              1991.
+            </p>
+            <p>
+              Clínica de obra, programa “Proyecto Trayecto”, en Fundación Cazadores a cargo de Leila
+              Tschopp (2025). Clínica de “Arte y Ambientalismo” en Muntref a cargo de Pablo Lapadula
+              (2024). Desafíos de producción y exhibiciones site specific, en Eseade con Cecilia
+              Jaime (2024).
+            </p>
+            <p>
+              Se capacitó en diferentes talleres en el área de ilustración con Victoria Morete (2019)
+              y con Azul Decorso (2023), ilustración botánica con Laura Blanco (2023), en raíces
+              textiles con Tsonolabstudio (2024) y técnicas textiles con Andrea Cavagnaro (2025).
+            </p>
+          </div>
+        </Container>
+      </section>
 
       {/* EXPOSICIONES */}
       <section id="exposiciones" className="scroll-mt-24 border-t border-foam/70 py-16 md:py-20">
@@ -144,12 +170,12 @@ export default function InfoPage() {
             tufting, cientos de conos de lana y las piezas en proceso. Diseñamos, experimentamos y
             realizamos artesanalmente cada obra, cuidando cada detalle.
           </p>
-          <div className="mt-10 grid grid-cols-[1.6fr_1fr] gap-3 md:gap-5">
+          <div className="mx-auto mt-10 grid max-w-4xl grid-cols-[1.6fr_1fr] gap-3 md:gap-4">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image src="/img/taller-2.jpg" alt="Interior del taller" fill sizes="60vw" className="object-cover" />
+              <Image src="/img/taller-2.jpg" alt="Interior del taller" fill sizes="(min-width: 896px) 520px, 60vw" className="object-cover" />
             </div>
             <div className="relative overflow-hidden rounded-2xl">
-              <Image src="/img/taller-1.jpg" alt="Entrada del taller" fill sizes="40vw" className="object-cover" />
+              <Image src="/img/taller-1.jpg" alt="Entrada del taller" fill sizes="(min-width: 896px) 320px, 40vw" className="object-cover" />
             </div>
           </div>
         </Container>

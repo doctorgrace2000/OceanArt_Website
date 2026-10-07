@@ -7,8 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
 import { Container } from "@/components/ui/Section";
 import {
-  AVAILABILITY_LABEL,
-  CATEGORY_LABEL,
+  categoryLabel,
   getProduct,
   products,
   relatedProducts,
@@ -74,9 +73,8 @@ export default async function ProductPage({ params }: Props) {
 
         <div className="lg:sticky lg:top-24 lg:self-start">
           <p className="text-sm text-stone">
-            {CATEGORY_LABEL[product.category]}
-            {product.year ? ` · ${product.year}` : ""} ·{" "}
-            <span className="text-navy">{AVAILABILITY_LABEL[product.availability]}</span>
+            {categoryLabel(product)}
+            {product.year ? ` · ${product.year}` : ""}
           </p>
           <h1 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
             {product.name}
@@ -90,6 +88,10 @@ export default async function ProductPage({ params }: Props) {
           </p>
 
           <p className="mt-6 text-[17px] leading-relaxed text-ink/90">{product.description}</p>
+
+          {product.inStock !== false && (
+            <p className="mt-4 text-[15px] font-medium text-sea">Disponible para entrega inmediata</p>
+          )}
 
           <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
             {product.dimensions && (

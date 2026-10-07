@@ -32,7 +32,7 @@ export function SectionTitle({
 }) {
   return (
     <div className={`${align === "center" ? "text-center" : "text-left"} ${className}`}>
-      {hand && <p className="font-hand text-2xl text-sea">{hand}</p>}
+      {hand && <p className="font-hand text-xl text-sea">{hand}</p>}
       <h2 className="text-2xl font-medium tracking-tight text-navy md:text-3xl">{children}</h2>
     </div>
   );

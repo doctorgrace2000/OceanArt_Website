@@ -1,37 +1,26 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import CustomOrderForm from "@/components/CustomOrderForm";
+import PageBanner from "@/components/ui/PageBanner";
 import { Container, SectionTitle } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
   title: "Diseña tu obra",
   description:
-    "Pedí una pieza textil a medida: tapices, alfombras, objetos intervenidos e instalaciones diseñadas para tu espacio.",
+    "Pedí una pieza textil a medida: tapices, alfombras, instalaciones y objetos diseñados para tu espacio.",
 };
 
 const STEPS = [
   ["Contanos tu idea", "Qué pieza querés, dónde va a ir, medidas aproximadas y colores o referencias que te gusten."],
   ["Propuesta y presupuesto", "Te enviamos un boceto, materiales y precio. Ajustamos juntos hasta que cierre."],
-  ["Seña por transferencia", "Con el 50 % de seña reservamos tu lugar en el taller y compramos los materiales."],
-  ["Producción y entrega", "Entre 3 y 8 semanas según el tamaño. Te mandamos fotos del proceso y coordinamos la entrega."],
+  ["Forma de pago", "50 % para reservar y comenzar a producir tu obra; el 50 % restante al entregarla."],
+  ["Producción y entrega", "Dependiendo del tamaño, suele ser 10 días hábiles de producción. Te mandamos fotos del proceso y coordinamos la entrega."],
 ];
 
 export default function DisenaTuObraPage() {
   return (
     <>
-      <div className="relative h-56 w-full md:h-72">
-        <Image src="/img/agua-3.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 flex items-end">
-          <Container className="pb-8">
-            <h1 className="text-3xl font-medium tracking-tight text-white drop-shadow md:text-4xl">
-              diseña tu obra
-            </h1>
-            <p className="mt-1 max-w-xl text-white/90 drop-shadow">
-              piezas únicas pensadas para tu espacio, hechas a mano en nuestro taller
-            </p>
-          </Container>
-        </div>
-      </div>
+      <PageBanner title="diseña tu obra" image="/img/agua-3.jpg" />
 
       <Container className="py-14">
         <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">

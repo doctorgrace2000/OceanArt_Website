@@ -5,7 +5,7 @@ import { WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import { whatsappUrl } from "@/lib/site";
 
-const TYPES = ["Tapiz", "Alfombra", "Cuadro", "Objeto intervenido", "Instalación", "No sé todavía"];
+const TYPES = ["Tapiz", "Alfombra", "Instalación", "Objeto", "No sé todavía"];
 
 export default function CustomOrderForm() {
   const [error, setError] = useState<string | null>(null);

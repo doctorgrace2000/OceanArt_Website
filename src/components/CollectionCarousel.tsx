@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/Icons";
-import { CATEGORY_LABEL, type Product } from "@/data/products";
+import { categoryLabel, type Product } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 
 const AUTOPLAY_MS = 4500;
@@ -83,14 +83,11 @@ export default function CollectionCarousel({ products }: { products: Product[] }
                 priority={i < 3}
                 className="object-cover transition duration-700 group-hover:scale-[1.04]"
               />
-              <span className="absolute left-4 top-4 rounded-pill bg-navy px-3 py-1 text-[11px] font-medium tracking-wide text-white">
-                nueva
-              </span>
             </div>
             <div className="mt-4 flex items-start justify-between gap-3 px-1">
               <div className="min-w-0">
-                <p className="font-hand text-2xl leading-none text-sea">
-                  {CATEGORY_LABEL[product.category].toLowerCase()}
+                <p className="font-hand text-xl leading-none text-sea">
+                  {categoryLabel(product).toLowerCase()}
                 </p>
                 <h3 className="mt-1 truncate text-lg font-medium text-navy">{product.name}</h3>
               </div>

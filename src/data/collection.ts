@@ -1,12 +1,13 @@
 import { getProduct, type Product } from "@/data/products";
 
 /**
- * Nueva colección "Orquídeas y bancos", presentada en Puro Diseño.
+ * Nueva colección "Jardín imaginario", presentada en Puro Diseño.
  * El carrusel de la landing muestra la foto de producto (fondo blanco) de
  * cada pieza, tomada directamente del catálogo. Para sumar o quitar una,
  * editá la lista de slugs.
  */
 const SLUGS = [
+  "tapiz-verde",
   "orquidea-moteada",
   "banco-musgo",
   "orquidea-blanca",
@@ -17,9 +18,7 @@ const SLUGS = [
 ] as const;
 
 export const collection = {
-  name: "Orquídeas y bancos",
+  name: "Jardín imaginario",
   eyebrow: "nueva colección",
-  intro:
-    "Alfombras con forma de orquídea en lilas, blancos y bordó, y bancos de madera con asiento de musgo tufteado. Piezas pensadas para traer el jardín adentro.",
   products: SLUGS.map((slug) => getProduct(slug)).filter((p): p is Product => Boolean(p)),
 };

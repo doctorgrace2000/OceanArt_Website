@@ -8,7 +8,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-sand">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-foam bg-white">
         <Image
           key={images[active]}
           src={images[active]}
@@ -16,7 +16,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
           fill
           priority
           sizes="(min-width: 1024px) 55vw, 100vw"
-          className="object-cover"
+          className="object-contain"
         />
       </div>
       {images.length > 1 && (

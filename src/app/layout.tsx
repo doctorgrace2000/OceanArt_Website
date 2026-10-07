@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Nunito_Sans } from "next/font/google";
+import { Cormorant_Garamond, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import CartToast from "@/components/CartToast";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
@@ -14,9 +14,11 @@ const nunito = Nunito_Sans({
   display: "swap",
 });
 
-const caveat = Caveat({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-caveat",
+  weight: ["500", "600"],
+  style: ["italic"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -44,7 +46,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${nunito.variable} ${caveat.variable}`}>
+    <html lang="es" className={`${nunito.variable} ${cormorant.variable}`}>
       <body className="flex min-h-screen flex-col">
         <CartProvider>
           <Header />

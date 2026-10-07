@@ -19,7 +19,7 @@ export const exhibitions: Exhibition[] = [
     venue: "Feria Puro Diseño · La Rural",
     place: "Buenos Aires",
     kind: "Feria de diseño",
-    detail: "Presentación de la colección Orquídeas y bancos",
+    detail: "Presentación de la colección Jardín imaginario",
   },
   {
     year: 2026,
@@ -126,7 +126,7 @@ export const exhibitions: Exhibition[] = [
     kind: "Muestra colectiva",
   },
   {
-    year: null,
+    year: 2025,
     venue: "Casa Sierra",
     place: "Córdoba",
     title: "Latidos de la tierra",

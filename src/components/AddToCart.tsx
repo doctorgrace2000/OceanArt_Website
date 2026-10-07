@@ -69,11 +69,11 @@ export default function AddToCart({ product }: { product: Product }) {
           <CartIcon /> {soldOutForYou ? "Ya está en tu carrito" : "Añadir al carrito"}
         </Button>
       </div>
-      <p className="text-center text-sm text-stone">
-        {product.availability === "unico"
-          ? "Pieza única: una sola disponible."
-          : "Se produce a pedido. Tiempo de realización: 3 a 6 semanas."}
-      </p>
+      {product.availability === "a-pedido" && (
+        <p className="text-center text-sm text-stone">
+          Dependiendo del tamaño, suele ser 10 días hábiles de producción.
+        </p>
+      )}
     </div>
   );
 }

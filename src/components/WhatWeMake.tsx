@@ -23,48 +23,32 @@ const ITEMS: Item[] = [
     label: "tapices",
     hand: "tapiz",
     blurb: "Piezas murales de gran formato, con relieves que cambian con la luz.",
-    image: "/obras/tapiz-verde/1.jpg",
-    alt: "Tapiz verde con líquenes sobre corteza",
+    image: "/obras/tapiz-pleopsidium-flavum/portada.jpg",
+    alt: "Tapiz circular de liquen amarillo",
   },
   {
     key: "alfombra",
     label: "alfombras",
     hand: "alfombra",
     blurb: "De bordes orgánicos, para el piso o para colgar.",
-    image: "/obras/orquidea-lila/2.jpg",
-    alt: "Alfombra con forma de orquídea lila sobre el pasto",
-  },
-  {
-    key: "banco",
-    label: "bancos",
-    hand: "banco",
-    blurb: "Madera maciza con asiento de musgo tufteado.",
-    image: "/obras/banco-musgo/2.jpg",
-    alt: "Banco de madera con asiento de musgo",
-  },
-  {
-    key: "objeto",
-    label: "objetos intervenidos",
-    hand: "objeto",
-    blurb: "Botellas, damajuanas y piezas recuperadas vestidas en textil.",
-    image: "/obras/ocean/4.jpg",
-    alt: "Damajuana de vidrio intervenida con tufting azul",
+    image: "/obras/orquidea-lila/portada.jpg",
+    alt: "Alfombra con forma de orquídea lila",
   },
   {
     key: "instalacion",
     label: "instalaciones",
     hand: "instalación",
     blurb: "A medida del espacio: techos, muros y dobles alturas.",
-    image: "/obras/amazonicas/4.jpg",
-    alt: "Hojas de nenúfar gigante suspendidas del techo",
+    image: "/obras/amazonicas/portada.jpg",
+    alt: "Hoja de nenúfar gigante tejida",
   },
   {
-    key: "cuadro",
-    label: "cuadros",
-    hand: "cuadro",
-    blurb: "Fragmentos textiles montados en marcos de madera natural.",
-    image: "/obras/cuadro-pleopsidium-flavum/2.jpg",
-    alt: "Cuadro textil enmarcado en madera clara",
+    key: "objeto",
+    label: "objetos",
+    hand: "objeto",
+    blurb: "Bancos con asiento de musgo, damajuanas y piezas recuperadas vestidas en textil.",
+    image: "/obras/banco-musgo/portada.jpg",
+    alt: "Banco de madera con asiento de musgo",
   },
 ];
 
@@ -94,7 +78,7 @@ export default function WhatWeMake() {
     <div className="grid items-center gap-10 md:grid-cols-[1fr_1.05fr] lg:gap-16">
       {/* Lista interactiva */}
       <div>
-        <p className="font-hand text-3xl text-sea">qué hacemos</p>
+        <p className="font-hand text-xl text-sea md:text-2xl">qué hacemos</p>
         <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
           Creamos piezas textiles a medida
         </h2>
@@ -151,40 +135,44 @@ export default function WhatWeMake() {
       <Link
         href={`/tienda?categoria=${current.key}`}
         aria-label={`Ver ${current.label} en la tienda`}
-        className="group relative block aspect-[4/5] overflow-hidden rounded-3xl bg-sand shadow-xl shadow-navy/10 sm:aspect-[5/6] md:aspect-[4/5]"
+        className="group block overflow-hidden rounded-3xl border border-foam bg-white shadow-xl shadow-navy/5 transition hover:border-navy/30"
       >
-        {ITEMS.map((item, i) => (
-          <Image
-            key={item.key}
-            src={item.image}
-            alt={i === active ? item.alt : ""}
-            fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            priority={i === 0}
-            className={`object-cover transition-all duration-700 ease-out ${
-              i === active ? "scale-100 opacity-100" : "scale-105 opacity-0"
-            }`}
-          />
-        ))}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/75 via-navy/25 to-transparent p-6 pt-24 text-white md:p-8">
-          <p key={current.key} className="font-hand text-4xl leading-none text-white md:text-5xl">
-            {current.hand}
-          </p>
-          <p className="mt-2 hidden max-w-sm text-[15px] text-white/85 md:block">{current.blurb}</p>
-          <span className="mt-4 inline-flex items-center gap-2 rounded-pill bg-white/15 px-4 py-2 text-sm font-medium backdrop-blur transition group-hover:bg-white group-hover:text-navy">
-            ver {current.label} <ArrowRightIcon width={16} height={16} />
-          </span>
-        </div>
-        {/* Puntos de progreso */}
-        <div className="absolute right-5 top-5 flex gap-1.5">
+        <div className="relative aspect-square">
           {ITEMS.map((item, i) => (
-            <span
+            <Image
               key={item.key}
-              className={`h-1.5 rounded-pill transition-all duration-300 ${
-                i === active ? "w-5 bg-white" : "w-1.5 bg-white/50"
+              src={item.image}
+              alt={i === active ? item.alt : ""}
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              priority={i === 0}
+              className={`object-contain p-4 transition-all duration-700 ease-out ${
+                i === active ? "scale-100 opacity-100" : "scale-105 opacity-0"
               }`}
             />
           ))}
+          {/* Puntos de progreso */}
+          <div className="absolute right-5 top-5 flex gap-1.5">
+            {ITEMS.map((item, i) => (
+              <span
+                key={item.key}
+                className={`h-1.5 rounded-pill transition-all duration-300 ${
+                  i === active ? "w-5 bg-navy" : "w-1.5 bg-navy/25"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="flex items-end justify-between gap-4 border-t border-foam px-6 py-5 md:px-8">
+          <div>
+            <p key={current.key} className="font-hand text-2xl leading-none text-sea md:text-3xl">
+              {current.hand}
+            </p>
+            <p className="mt-2 hidden max-w-sm text-[15px] text-ink/75 md:block">{current.blurb}</p>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-2 rounded-pill border border-navy/15 px-4 py-2 text-sm font-medium text-navy transition group-hover:bg-navy group-hover:text-white">
+            ver {current.label} <ArrowRightIcon width={16} height={16} />
+          </span>
         </div>
       </Link>
     </div>

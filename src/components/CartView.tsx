@@ -6,7 +6,7 @@ import { TrashIcon } from "@/components/Icons";
 import QuantityStepper from "@/components/QuantityStepper";
 import Button from "@/components/ui/Button";
 import { Container } from "@/components/ui/Section";
-import { CATEGORY_LABEL, maxQty } from "@/data/products";
+import { categoryLabel, maxQty } from "@/data/products";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 
@@ -41,7 +41,7 @@ export default function CartView() {
                         {product.name}
                       </Link>
                       <p className="text-sm text-stone">
-                        {CATEGORY_LABEL[product.category]}
+                        {categoryLabel(product)}
                         {product.dimensions ? ` · ${product.dimensions}` : ""}
                       </p>
                     </div>
@@ -56,7 +56,7 @@ export default function CartView() {
                         onChange={(v) => setQty(product.slug, v)}
                       />
                     ) : (
-                      <span className="text-xs text-stone">pieza única</span>
+                      <span />
                     )}
                     <button
                       type="button"

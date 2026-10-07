@@ -9,7 +9,7 @@ export const site = {
   legalName: "Ocean Art · Verónica Orlando",
   tagline: "creaciones inspiradas en la naturaleza",
   description:
-    "Estudio de arte textil en Buenos Aires. Tapices, alfombras, cuadros e instalaciones hechas a mano con tufting, inspiradas en líquenes, hongos, raíces y agua.",
+    "Estudio de arte textil en Buenos Aires. Tapices, alfombras, instalaciones y objetos hechos a mano con tufting, inspiradas en líquenes, hongos, raíces y agua.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   whatsapp: digits(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5491152401299"),
   instagram:

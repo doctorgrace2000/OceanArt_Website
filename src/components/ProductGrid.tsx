@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { CATEGORIES, CATEGORY_PLURAL, type Category, type Product } from "@/data/products";
+import { CATEGORIES, CATEGORY_PLURAL, categoriesOf, inCategory, type Category, type Product } from "@/data/products";
 
 type Filter = Category | "todas";
 type Sort = "destacadas" | "precio-asc" | "precio-desc" | "recientes";
@@ -19,12 +19,12 @@ export default function ProductGrid({
 
   const counts = useMemo(() => {
     const c: Partial<Record<Category, number>> = {};
-    for (const p of products) c[p.category] = (c[p.category] ?? 0) + 1;
+    for (const p of products) for (const cat of categoriesOf(p)) c[cat] = (c[cat] ?? 0) + 1;
     return c;
   }, [products]);
 
   const visible = useMemo(() => {
-    const list = products.filter((p) => filter === "todas" || p.category === filter);
+    const list = products.filter((p) => filter === "todas" || inCategory(p, filter));
     const price = (p: Product) => p.price ?? Number.POSITIVE_INFINITY;
     switch (sort) {
       case "precio-asc":
