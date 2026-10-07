@@ -95,7 +95,7 @@ export default async function ProductPage({ params }: Props) {
             {product.dimensions && (
               <>
                 <dt className="text-stone">Medidas</dt>
-                <dd>{product.dimensions}</dd>
+                <dd className="whitespace-pre-line">{product.dimensions}</dd>
               </>
             )}
             <dt className="text-stone">Materiales</dt>
