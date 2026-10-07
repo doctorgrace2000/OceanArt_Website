@@ -1,6 +1,6 @@
 export type Category = "tapiz" | "alfombra" | "cuadro" | "instalacion" | "objeto" | "banco";
 
-export type Availability = "unico" | "a-pedido" | "vendido";
+export type Availability = "unico" | "a-pedido" | "en-proceso" | "vendido";
 
 export interface Product {
   slug: string;
@@ -39,6 +39,7 @@ export const CATEGORY_PLURAL: Record<Category, string> = {
 export const AVAILABILITY_LABEL: Record<Availability, string> = {
   unico: "Pieza única",
   "a-pedido": "A pedido",
+  "en-proceso": "En proceso",
   vendido: "Vendida",
 };
 
@@ -223,17 +224,17 @@ export const products: Product[] = [
   },
   {
     slug: "tapiz-verde",
-    name: "Tapiz Verde",
+    name: "Tapiz Cartografía de líquenes",
     year: 2026,
     category: "tapiz",
     price: 890000,
-    availability: "unico",
+    availability: "en-proceso",
     featured: true,
-    short: "Cartografía de líquenes sobre corteza, gran formato.",
+    short: "Territorio textil que funciona como mapa sensible de la naturaleza.",
     description:
-      "Mapa textil de líquenes y musgos sobre una corteza imaginaria. Más de veinte tonos de verde, texturas de bucle y pelo cortado y detalles bordados a mano. Se entrega montado sobre bastidor de madera.",
-    dimensions: "200 × 160 cm aprox.",
-    materials: TUFTING + " Montado sobre bastidor de madera.",
+      "Este proyecto parte de la observación de ecosistemas mínimos, y su capacidad de expandirse en diferentes soportes, es una superficie de registro donde la trama textil oscila entre lo orgánico y lo cartográfico. Propone un territorio textil que funciona como mapa sensible de la naturaleza.",
+    dimensions: "240 × 150 cm",
+    materials: "Tufting, lana.",
     images: imgs("tapiz-verde", 8, 1),
   },
   {
@@ -449,4 +450,6 @@ export const maxQty = (product: Product): number =>
   product.availability === "unico" ? 1 : 10;
 
 export const isPurchasable = (product: Product): boolean =>
-  product.price !== null && product.availability !== "vendido";
+  product.price !== null &&
+  product.availability !== "vendido" &&
+  product.availability !== "en-proceso";

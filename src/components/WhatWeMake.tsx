@@ -24,7 +24,7 @@ const ITEMS: Item[] = [
     hand: "tapiz",
     blurb: "Piezas murales de gran formato, con relieves que cambian con la luz.",
     image: "/obras/tapiz-verde/1.jpg",
-    alt: "Tapiz verde con líquenes sobre corteza",
+    alt: "Tapiz Cartografía de líquenes",
   },
   {
     key: "alfombra",

@@ -34,6 +34,24 @@ export default function AddToCart({ product }: { product: Product }) {
     );
   }
 
+  if (product.availability === "en-proceso") {
+    return (
+      <div className="space-y-3">
+        <Button
+          variant="whatsapp"
+          size="lg"
+          className="w-full"
+          href={whatsappUrl(`Hola Ocean Art! Me interesa "${product.name}", que está en proceso. ¿Podemos hablar?`)}
+        >
+          <WhatsAppIcon /> Consultar por WhatsApp
+        </Button>
+        <p className="text-center text-sm text-stone">
+          Obra en proceso: escribinos para reservarla o saber cuándo estará terminada.
+        </p>
+      </div>
+    );
+  }
+
   if (!isPurchasable(product)) {
     return (
       <div className="space-y-3">
