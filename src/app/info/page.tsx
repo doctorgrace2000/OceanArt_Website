@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import { Container, SectionTitle } from "@/components/ui/Section";
+import { awardCount, exhibitions, exhibitionsByYear } from "@/data/exhibitions";
 import { site, whatsappDisplay, whatsappUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -70,6 +71,70 @@ export default function InfoPage() {
           </div>
         </div>
       </Container>
+
+      {/* EXPOSICIONES */}
+      <section id="exposiciones" className="scroll-mt-24 border-t border-foam/70 py-16 md:py-20">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionTitle align="left" hand="recorrido">Exposiciones y premios</SectionTitle>
+              <p className="mt-4 text-[17px] leading-relaxed text-ink/85">
+                Las obras de Ocean Art participaron en muestras colectivas, ferias y espacios de
+                diseño en Argentina, Italia y Austria.
+              </p>
+              <dl className="mt-6 flex gap-8">
+                <div>
+                  <dt className="text-sm text-stone">Muestras</dt>
+                  <dd className="text-3xl font-medium text-navy">{exhibitions.length}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-stone">Premios</dt>
+                  <dd className="text-3xl font-medium text-navy">{awardCount}</dd>
+                </div>
+              </dl>
+            </div>
+
+            <ol className="divide-y divide-foam">
+              {exhibitionsByYear().map(({ year, items }) => (
+                <li key={year ?? "s/f"} className="grid gap-4 py-7 first:pt-0 sm:grid-cols-[88px_1fr]">
+                  <p className="font-hand text-3xl leading-none text-sea">{year ?? "otras"}</p>
+                  <ul className="space-y-5">
+                    {items.map((e, i) => (
+                      <li key={`${e.venue}-${e.title ?? i}`}>
+                        <p className="text-[17px] font-medium text-navy">
+                          {e.title ? (
+                            <>
+                              <span className="italic">“{e.title}”</span>
+                              <span className="text-stone"> · </span>
+                            </>
+                          ) : null}
+                          {e.venue}
+                        </p>
+                        <p className="text-sm text-ink/75">
+                          {e.kind} · {e.place}
+                          {e.detail ? ` · ${e.detail}` : ""}
+                        </p>
+                        {e.awards && (
+                          <ul className="mt-2 flex flex-wrap gap-2">
+                            {e.awards.map((a) => (
+                              <li
+                                key={a}
+                                className="inline-flex items-center gap-1.5 rounded-pill border border-navy/15 bg-mist px-3 py-1 text-xs font-medium text-navy"
+                              >
+                                <span aria-hidden className="text-sea">★</span> {a}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
 
       <section className="bg-mist py-16 md:py-20">
         <Container>

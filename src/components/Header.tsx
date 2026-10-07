@@ -78,8 +78,7 @@ export default function Header() {
       <div className="mx-auto grid h-[var(--header-h)] max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:px-8">
         {/* Izquierda: menú en dos líneas (desktop) / hamburguesa (mobile) */}
         <nav aria-label="Principal" className="hidden md:block">
-          {/* 2 × 2 como el sitio original: "inicio tienda" / "diseña tu obra info" */}
-          <ul className="grid w-fit grid-cols-[auto_auto] gap-x-7 gap-y-1.5 text-[17px] leading-tight tracking-wide">
+          <ul className="flex items-center gap-x-6 whitespace-nowrap text-[17px] leading-tight tracking-wide lg:gap-x-8">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
               return (

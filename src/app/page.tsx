@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import CollectionCarousel from "@/components/CollectionCarousel";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
-import { ArrowRightIcon, ChevronDownIcon, WhatsAppIcon } from "@/components/Icons";
+import WhatWeMake from "@/components/WhatWeMake";
+import { ArrowRightIcon, ChevronDownIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import { Container, SectionTitle } from "@/components/ui/Section";
 import { collection } from "@/data/collection";
 import { featuredProducts } from "@/data/products";
-import { site, whatsappUrl } from "@/lib/site";
+import { site } from "@/lib/site";
 
 export default function HomePage() {
   const featured = featuredProducts();
@@ -78,65 +79,25 @@ export default function HomePage() {
       </section>
 
       {/* NUEVA COLECCIÓN */}
-      <section id="coleccion" className="scroll-mt-24 bg-sand py-20 md:py-24">
+      <section id="coleccion" className="scroll-mt-24 border-y border-foam/70 bg-white py-20 md:py-24">
         <Container>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-xl">
-              <p className="font-hand text-3xl text-sea">{collection.eyebrow}</p>
-              <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
-                {collection.name}
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-ink/85">{collection.intro}</p>
-            </div>
-            <div className="flex shrink-0 flex-wrap gap-3">
-              <Button
-                href={whatsappUrl(`Hola Ocean Art! Me interesa la nueva colección "${collection.name}". ¿Me cuentan más?`)}
-              >
-                <WhatsAppIcon /> consultar por la colección
-              </Button>
-            </div>
+          <div className="max-w-xl">
+            <p className="font-hand text-3xl text-sea">{collection.eyebrow}</p>
+            <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
+              {collection.name}
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-ink/85">{collection.intro}</p>
           </div>
           <div className="mt-10">
-            <CollectionCarousel items={collection.items} />
+            <CollectionCarousel products={collection.products} />
           </div>
         </Container>
       </section>
 
       {/* QUÉ HACEMOS */}
-      <section className="bg-mist py-20 md:py-24">
+      <section className="py-20 md:py-28">
         <Container>
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div className="md:text-right">
-              <p className="text-[17px] text-ink/90">Creamos piezas textiles personalizadas a medida:</p>
-              <ul className="mt-5 space-y-2.5 text-lg text-navy">
-                {[
-                  ["tapices", "tapiz"],
-                  ["alfombras", "alfombra"],
-                  ["objetos intervenidos", "objeto"],
-                  ["instalaciones", "instalacion"],
-                  ["cuadros", "cuadro"],
-                ].map(([label]) => (
-                  <li key={label}>
-                    <span className="font-hand text-2xl text-sea">— </span>
-                    {label}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex gap-3 md:justify-end">
-                <Button href="/tienda" variant="outline">ver obras</Button>
-                <Button href="/disena-tu-obra">pedir una a medida</Button>
-              </div>
-            </div>
-            <div className="relative mx-auto aspect-square w-full max-w-md">
-              <Image
-                src="/img/dibujo.jpg"
-                alt="Dibujo a mano de un tapiz, una alfombra y un objeto intervenido"
-                fill
-                sizes="(min-width: 768px) 40vw, 90vw"
-                className="object-contain mix-blend-multiply"
-              />
-            </div>
-          </div>
+          <WhatWeMake />
         </Container>
       </section>
 

@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/Icons";
-import type { CollectionItem } from "@/data/collection";
+import { CATEGORY_LABEL, type Product } from "@/data/products";
+import { formatPrice } from "@/lib/format";
 
 const AUTOPLAY_MS = 4500;
 
-export default function CollectionCarousel({ items }: { items: CollectionItem[] }) {
+export default function CollectionCarousel({ products }: { products: Product[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -36,8 +37,7 @@ export default function CollectionCarousel({ items }: { items: CollectionItem[] 
     if (!track) return;
     const slides = Array.from(track.children) as HTMLElement[];
     const i = ((index % slides.length) + slides.length) % slides.length;
-    const el = slides[i];
-    track.scrollTo({ left: el.offsetLeft - track.offsetLeft, behavior: "smooth" });
+    track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: "smooth" });
   }, []);
 
   // Autoplay: avanza solo mientras la pestaña está visible y nadie interactúa.
@@ -63,63 +63,54 @@ export default function CollectionCarousel({ items }: { items: CollectionItem[] 
         ref={trackRef}
         onScroll={onScroll}
         role="region"
-        aria-label="Fotos de la colección"
-        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        aria-label="Piezas de la colección"
+        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
       >
-        {items.map((item, i) => {
-          const landscape = item.orientation === "landscape";
-          const body = (
-            <>
+        {products.map((product, i) => (
+          <Link
+            key={product.slug}
+            href={`/tienda/${product.slug}`}
+            aria-label={product.name}
+            className="group w-[70vw] shrink-0 snap-start sm:w-[40vw] lg:w-[calc((100%-3.75rem)/4)]"
+          >
+            {/* Foto de producto sobre blanco, con un borde suave para que la tarjeta se lea */}
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-foam bg-white transition duration-500 group-hover:border-navy/30 group-hover:shadow-xl group-hover:shadow-navy/10">
               <Image
-                src={item.src}
-                alt={item.alt}
+                src={product.images[0]}
+                alt={product.name}
                 fill
-                sizes={landscape ? "(min-width: 1024px) 560px, 86vw" : "(min-width: 1024px) 380px, 72vw"}
-                className="object-cover transition duration-700 group-hover:scale-[1.03]"
-                priority={i < 2}
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 70vw"
+                priority={i < 3}
+                className="object-cover transition duration-700 group-hover:scale-[1.04]"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/70 via-navy/20 to-transparent p-5 pt-16 text-white">
-                <p className="text-xs uppercase tracking-[0.18em] text-white/75">{item.kind}</p>
-                <p className="mt-0.5 flex items-center gap-2 text-lg font-medium">
-                  {item.title}
-                  {item.href && (
-                    <ArrowRightIcon
-                      width={18}
-                      height={18}
-                      className="opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"
-                    />
-                  )}
+              <span className="absolute left-4 top-4 rounded-pill bg-navy px-3 py-1 text-[11px] font-medium tracking-wide text-white">
+                nueva
+              </span>
+            </div>
+            <div className="mt-4 flex items-start justify-between gap-3 px-1">
+              <div className="min-w-0">
+                <p className="font-hand text-2xl leading-none text-sea">
+                  {CATEGORY_LABEL[product.category].toLowerCase()}
                 </p>
-              </figcaption>
-            </>
-          );
-          const cls = `group relative block shrink-0 snap-start overflow-hidden rounded-3xl bg-sand ${
-            landscape
-              ? "aspect-[4/3] w-[86vw] sm:w-[60vw] lg:w-[560px]"
-              : "aspect-[3/4] w-[72vw] sm:w-[42vw] lg:w-[380px]"
-          }`;
-          return item.href ? (
-            <Link key={item.src} href={item.href} className={cls} aria-label={`Ver ${item.title}`}>
-              <figure className="absolute inset-0">{body}</figure>
-            </Link>
-          ) : (
-            <figure key={item.src} className={cls}>
-              {body}
-            </figure>
-          );
-        })}
+                <h3 className="mt-1 truncate text-lg font-medium text-navy">{product.name}</h3>
+              </div>
+              <p className="shrink-0 pt-1 text-[15px] text-ink">
+                {product.price === null ? "consultar" : formatPrice(product.price)}
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
 
-      <div className="mt-5 flex items-center justify-between">
-        {/* Puntos */}
-        <div className="flex items-center gap-1.5" role="tablist" aria-label="Ir a la foto">
-          {items.map((item, i) => (
+      <div className="mt-6 flex items-center justify-between">
+        <div className="flex items-center gap-1.5" role="tablist" aria-label="Ir a la pieza">
+          {products.map((product, i) => (
             <button
-              key={item.src}
+              key={product.slug}
               type="button"
               role="tab"
               aria-selected={i === active}
-              aria-label={`Foto ${i + 1}: ${item.title}`}
+              aria-label={`${i + 1}: ${product.name}`}
               onClick={() => goTo(i)}
               className={`h-1.5 rounded-pill transition-all ${
                 i === active ? "w-6 bg-navy" : "w-1.5 bg-navy/25 hover:bg-navy/50"
@@ -127,7 +118,6 @@ export default function CollectionCarousel({ items }: { items: CollectionItem[] 
             />
           ))}
         </div>
-        {/* Flechas */}
         <div className="flex gap-2">
           <button
             type="button"
