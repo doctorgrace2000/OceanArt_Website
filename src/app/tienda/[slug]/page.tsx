@@ -91,8 +91,12 @@ export default async function ProductPage({ params }: Props) {
 
           <p className="mt-6 text-[17px] leading-relaxed text-ink/90">{product.description}</p>
 
-          {product.inStock !== false && (
-            <p className="mt-4 text-[15px] font-medium text-sea">Disponible para entrega inmediata</p>
+          {product.availability === "en-proceso" ? (
+            <p className="mt-4 text-[15px] font-medium text-sea">Obra en proceso</p>
+          ) : (
+            product.inStock !== false && (
+              <p className="mt-4 text-[15px] font-medium text-sea">Disponible para entrega inmediata</p>
+            )
           )}
 
           <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
