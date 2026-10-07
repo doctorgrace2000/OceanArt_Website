@@ -53,7 +53,9 @@ export default async function ProductPage({ params }: Props) {
         availability:
           product.availability === "vendido"
             ? "https://schema.org/SoldOut"
-            : "https://schema.org/InStock",
+            : product.availability === "en-proceso"
+              ? "https://schema.org/PreOrder"
+              : "https://schema.org/InStock",
       },
     }),
   };

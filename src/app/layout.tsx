@@ -37,7 +37,6 @@ export const metadata: Metadata = {
     description: site.description,
     images: [{ url: "/img/agua-2.jpg", width: 2400, height: 1800, alt: site.name }],
   },
-  icons: { icon: "/favicon.ico" },
 };
 
 export const viewport: Viewport = {
