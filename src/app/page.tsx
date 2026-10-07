@@ -30,9 +30,9 @@ export default function HomePage() {
             {site.tagline}
           </h1>
           <p className="mt-4 text-lg text-white drop-shadow md:text-xl">explorá nuestra colección</p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-            <Button href="/tienda" size="lg" variant="light">obras disponibles</Button>
-            <Button href="/disena-tu-obra" size="lg" variant="lightOutline">diseña tu obra</Button>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Button href="/tienda" variant="light" className="w-48">obras disponibles</Button>
+            <Button href="/disena-tu-obra" variant="lightOutline" className="w-48">diseña tu obra</Button>
           </div>
         </div>
         <a
