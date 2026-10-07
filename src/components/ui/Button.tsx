@@ -12,7 +12,7 @@ const variants: Record<Variant, string> = {
   ghost: "text-navy hover:bg-mist",
   whatsapp: "bg-whatsapp text-white hover:brightness-95 shadow-sm shadow-whatsapp/30",
   // Para usar sobre fotos (hero): blanco sólido y blanco translúcido con borde
-  light: "bg-white text-navy hover:bg-foam shadow-lg shadow-navy/25",
+  light: "border-2 border-white bg-white text-navy hover:border-foam hover:bg-foam shadow-lg shadow-navy/25",
   lightOutline:
     "border-2 border-white bg-white/10 text-white backdrop-blur-sm hover:bg-white hover:text-navy shadow-lg shadow-navy/20",
 };
