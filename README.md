@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ocean Art · tienda online
 
-## Getting Started
+Sitio + ecommerce de [Ocean Art](https://oceanartveronicaorlando.myportfolio.com/) reconstruido en
+**Next.js 16 (App Router) + TypeScript + Tailwind CSS 4**, pensado para desplegarse 100 % en Vercel
+sin base de datos ni servicios pagos.
 
-First, run the development server:
+## Qué incluye
+
+| Ruta | Qué hace |
+| --- | --- |
+| `/` | Inicio: hero de agua, "Sobre Ocean Art", qué hacemos (con el dibujo a mano), carrusel de obras destacadas, el taller |
+| `/tienda` | Grilla de obras con filtros por categoría y orden por precio / fecha |
+| `/tienda/[slug]` | Ficha de obra: galería, medidas, materiales, **añadir al carrito** (o "cotizar por WhatsApp" si no tiene precio) |
+| `/carrito` | Carrito persistente en el navegador (localStorage), cantidades, subtotal |
+| `/checkout` | Datos del cliente, retiro o envío, método de pago: **transferencia bancaria** |
+| `/pedido/[id]` | Confirmación con CBU / alias (botones copiar), importe, y **botón que abre WhatsApp con el pedido ya escrito** para mandar el comprobante |
+| `/disena-tu-obra` | Formulario de obra a medida que se envía por WhatsApp |
+| `/info` | Verónica, el taller, contacto y preguntas frecuentes |
+| `POST /api/orders` | Valida el pedido, recalcula precios desde el catálogo, genera el número `OA-…`, opcionalmente avisa por email |
+
+## Correr en local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local   # editá los datos bancarios y el WhatsApp
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editar el catálogo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Todo el catálogo vive en [`src/data/products.ts`](src/data/products.ts). Cada obra tiene:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `price`: en pesos. Poné `null` para que en vez de "añadir al carrito" muestre "cotizar por WhatsApp".
+- `availability`: `"unico"` (máximo 1 por carrito), `"a-pedido"` (hasta 10) o `"vendido"`.
+- `images`: rutas dentro de `public/obras/<carpeta>/`. La primera es la portada.
+- `featured`: `true` para que aparezca en el carrusel del inicio.
 
-## Learn More
+> **Los precios actuales son de ejemplo.** Reemplazalos por los reales antes de publicar.
 
-To learn more about Next.js, take a look at the following resources:
+Para agregar fotos nuevas: copiá los JPG a `public/obras/<slug>/` (ideal ≤ 1800 px de lado) y
+sumalos al array `images`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Desplegar en Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Subí el proyecto a un repo de GitHub / GitLab / Bitbucket.
+2. En [vercel.com/new](https://vercel.com/new) importá el repo. Vercel detecta Next.js solo; no hay que tocar nada.
+3. En **Settings → Environment Variables** cargá las variables de `.env.example`
+   (como mínimo `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_WHATSAPP_NUMBER` y los `NEXT_PUBLIC_BANK_*`).
+4. Deploy. Cada `git push` a `main` vuelve a desplegar.
 
-## Deploy on Vercel
+O desde la terminal:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dlx vercel        # primer deploy (preview)
+pnpm dlx vercel --prod # producción
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Aviso de pedidos al taller
+
+- **Siempre**: el cliente ve los datos de transferencia y un botón que abre WhatsApp con el detalle
+  del pedido. Es el canal principal.
+- **Opcional, gratis**: si cargás `RESEND_API_KEY` y `ORDER_NOTIFY_EMAIL` en Vercel, cada pedido
+  también llega por email ([resend.com](https://resend.com), 3.000 emails/mes gratis).
+- Además cada pedido queda en los **logs de Vercel** (`[order] {...}`), consultables desde el dashboard.
+
+### Próximos pasos posibles (sin salir de Vercel)
+
+- Guardar pedidos en una base: Vercel Postgres / Neon o Upstash Redis (ambos con plan gratis).
+- Panel de administración simple protegido con contraseña para marcar obras como vendidas.
+- Pasarela con tarjeta (Mercado Pago Checkout Pro) si más adelante se quiere sumar a la transferencia.
+
+## Stack
+
+- Next.js 16 · React 19 · TypeScript estricto
+- Tailwind CSS 4 (tokens de color en `src/app/globals.css`: `navy`, `ink`, `sand`, `mist`, `foam`, `sea`)
+- Tipografías: Nunito Sans (texto) y Caveat (acentos manuscritos), vía `next/font`
+- Sin dependencias externas de UI ni de estado

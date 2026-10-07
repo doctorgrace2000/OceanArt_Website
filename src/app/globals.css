@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
+@theme {
+  /* Paleta tomada del sitio original: azul marino + gris tinta sobre blanco */
+  --color-navy: #012b55;
+  --color-navy-dark: #011d3a;
+  --color-ink: #282828;
+  --color-stone: #6b7280;
+  --color-sand: #f6f4ef;
+  --color-mist: #f3f6f9;
+  --color-foam: #dfe8f0;
+  --color-sea: #4a7fa5;
+  --color-whatsapp: #25d366;
+
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
+
+  --radius-pill: 999px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Altura del header fijo; la usan el hero y el menú mobile */
+  --header-h: 80px;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --header-h: 96px;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-foam);
+  color: var(--color-navy);
+}
+
+/* Ocultar scrollbar en carruseles horizontales sin perder el scroll */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Campos de formulario */
+.field {
+  @apply w-full rounded-xl border border-foam bg-white px-4 py-3 text-ink placeholder:text-stone/60 outline-none transition focus:border-navy focus:ring-2 focus:ring-navy/15;
+}
+.field-label {
+  @apply mb-1.5 block text-sm font-medium text-navy;
 }

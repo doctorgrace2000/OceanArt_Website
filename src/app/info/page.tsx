@@ -1,0 +1,144 @@
+import Image from "next/image";
+import type { Metadata } from "next";
+import { InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
+import Button from "@/components/ui/Button";
+import { Container, SectionTitle } from "@/components/ui/Section";
+import { site, whatsappDisplay, whatsappUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Info",
+  description:
+    "Quiénes somos, dónde está el taller de Ocean Art y cómo comprar o encargar una obra textil.",
+};
+
+const FAQ = [
+  [
+    "¿Cómo pago?",
+    "Por transferencia bancaria. Al finalizar la compra te mostramos CBU y alias; nos mandás el comprobante por WhatsApp y la obra queda confirmada. Reservamos la pieza 48 horas.",
+  ],
+  [
+    "¿Hacen envíos?",
+    "Sí, a todo el país. El costo depende del tamaño y el destino, por eso lo cotizamos por WhatsApp después del pedido. También podés retirar en el taller sin cargo.",
+  ],
+  [
+    "¿Cuánto tarda una obra a pedido?",
+    "Entre 3 y 8 semanas según el tamaño y la complejidad. Te vamos mandando fotos del proceso.",
+  ],
+  [
+    "¿Cómo cuido mi pieza?",
+    "Aspirar suavemente sin cepillo giratorio, evitar sol directo prolongado y, ante una mancha, limpiar con paño húmedo y jabón neutro. Para alfombras recomendamos rotarlas cada tanto.",
+  ],
+  [
+    "¿Puedo visitar el taller?",
+    "Claro. Estamos en General Rodríguez, provincia de Buenos Aires. Escribinos para coordinar un día.",
+  ],
+];
+
+export default function InfoPage() {
+  return (
+    <>
+      <Container className="py-14 md:py-20">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image
+              src="/img/veronica.jpg"
+              alt="Verónica Orlando frente a las raíces de un ficus"
+              fill
+              priority
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <SectionTitle align="left" hand="la persona detrás">Verónica Orlando</SectionTitle>
+            <div className="mt-6 space-y-4 text-[17px] leading-relaxed text-ink/90">
+              <p>
+                Artista textil y fundadora de Ocean Art. Trabaja con tufting, tejido y bordado para
+                traducir al textil lo que observa en la naturaleza: líquenes sobre rocas, hongos en
+                troncos caídos, raíces aéreas, la superficie del agua.
+              </p>
+              <p>
+                Cada obra parte de la observación directa y de un archivo propio de fotografías y
+                dibujos. De ahí salen las formas, las paletas y los relieves que después se tuftean
+                a mano, hebra por hebra, en el taller.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button href={site.instagram}><InstagramIcon /> seguir en Instagram</Button>
+              <Button href="/tienda" variant="outline">ver obras</Button>
+            </div>
+          </div>
+        </div>
+      </Container>
+
+      <section className="bg-mist py-16 md:py-20">
+        <Container>
+          <SectionTitle hand="General Rodríguez">El taller</SectionTitle>
+          <p className="mx-auto mt-6 max-w-2xl text-center text-[17px] leading-relaxed text-ink/90">
+            Un galpón de ladrillo con puertas azules, donde conviven los bastidores, las pistolas de
+            tufting, cientos de conos de lana y las piezas en proceso. Diseñamos, experimentamos y
+            realizamos artesanalmente cada obra, cuidando cada detalle.
+          </p>
+          <div className="mt-10 grid grid-cols-[1.6fr_1fr] gap-3 md:gap-5">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image src="/img/taller-2.jpg" alt="Interior del taller" fill sizes="60vw" className="object-cover" />
+            </div>
+            <div className="relative overflow-hidden rounded-2xl">
+              <Image src="/img/taller-1.jpg" alt="Entrada del taller" fill sizes="40vw" className="object-cover" />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <Container className="py-16 md:py-20">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr]">
+          <div>
+            <SectionTitle align="left" hand="escribinos">Contacto</SectionTitle>
+            <ul className="mt-6 space-y-4 text-[16px]">
+              <li className="flex items-center gap-3">
+                <WhatsAppIcon className="text-navy" />
+                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="hover:text-navy">
+                  {whatsappDisplay()}
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <MailIcon className="text-navy" />
+                <a href={`mailto:${site.email}`} className="hover:text-navy">{site.email}</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <InstagramIcon className="text-navy" />
+                <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-navy">
+                  @oceanart.veronicaorlando
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <PinIcon className="text-navy" />
+                <span>{site.location}</span>
+              </li>
+            </ul>
+            <div className="mt-8">
+              <Button variant="whatsapp" href={whatsappUrl("Hola Ocean Art! Quería hacerles una consulta.")}>
+                <WhatsAppIcon /> escribir por WhatsApp
+              </Button>
+            </div>
+          </div>
+
+          <div id="como-comprar" className="scroll-mt-24">
+            <SectionTitle align="left" hand="preguntas frecuentes">Cómo comprar</SectionTitle>
+            <div className="mt-6 divide-y divide-foam">
+              {FAQ.map(([q, a]) => (
+                <details key={q} className="group py-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-navy">
+                    {q}
+                    <span className="text-xl leading-none text-sea transition group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-[15px] leading-relaxed text-ink/80">{a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Container>
+    </>
+  );
+}

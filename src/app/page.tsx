@@ -1,69 +1,189 @@
 import Image from "next/image";
+import Link from "next/link";
+import CollectionCarousel from "@/components/CollectionCarousel";
+import FeaturedCarousel from "@/components/FeaturedCarousel";
+import { ArrowRightIcon, ChevronDownIcon, WhatsAppIcon } from "@/components/Icons";
+import Button from "@/components/ui/Button";
+import { Container, SectionTitle } from "@/components/ui/Section";
+import { collection } from "@/data/collection";
+import { featuredProducts } from "@/data/products";
+import { site, whatsappUrl } from "@/lib/site";
 
-export default function Home() {
+export default function HomePage() {
+  const featured = featuredProducts();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <>
+      {/* HERO */}
+      <section className="relative flex h-[calc(100svh-var(--header-h))] min-h-[520px] items-center justify-center overflow-hidden">
         <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/img/agua-2.jpg"
+          alt="Superficie del mar"
+          fill
           priority
+          sizes="100vw"
+          className="object-cover"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+        <div className="relative z-10 px-4 text-center">
+          <h1 className="text-balance text-3xl font-medium tracking-tight text-navy drop-shadow-[0_1px_8px_rgba(255,255,255,0.5)] sm:text-4xl md:text-5xl">
+            {site.tagline}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-4 text-lg text-white drop-shadow md:text-xl">explorá nuestra colección</p>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+            <Button href="/tienda" size="lg" variant="light">obras disponibles</Button>
+            <Button href="/disena-tu-obra" size="lg" variant="lightOutline">diseña tu obra</Button>
+          </div>
+        </div>
+        <a
+          href="#sobre"
+          aria-label="Bajar"
+          className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-bounce text-white/90"
+        >
+          <ChevronDownIcon width={32} height={32} strokeWidth={1.25} />
+        </a>
+      </section>
+
+      {/* SOBRE */}
+      <section id="sobre" className="scroll-mt-20 py-20 md:py-28">
+        <Container className="max-w-4xl">
+          <p className="text-center font-hand text-3xl text-sea">qué es Ocean Art</p>
+          {/* Frase principal: funciona como título de la sección */}
+          <h2 className="mx-auto mt-3 max-w-3xl text-balance text-center text-3xl font-medium leading-snug tracking-tight text-navy sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
+            Un estudio de arte textil donde cada obra nace del encuentro entre la naturaleza, la
+            materia y el diseño.
+          </h2>
+          <div className="mx-auto mt-10 grid max-w-3xl gap-8 text-center text-lg leading-relaxed text-ink/85 md:grid-cols-2 md:gap-10 md:text-left md:text-[19px]">
+            <p>
+              Con tufting y otras técnicas textiles contemporáneas creamos tapices, alfombras e
+              instalaciones de formas orgánicas, texturas y relieves inspirados en paisajes, raíces y
+              organismos vivos.
+            </p>
+            <p>
+              Cada pieza es artesanal y exclusiva, pensada para dialogar con el espacio. No
+              representamos la naturaleza: la interpretamos en textil, construyendo paisajes
+              materiales donde diseño, materia y oficio se entrelazan.
+            </p>
+          </div>
+        </Container>
+        <Container className="mt-14">
+          <div className="grid grid-cols-2 gap-3 md:gap-5">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image src="/img/agua-3.jpg" alt="Reflejos de sol sobre el agua" fill sizes="50vw" className="object-cover" />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image src="/img/agua-1.jpg" alt="Ondas sobre el mar" fill sizes="50vw" className="object-cover" />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* NUEVA COLECCIÓN */}
+      <section id="coleccion" className="scroll-mt-24 bg-sand py-20 md:py-24">
+        <Container>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-xl">
+              <p className="font-hand text-3xl text-sea">{collection.eyebrow}</p>
+              <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
+                {collection.name}
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-ink/85">{collection.intro}</p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-3">
+              <Button
+                href={whatsappUrl(`Hola Ocean Art! Me interesa la nueva colección "${collection.name}". ¿Me cuentan más?`)}
+              >
+                <WhatsAppIcon /> consultar por la colección
+              </Button>
+            </div>
+          </div>
+          <div className="mt-10">
+            <CollectionCarousel items={collection.items} />
+          </div>
+        </Container>
+      </section>
+
+      {/* QUÉ HACEMOS */}
+      <section className="bg-mist py-20 md:py-24">
+        <Container>
+          <div className="grid items-center gap-10 md:grid-cols-2">
+            <div className="md:text-right">
+              <p className="text-[17px] text-ink/90">Creamos piezas textiles personalizadas a medida:</p>
+              <ul className="mt-5 space-y-2.5 text-lg text-navy">
+                {[
+                  ["tapices", "tapiz"],
+                  ["alfombras", "alfombra"],
+                  ["objetos intervenidos", "objeto"],
+                  ["instalaciones", "instalacion"],
+                  ["cuadros", "cuadro"],
+                ].map(([label]) => (
+                  <li key={label}>
+                    <span className="font-hand text-2xl text-sea">— </span>
+                    {label}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex gap-3 md:justify-end">
+                <Button href="/tienda" variant="outline">ver obras</Button>
+                <Button href="/disena-tu-obra">pedir una a medida</Button>
+              </div>
+            </div>
+            <div className="relative mx-auto aspect-square w-full max-w-md">
+              <Image
+                src="/img/dibujo.jpg"
+                alt="Dibujo a mano de un tapiz, una alfombra y un objeto intervenido"
+                fill
+                sizes="(min-width: 768px) 40vw, 90vw"
+                className="object-contain mix-blend-multiply"
+              />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* DESTACADAS */}
+      <section className="py-20 md:py-24">
+        <Container>
+          <div className="flex items-end justify-between gap-4">
+            <SectionTitle align="left" hand="disponibles ahora">Obras destacadas</SectionTitle>
+            <Link href="/tienda" className="hidden items-center gap-1 text-sm text-navy hover:underline sm:inline-flex">
+              ver todas <ArrowRightIcon width={16} height={16} />
+            </Link>
+          </div>
+          <div className="mt-8">
+            <FeaturedCarousel products={featured} />
+          </div>
+          <div className="mt-6 text-center sm:hidden">
+            <Button href="/tienda" variant="outline">ver todas las obras</Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* TALLER */}
+      <section className="py-10 md:py-16">
+        <Container narrow>
+          <SectionTitle hand="General Rodríguez, Buenos Aires">Nuestro taller</SectionTitle>
+          <p className="mt-6 text-center text-[17px] leading-relaxed text-ink/90">
+            Ubicado en General Rodríguez, provincia de Buenos Aires, nuestro taller es el espacio
+            donde las ideas toman forma. Diseñamos, experimentamos y realizamos artesanalmente cada
+            una de nuestras obras, cuidando cada detalle del proceso creativo.
+            <br />
+            Te invitamos a conocerlo.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </Container>
+        <Container className="mt-10">
+          <div className="grid grid-cols-[1.6fr_1fr] gap-3 md:gap-5">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image src="/img/taller-2.jpg" alt="Interior del taller con piezas colgando" fill sizes="60vw" className="object-cover" />
+            </div>
+            <div className="relative overflow-hidden rounded-2xl">
+              <Image src="/img/taller-1.jpg" alt="Entrada del taller, pared de ladrillo y puerta azul" fill sizes="40vw" className="object-cover" />
+            </div>
+          </div>
+          <div className="mt-10 text-center">
+            <Button href="/info" size="lg">conocé más sobre nosotros</Button>
+          </div>
+        </Container>
+      </section>
+    </>
   );
 }
