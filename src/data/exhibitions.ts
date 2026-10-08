@@ -12,15 +12,8 @@ export interface Exhibition {
   awards?: string[];
 }
 
-/** Ordenadas de la más reciente a la más antigua dentro de cada año. */
+/** Dentro de cada año, la primera es la más destacada (La materia del mundo, con Leila Tschopp). */
 export const exhibitions: Exhibition[] = [
-  {
-    year: 2026,
-    venue: "Feria Puro Diseño · La Rural",
-    place: "Buenos Aires",
-    kind: "Feria de diseño",
-    detail: "Presentación de la colección Jardín imaginario",
-  },
   {
     year: 2026,
     venue: "Fundación Cazadores",
@@ -28,6 +21,13 @@ export const exhibitions: Exhibition[] = [
     title: "La materia del mundo",
     kind: "Muestra colectiva",
     detail: "Curada por Leila Tschopp",
+  },
+  {
+    year: 2026,
+    venue: "Feria Puro Diseño · La Rural",
+    place: "Buenos Aires",
+    kind: "Feria de diseño",
+    detail: "Presentación de la colección Jardín imaginario",
   },
   {
     year: 2026,

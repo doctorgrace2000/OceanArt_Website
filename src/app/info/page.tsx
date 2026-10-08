@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import ContactFaq from "@/components/ContactFaq";
 import { InstagramIcon } from "@/components/Icons";
@@ -32,15 +33,20 @@ export default function InfoPage() {
           </div>
           <div>
             <SectionTitle align="left" hand="la persona detrás">Verónica Orlando</SectionTitle>
-            <p className="mt-2 text-lg font-medium text-sea">
-              Artista textil y fundadora de Ocean Art.
-            </p>
+            <p className="mt-2 text-[17px] text-ink/70">Artista textil y fundadora de Ocean Art.</p>
             <div className="mt-5 space-y-4 text-[17px] leading-relaxed text-ink/90">
               <p>
-                Ocean Art es su proyecto personal. Nació como una búsqueda de disfrute, de juego con
-                la materia y el color, y con el tiempo se convirtió en su manera de interpretar
-                artísticamente la naturaleza: cada obra es una exploración libre de formas, texturas
-                y relieves, hecha a mano en su taller.
+                Su obra{" "}
+                <Link href="/tienda/archivo-biologico" className="underline underline-offset-2 hover:text-navy">
+                  Archivo Biológico
+                </Link>{" "}
+                participó de “La materia del mundo”, muestra curada por Leila Tschopp en Fundación
+                Cazadores (Buenos Aires, 2026).
+              </p>
+              <p>
+                Ocean Art es un proyecto personal que nace desde la búsqueda del disfrute, y con el
+                tiempo se fue transformando en la interpretación artística. Cada obra fue pensada,
+                sentida y trabajada de manera artesanal en el taller.
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -144,9 +150,11 @@ export default function InfoPage() {
         <Container>
           <SectionTitle hand="General Rodríguez">El taller</SectionTitle>
           <p className="mx-auto mt-6 max-w-2xl text-center text-[17px] leading-relaxed text-ink/90">
-            Un galpón de ladrillo con puertas azules, donde conviven los bastidores, las pistolas de
-            tufting, cientos de conos de lana y las piezas en proceso. Diseñamos, experimentamos y
-            realizamos artesanalmente cada obra, cuidando cada detalle.
+            Ubicado en General Rodríguez, provincia de Buenos Aires, nuestro taller es el espacio
+            donde las ideas toman forma. Diseñamos, experimentamos y realizamos artesanalmente cada
+            una de nuestras obras, cuidando cada detalle del proceso creativo.
+            <br />
+            Te invitamos a conocerlo.
           </p>
           <div className="mx-auto mt-10 grid max-w-4xl grid-cols-[1.6fr_1fr] gap-3 md:gap-4">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">

@@ -1,3 +1,5 @@
+import { obra } from "@/lib/obras";
+
 export type Category = "tapiz" | "alfombra" | "instalacion" | "escultura" | "objeto";
 
 export type Availability = "unico" | "a-pedido" | "en-proceso" | "vendido";
@@ -20,6 +22,8 @@ export interface Product {
   featured?: boolean;
   /** `false` = no está lista para entrega inmediata. Por defecto, sí. */
   inStock?: boolean;
+  /** Obras que se venden juntas en este producto (p. ej. un dúo con precio especial). */
+  bundleOf?: string[];
 }
 
 export const CATEGORY_LABEL: Record<Category, string> = {
@@ -66,7 +70,7 @@ function imgs(folder: string, count: number, source = 1, keepSource = false): st
   const all = Array.from({ length: count }, (_, i) => `/obras/${folder}/${i + 1}.jpg`);
   const src = all[source - 1];
   const rest = keepSource ? [src, ...all.filter((p) => p !== src)] : all.filter((p) => p !== src);
-  return [`/obras/${folder}/portada.jpg`, ...rest];
+  return [`/obras/${folder}/portada.jpg`, ...rest].map(obra);
 }
 
 const TUFTING =
@@ -87,11 +91,11 @@ export const products: Product[] = [
   // --- Orquídeas ---------------------------------------------------------------
   {
     slug: "orquidea-moteada",
-    name: "Orquídea moteada",
+    name: "Orquídea I",
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 260000,
+    price: 435000,
     availability: "a-pedido",
     featured: true,
     short: "Alfombra orquídea lila con pétalos moteados y centro violeta.",
@@ -104,11 +108,11 @@ export const products: Product[] = [
   },
   {
     slug: "orquidea-lila",
-    name: "Orquídea lila",
+    name: "Orquídea II",
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 260000,
+    price: 435000,
     availability: "a-pedido",
     featured: true,
     short: "Alfombra orquídea lila con manchas y centro bordó en relieve.",
@@ -121,11 +125,11 @@ export const products: Product[] = [
   },
   {
     slug: "orquidea-blanca",
-    name: "Orquídea blanca",
+    name: "Orquídea III",
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 260000,
+    price: 400000,
     availability: "a-pedido",
     short: "Alfombra orquídea blanca con nervaduras violetas.",
     description:
@@ -137,11 +141,11 @@ export const products: Product[] = [
   },
   {
     slug: "orquidea-bordo",
-    name: "Orquídea bordó",
+    name: "Orquídea IV",
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 260000,
+    price: 400000,
     availability: "a-pedido",
     short: "Alfombra orquídea blanca con moteado y centro bordó.",
     description:
@@ -153,11 +157,11 @@ export const products: Product[] = [
   },
   {
     slug: "orquidea-purpura",
-    name: "Orquídea púrpura",
+    name: "Orquídea V",
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 260000,
+    price: 400000,
     availability: "a-pedido",
     short: "Alfombra orquídea púrpura de pétalos alargados.",
     description:
@@ -175,11 +179,12 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: null,
+    price: 360000,
     availability: "unico",
     short: "Alfombra de musgos en verdes, amarillos y tierras.",
     description:
       "Un manto de musgos tufteados en verdes, amarillos y tierras, con distintas alturas de pelo y un borde orgánico. Forma pareja con Verde Musgo II: juntas componen una sola pieza.",
+    dimensions: "1.22 × 0.67 m",
     materials: TUFTING,
     images: imgs("verde-musgo", 6, 1, true),
   },
@@ -189,13 +194,35 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: null,
+    price: 360000,
     availability: "unico",
     short: "Alfombra de musgos, pareja de Verde Musgo.",
     description:
       "Musgos tufteados en verdes, amarillos y tierras sobre una base de silueta orgánica, con distintas alturas de pelo. Funciona sola o junto a Verde Musgo, con la que forma una sola pieza.",
+    dimensions: "1.35 × 0.60 m",
     materials: TUFTING,
     images: imgs("verde-musgo-2", 7, 1, true),
+  },
+  {
+    slug: "duo-verde-musgo",
+    name: "Dúo Verde Musgo",
+    year: 2026,
+    category: "alfombra",
+    alsoIn: ["tapiz"],
+    price: 650000,
+    availability: "unico",
+    short: "Verde Musgo y Verde Musgo II juntas, con precio especial.",
+    description:
+      "Las dos piezas Verde Musgo pensadas para estar juntas: se encuentran en el centro y componen un solo manto de musgos en verdes, amarillos y tierras. Llevando el dúo, el precio es especial.",
+    dimensions: "Verde Musgo 1.22 × 0.67 m · Verde Musgo II 1.35 × 0.60 m",
+    materials: TUFTING,
+    images: [
+      "/obras/duo-verde-musgo/portada.jpg",
+      "/obras/duo-verde-musgo/1.jpg",
+      "/obras/verde-musgo/portada.jpg",
+      "/obras/verde-musgo-2/portada.jpg",
+    ].map(obra),
+    bundleOf: ["verde-musgo", "verde-musgo-2"],
   },
   {
     slug: "set-verde-musgo",
@@ -203,11 +230,12 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: null,
+    price: 120000,
     availability: "unico",
     short: "Piezas de musgo para componer en piso o pared.",
     description:
       "Un conjunto de piezas de musgo tufteado de formas libres, en verdes y amarillos, que se pueden agrupar o separar para armar tu propia composición.",
+    dimensions: "Piezas de 0.55 × 0.26 m y 0.46 × 0.30 m",
     materials: TUFTING,
     images: imgs("set-verde-musgo", 10, 1, true),
   },
@@ -245,12 +273,12 @@ export const products: Product[] = [
     name: "Banco Musgo I",
     year: 2026,
     category: "objeto",
-    price: 180000,
+    price: 350000,
     availability: "a-pedido",
     short: "Banco de madera maciza con asiento de musgo tufteado.",
     description:
       "Banco de madera clara con asiento redondo tapizado en tufting que imita un cojín de musgo, con parches en distintos verdes y alturas de pelo. Cada asiento es único. Apto para interior y exterior cubierto.",
-    dimensions: "Ø 35 cm · 45 cm de alto aprox.",
+    dimensions: "0.44 × 0.30 m",
     materials: "Estructura de madera maciza; asiento de lana y fibras acrílicas tufteadas a mano.",
     images: imgs("banco-musgo", 7, 1, true),
   },
@@ -259,11 +287,12 @@ export const products: Product[] = [
     name: "Banco Musgo II",
     year: 2026,
     category: "objeto",
-    price: null,
+    price: 350000,
     availability: "unico",
     short: "Banco de madera con asiento redondo de musgo en verdes y amarillo.",
     description:
       "Banco de madera clara con asiento redondo tapizado en tufting que imita un cojín de musgo, con un recorrido de amarillo intenso sobre verdes. Cada asiento es único.",
+    dimensions: "0.44 × 0.30 m",
     materials: "Estructura de madera maciza; asiento de lana y fibras acrílicas tufteadas a mano.",
     images: imgs("banco-musgo-2", 4, 1, true),
   },
@@ -272,11 +301,12 @@ export const products: Product[] = [
     name: "Banco Musgo III",
     year: 2026,
     category: "objeto",
-    price: null,
+    price: 350000,
     availability: "unico",
     short: "Banco de madera con asiento cuadrado de musgo en amarillos y verdes.",
     description:
       "Banco de madera clara con asiento cuadrado tapizado en tufting, como un cojín de musgo en amarillos y verdes. Cada asiento es único.",
+    dimensions: "0.44 × 0.30 m",
     materials: "Estructura de madera maciza; asiento de lana y fibras acrílicas tufteadas a mano.",
     images: imgs("banco-musgo-3", 3, 1, true),
   },
@@ -285,12 +315,12 @@ export const products: Product[] = [
     name: "Trío de bancos Musgo",
     year: 2026,
     category: "objeto",
-    price: 480000,
+    price: 1050000,
     availability: "a-pedido",
     short: "Juego de tres bancos Musgo con asientos en verdes distintos.",
     description:
       "Tres bancos Musgo pensados para convivir: mismos pies de madera, asientos con composiciones de musgo distintas. Ideal para living, galería o espacio de trabajo.",
-    dimensions: "Cada banco Ø 35 cm · 45 cm de alto aprox.",
+    dimensions: "Cada banco 0.44 × 0.30 m",
     materials: "Estructura de madera maciza; asientos de lana y fibras acrílicas tufteadas a mano.",
     images: imgs("trio-bancos", 5, 1),
   },
@@ -582,7 +612,7 @@ export const products: Product[] = [
       "La pieza que da nombre al estudio: capas de azules profundos atravesadas por verdes y marrones, como la vista del mar desde arriba. Se produce a pedido en la medida que necesites.",
     dimensions: "150 × 90 cm aprox.",
     materials: TUFTING,
-    images: ["/obras/ocean/portada-tapiz.jpg", "/obras/ocean/6.jpg"],
+    images: ["/obras/ocean/portada-tapiz.jpg", "/obras/ocean/6.jpg"].map(obra),
     inStock: false,
   },
   {
@@ -604,7 +634,7 @@ export const products: Product[] = [
       "/obras/ocean/1.jpg",
       "/obras/ocean/3.jpg",
       "/obras/ocean/6.jpg",
-    ],
+    ].map(obra),
   },
   {
     slug: "alba",
@@ -628,6 +658,10 @@ export const getProduct = (slug: string): Product | undefined =>
   products.find((p) => p.slug === slug);
 
 export const featuredProducts = (): Product[] => products.filter((p) => p.featured);
+
+/** Productos que venden esta obra junto con otras (p. ej. el dúo Verde Musgo). */
+export const bundlesWith = (slug: string): Product[] =>
+  products.filter((p) => p.bundleOf?.includes(slug));
 
 export const relatedProducts = (product: Product, limit = 4): Product[] => {
   const same = products.filter(

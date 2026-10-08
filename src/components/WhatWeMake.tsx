@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ArrowRightIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import type { Category } from "@/data/products";
+import { obra } from "@/lib/obras";
 
 interface Item {
   key: Category;
@@ -23,7 +24,7 @@ const ITEMS: Item[] = [
     label: "tapices",
     hand: "tapiz",
     blurb: "Piezas murales de gran formato, con relieves que cambian con la luz.",
-    image: "/obras/tapiz-pleopsidium-flavum/portada.jpg",
+    image: obra("/obras/tapiz-pleopsidium-flavum/portada.jpg"),
     alt: "Tapiz circular de liquen amarillo",
   },
   {
@@ -31,7 +32,7 @@ const ITEMS: Item[] = [
     label: "alfombras",
     hand: "alfombra",
     blurb: "De bordes orgánicos, para el piso o para colgar.",
-    image: "/obras/orquidea-lila/portada.jpg",
+    image: obra("/obras/orquidea-lila/portada.jpg"),
     alt: "Alfombra con forma de orquídea lila",
   },
   {
@@ -39,7 +40,7 @@ const ITEMS: Item[] = [
     label: "instalaciones",
     hand: "instalación",
     blurb: "A medida del espacio: techos, muros y dobles alturas.",
-    image: "/obras/amazonicas/portada.jpg",
+    image: obra("/obras/amazonicas/portada.jpg"),
     alt: "Hoja de nenúfar gigante tejida",
   },
   {
@@ -47,7 +48,7 @@ const ITEMS: Item[] = [
     label: "objetos",
     hand: "objeto",
     blurb: "Bancos con asiento de musgo, damajuanas y piezas recuperadas vestidas en textil.",
-    image: "/obras/banco-musgo/portada.jpg",
+    image: obra("/obras/banco-musgo/portada.jpg"),
     alt: "Banco de madera con asiento de musgo",
   },
 ];

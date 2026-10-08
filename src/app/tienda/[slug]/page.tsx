@@ -7,6 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
 import { Container } from "@/components/ui/Section";
 import {
+  bundlesWith,
   categoryLabel,
   getProduct,
   products,
@@ -88,6 +89,26 @@ export default async function ProductPage({ params }: Props) {
               formatPrice(product.price)
             )}
           </p>
+
+          {bundlesWith(product.slug).map((bundle) => {
+            const parts = (bundle.bundleOf ?? []).map(getProduct).filter((p) => p !== undefined);
+            const separate = parts.reduce((sum, p) => sum + (p.price ?? 0), 0);
+            return (
+              <Link
+                key={bundle.slug}
+                href={`/tienda/${bundle.slug}`}
+                className="mt-4 block rounded-2xl border border-sea/30 bg-mist px-4 py-3 text-[15px] transition hover:border-navy/40"
+              >
+                <span className="font-medium text-navy">
+                  {bundle.name}: {bundle.price !== null && formatPrice(bundle.price)} llevando las dos
+                </span>
+                <span className="block text-ink/80">
+                  {parts.map((p) => p.name).join(" y ")} juntas, en lugar de {formatPrice(separate)}{" "}
+                  por separado. <span className="text-navy underline underline-offset-2">ver el dúo</span>
+                </span>
+              </Link>
+            );
+          })}
 
           <p className="mt-6 text-[17px] leading-relaxed text-ink/90">{product.description}</p>
 
