@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import CollectionCarousel from "@/components/CollectionCarousel";
+import ContactFaq from "@/components/ContactFaq";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import WhatWeMake from "@/components/WhatWeMake";
 import { ArrowRightIcon, ChevronDownIcon } from "@/components/Icons";
@@ -117,31 +118,9 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* TALLER */}
-      <section className="pt-8 pb-10 md:pt-10 md:pb-16">
-        <Container narrow>
-          <SectionTitle hand="General Rodríguez, Buenos Aires">Nuestro taller</SectionTitle>
-          <p className="mt-6 text-center text-[17px] leading-relaxed text-ink/90">
-            Ubicado en General Rodríguez, provincia de Buenos Aires, nuestro taller es el espacio
-            donde las ideas toman forma. Diseñamos, experimentamos y realizamos artesanalmente cada
-            una de nuestras obras, cuidando cada detalle del proceso creativo.
-            <br />
-            Te invitamos a conocerlo.
-          </p>
-        </Container>
-        <Container className="mt-10 max-w-4xl">
-          <div className="grid grid-cols-[1.6fr_1fr] gap-3 md:gap-4">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image src="/img/taller-2.jpg" alt="Interior del taller con piezas colgando" fill sizes="(min-width: 896px) 520px, 60vw" className="object-cover" />
-            </div>
-            <div className="relative overflow-hidden rounded-2xl">
-              <Image src="/img/taller-1.jpg" alt="Entrada del taller, pared de ladrillo y puerta azul" fill sizes="(min-width: 896px) 320px, 40vw" className="object-cover" />
-            </div>
-          </div>
-          <div className="mt-10 text-center">
-            <Button href="/info" size="lg">conocé más sobre nosotros</Button>
-          </div>
-        </Container>
+      {/* CONTACTO Y PREGUNTAS FRECUENTES */}
+      <section className="mt-8 border-t border-foam/70 md:mt-10">
+        <ContactFaq />
       </section>
     </>
   );

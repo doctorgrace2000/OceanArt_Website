@@ -37,13 +37,13 @@ export default function DisenaTuObraPage() {
                 </li>
               ))}
             </ol>
-            <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-2xl">
+            <div className="relative mx-auto mt-10 aspect-square max-w-md">
               <Image
-                src="/img/taller-2.jpg"
-                alt="Interior del taller de Ocean Art"
+                src="/img/dibujo.jpg"
+                alt="Bocetos a mano en línea azul de un tapiz, una alfombra y un objeto intervenido"
                 fill
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover"
+                sizes="(min-width: 1024px) 28rem, 90vw"
+                className="object-contain"
               />
             </div>
           </div>
