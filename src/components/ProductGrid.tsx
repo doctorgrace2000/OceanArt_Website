@@ -34,7 +34,8 @@ export default function ProductGrid({
       case "recientes":
         return [...list].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
       default:
-        return [...list].sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+        // "destacadas" respeta el orden del catálogo (agrupado por colorimetría)
+        return list;
     }
   }, [products, filter, sort]);
 

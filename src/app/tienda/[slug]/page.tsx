@@ -108,8 +108,6 @@ export default async function ProductPage({ params }: Props) {
             )}
             <dt className="text-stone">Materiales</dt>
             <dd>{product.materials}</dd>
-            <dt className="text-stone">Origen</dt>
-            <dd>Hecha a mano en nuestro taller de General Rodríguez, Buenos Aires.</dd>
           </dl>
 
           <div className="mt-8">
