@@ -21,32 +21,32 @@ interface Item {
 const ITEMS: Item[] = [
   {
     key: "tapiz",
-    label: "tapices",
-    hand: "tapiz",
+    label: "Tapices",
+    hand: "Tapiz",
     blurb: "Piezas murales de gran formato, con relieves que cambian con la luz.",
     image: obra("/obras/tapiz-pleopsidium-flavum/portada.jpg"),
     alt: "Tapiz circular de liquen amarillo",
   },
   {
     key: "alfombra",
-    label: "alfombras",
-    hand: "alfombra",
+    label: "Alfombras",
+    hand: "Alfombra",
     blurb: "De bordes orgánicos, para el piso o para colgar.",
     image: obra("/obras/orquidea-lila/portada.jpg"),
     alt: "Alfombra con forma de orquídea lila",
   },
   {
     key: "instalacion",
-    label: "instalaciones",
-    hand: "instalación",
+    label: "Instalaciones",
+    hand: "Instalación",
     blurb: "A medida del espacio: techos, muros y dobles alturas.",
     image: obra("/obras/amazonicas/portada.jpg"),
     alt: "Hoja de nenúfar gigante tejida",
   },
   {
     key: "objeto",
-    label: "objetos",
-    hand: "objeto",
+    label: "Objetos",
+    hand: "Objeto",
     blurb: "Bancos con asiento de musgo, damajuanas y piezas recuperadas vestidas en textil.",
     image: obra("/obras/banco-musgo/portada.jpg"),
     alt: "Banco de madera con asiento de musgo",
@@ -79,7 +79,7 @@ export default function WhatWeMake() {
     <div className="grid items-center gap-10 md:grid-cols-[1fr_1.05fr] lg:gap-16">
       {/* Lista interactiva */}
       <div>
-        <p className="font-hand text-xl text-sea md:text-2xl">qué hacemos</p>
+        <p className="font-hand text-xl text-sea md:text-2xl">Qué hacemos</p>
         <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
           Creamos piezas textiles a medida
         </h2>
@@ -127,15 +127,15 @@ export default function WhatWeMake() {
         </ul>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/tienda" variant="outline">ver obras</Button>
-          <Button href="/disena-tu-obra">pedir una a medida</Button>
+          <Button href="/tienda" variant="outline">Ver obras</Button>
+          <Button href="/disena-tu-obra">Pedir una a medida</Button>
         </div>
       </div>
 
       {/* Foto que cambia con la categoría activa */}
       <Link
         href={`/tienda?categoria=${current.key}`}
-        aria-label={`Ver ${current.label} en la tienda`}
+        aria-label={`Ver ${current.label.toLowerCase()} en la tienda`}
         className="group block overflow-hidden rounded-3xl border border-foam bg-white shadow-xl shadow-navy/5 transition hover:border-navy/30"
       >
         <div className="relative aspect-square">
@@ -172,7 +172,7 @@ export default function WhatWeMake() {
             <p className="mt-2 hidden max-w-sm text-[15px] text-ink/75 md:block">{current.blurb}</p>
           </div>
           <span className="inline-flex shrink-0 items-center gap-2 rounded-pill border border-navy/15 px-4 py-2 text-sm font-medium text-navy transition group-hover:bg-navy group-hover:text-white">
-            ver {current.label} <ArrowRightIcon width={16} height={16} />
+            Ver {current.label.toLowerCase()} <ArrowRightIcon width={16} height={16} />
           </span>
         </div>
       </Link>

@@ -7,7 +7,7 @@ const digits = (v: string) => v.replace(/\D/g, "");
 export const site = {
   name: "Ocean Art",
   legalName: "Ocean Art · Verónica Orlando",
-  tagline: "creaciones inspiradas en la naturaleza",
+  tagline: "Creaciones inspiradas en la naturaleza",
   description:
     "Estudio de arte textil en Buenos Aires. Tapices, alfombras, instalaciones y objetos hechos a mano con tufting, inspiradas en líquenes, hongos, raíces y agua.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
@@ -19,10 +19,11 @@ export const site = {
   location: "General Rodríguez, Provincia de Buenos Aires",
   bank: {
     holder: process.env.NEXT_PUBLIC_BANK_HOLDER ?? "Verónica Orlando",
-    bank: process.env.NEXT_PUBLIC_BANK_NAME ?? "Banco (completar)",
-    cbu: process.env.NEXT_PUBLIC_BANK_CBU ?? "0000000000000000000000",
-    alias: process.env.NEXT_PUBLIC_BANK_ALIAS ?? "OCEAN.ART.TUFTING",
-    cuit: process.env.NEXT_PUBLIC_BANK_CUIT ?? "00-00000000-0",
+    bank: process.env.NEXT_PUBLIC_BANK_NAME ?? "Banco Supervielle",
+    account: process.env.NEXT_PUBLIC_BANK_ACCOUNT ?? "CA ARS 180-5134554-3",
+    cbu: process.env.NEXT_PUBLIC_BANK_CBU ?? "0270180220051345540036",
+    alias: process.env.NEXT_PUBLIC_BANK_ALIAS ?? "OCEAN.ART",
+    cuit: process.env.NEXT_PUBLIC_BANK_CUIT ?? "27-21923372-3",
   },
 } as const;
 

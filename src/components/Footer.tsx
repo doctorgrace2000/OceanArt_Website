@@ -43,11 +43,11 @@ export default function Footer() {
             </a>
           </div>
           <nav aria-label="Pie" className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink">
-            <Link href="/tienda" className="hover:text-navy">tienda</Link>
-            <Link href="/disena-tu-obra" className="hover:text-navy">diseña tu obra</Link>
-            <Link href="/info" className="hover:text-navy">info</Link>
-            <Link href="/info#exposiciones" className="hover:text-navy">exposiciones</Link>
-            <Link href="/info#como-comprar" className="hover:text-navy">cómo comprar</Link>
+            <Link href="/tienda" className="hover:text-navy">Tienda</Link>
+            <Link href="/disena-tu-obra" className="hover:text-navy">Diseña tu obra</Link>
+            <Link href="/info" className="hover:text-navy">Info</Link>
+            <Link href="/info#exposiciones" className="hover:text-navy">Exposiciones</Link>
+            <Link href="/info#como-comprar" className="hover:text-navy">Cómo comprar</Link>
           </nav>
           <p className="max-w-md text-sm text-stone">
             {site.location} · {whatsappDisplay()} · {site.email}

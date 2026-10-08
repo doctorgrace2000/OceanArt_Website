@@ -68,7 +68,7 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Link href="/tienda" className="inline-flex items-center gap-1 text-sm text-stone hover:text-navy">
-        <ArrowLeftIcon width={16} height={16} /> volver a la tienda
+        <ArrowLeftIcon width={16} height={16} /> Volver a la tienda
       </Link>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
@@ -84,7 +84,7 @@ export default async function ProductPage({ params }: Props) {
           </h1>
           <p className="mt-4 text-2xl text-ink">
             {product.price === null ? (
-              <span className="text-stone">precio a cotizar</span>
+              <span className="text-stone">Precio a cotizar</span>
             ) : (
               formatPrice(product.price)
             )}
@@ -104,7 +104,7 @@ export default async function ProductPage({ params }: Props) {
                 </span>
                 <span className="block text-ink/80">
                   {parts.map((p) => p.name).join(" y ")} juntas, en lugar de {formatPrice(separate)}{" "}
-                  por separado. <span className="text-navy underline underline-offset-2">ver el dúo</span>
+                  por separado. <span className="text-navy underline underline-offset-2">Ver el dúo</span>
                 </span>
               </Link>
             );

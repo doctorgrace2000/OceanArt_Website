@@ -40,7 +40,7 @@ export default function ProductCard({
           </p>
         </div>
         <p className="shrink-0 text-[15px] text-navy">
-          {product.price === null ? "consultar" : formatPrice(product.price)}
+          {product.price === null ? "Consultar" : formatPrice(product.price)}
         </p>
       </div>
     </Link>

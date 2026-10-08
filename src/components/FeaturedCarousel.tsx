@@ -18,13 +18,13 @@ export default function FeaturedCarousel({ products }: { products: Product[] }) 
     <div className="relative">
       <div
         ref={ref}
-        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[10vw] pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:-mx-8 lg:scroll-px-8 lg:px-8"
       >
         {products.map((p) => (
           <ProductCard
             key={p.slug}
             product={p}
-            className="w-[72vw] shrink-0 snap-start sm:w-[44vw] lg:w-[calc((100%-3rem)/4)]"
+            className="w-[80vw] shrink-0 snap-center sm:w-[44vw] sm:snap-start lg:w-[calc((100%-3rem)/4)]"
           />
         ))}
       </div>

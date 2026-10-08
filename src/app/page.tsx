@@ -30,10 +30,10 @@ export default function HomePage() {
           <h1 className="text-balance text-3xl font-medium tracking-tight text-navy drop-shadow-[0_1px_8px_rgba(255,255,255,0.5)] sm:text-4xl md:text-5xl">
             {site.tagline}
           </h1>
-          <p className="mt-4 text-lg text-white drop-shadow md:text-xl">explorá nuestra colección</p>
+          <p className="mt-4 text-lg text-white drop-shadow md:text-xl">Explorá nuestra colección</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button href="/tienda" variant="light" className="w-48">obras disponibles</Button>
-            <Button href="/disena-tu-obra" variant="lightOutline" className="w-48">diseña tu obra</Button>
+            <Button href="/tienda" variant="light" className="w-48">Obras disponibles</Button>
+            <Button href="/disena-tu-obra" variant="lightOutline" className="w-48">Diseña tu obra</Button>
           </div>
         </div>
         <a
@@ -48,7 +48,7 @@ export default function HomePage() {
       {/* SOBRE */}
       <section id="sobre" className="scroll-mt-20 py-20 md:py-28">
         <Container className="max-w-4xl">
-          <p className="text-center font-hand text-xl text-sea md:text-2xl">qué es Ocean Art</p>
+          <p className="text-center font-hand text-xl text-sea md:text-2xl">Qué es Ocean Art</p>
           {/* Frase principal: funciona como título de la sección */}
           <h2 className="mx-auto mt-3 max-w-3xl text-balance text-center text-3xl font-medium leading-snug tracking-tight text-navy sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
             Un estudio de arte textil donde cada obra nace del encuentro entre la naturaleza, la
@@ -106,14 +106,14 @@ export default function HomePage() {
           <div className="flex items-end justify-between gap-4">
             <SectionTitle align="left">Obras destacadas</SectionTitle>
             <Link href="/tienda" className="hidden items-center gap-1 text-sm text-navy hover:underline sm:inline-flex">
-              ver todas <ArrowRightIcon width={16} height={16} />
+              Ver todas <ArrowRightIcon width={16} height={16} />
             </Link>
           </div>
           <div className="mt-8">
             <FeaturedCarousel products={featured} />
           </div>
           <div className="mt-6 text-center sm:hidden">
-            <Button href="/tienda" variant="outline">ver todas las obras</Button>
+            <Button href="/tienda" variant="outline">Ver todas las obras</Button>
           </div>
         </Container>
       </section>

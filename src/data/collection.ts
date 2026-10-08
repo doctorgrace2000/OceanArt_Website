@@ -20,13 +20,13 @@ const SLUGS = [
   "banco-musgo-2",
   "banco-musgo-3",
   "trio-bancos",
-  "escultura-flor-1",
-  "escultura-flor-2",
-  "escultura-flor-3",
+  "base-modular-1",
+  "base-modular-2",
+  "base-modular-3",
 ] as const;
 
 export const collection = {
   name: "Jardín imaginario",
-  eyebrow: "nueva colección",
+  eyebrow: "Nueva colección",
   products: SLUGS.map((slug) => getProduct(slug)).filter((p): p is Product => Boolean(p)),
 };

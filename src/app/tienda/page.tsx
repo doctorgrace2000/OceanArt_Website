@@ -18,7 +18,7 @@ export default async function TiendaPage({ searchParams }: Props) {
 
   return (
     <>
-      <PageBanner title="tienda" image="/img/agua-1.jpg" />
+      <PageBanner title="Tienda" image="/img/agua-1.jpg" />
       <Container className="py-10">
         <ProductGrid products={products} initialFilter={initial} />
       </Container>

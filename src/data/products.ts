@@ -1,6 +1,6 @@
 import { obra } from "@/lib/obras";
 
-export type Category = "tapiz" | "alfombra" | "instalacion" | "escultura" | "objeto";
+export type Category = "tapiz" | "alfombra" | "instalacion" | "objeto";
 
 export type Availability = "unico" | "a-pedido" | "en-proceso" | "vendido";
 
@@ -30,7 +30,6 @@ export const CATEGORY_LABEL: Record<Category, string> = {
   tapiz: "Tapiz",
   alfombra: "Alfombra",
   instalacion: "Instalación",
-  escultura: "Escultura",
   objeto: "Objeto",
 };
 
@@ -38,7 +37,6 @@ export const CATEGORY_PLURAL: Record<Category, string> = {
   tapiz: "Tapices",
   alfombra: "Alfombras",
   instalacion: "Instalaciones",
-  escultura: "Esculturas",
   objeto: "Objetos",
 };
 
@@ -259,7 +257,7 @@ export const products: Product[] = [
     name: "Tapiz Cartografía de líquenes",
     year: 2026,
     category: "tapiz",
-    price: 890000,
+    price: null,
     availability: "en-proceso",
     short: "Territorio textil que funciona como mapa sensible de la naturaleza.",
     description:
@@ -340,13 +338,13 @@ export const products: Product[] = [
     images: imgs("nido", 4, 1, true),
   },
 
-  // --- Esculturas flor ---------------------------------------------------------
+  // --- Bases modulares ---------------------------------------------------------
   {
-    slug: "escultura-flor-1",
-    name: "Escultura Flor I",
+    slug: "base-modular-1",
+    name: "Base Modular I",
     year: 2026,
-    category: "escultura",
-    price: null,
+    category: "objeto",
+    price: 120000,
     availability: "unico",
     short: "Dos flores de pétalos lilas sobre una base de tallos enroscados.",
     description:
@@ -355,11 +353,11 @@ export const products: Product[] = [
     images: imgs("escultura-flor-1", 4, 1, true),
   },
   {
-    slug: "escultura-flor-2",
-    name: "Escultura Flor II",
+    slug: "base-modular-2",
+    name: "Base Modular II",
     year: 2026,
-    category: "escultura",
-    price: null,
+    category: "objeto",
+    price: 120000,
     availability: "unico",
     short: "Flor de pétalos circulares y centro violeta, con tallo y base verdes.",
     description:
@@ -368,11 +366,11 @@ export const products: Product[] = [
     images: imgs("escultura-flor-2", 3, 1, true),
   },
   {
-    slug: "escultura-flor-3",
-    name: "Escultura Flor III",
+    slug: "base-modular-3",
+    name: "Base Modular III",
     year: 2026,
-    category: "escultura",
-    price: null,
+    category: "objeto",
+    price: 120000,
     availability: "unico",
     short: "Flor de pétalos lilas filiformes y centro violeta en relieve.",
     description:
@@ -592,7 +590,7 @@ export const products: Product[] = [
     availability: "unico",
     short: "Biomateriales, raíces cultivadas y tejido ensamblado con cobre.",
     description:
-      "Pieza realizada con biomateriales, raíces cultivadas y tejido ensamblado con cobre. Participó de la muestra “La materia del mundo”, con curaduría de Leila Tschopp, en Fundación Cazadores (Buenos Aires, 2026).",
+      "Pieza realizada con biomateriales, raíces cultivadas y tejido ensamblado con cobre. Participó de la muestra “La materia del mundo”, con curaduría de Leila Tschopp, en Fundación Cazadores (Buenos Aires, 2026). También formó parte del “Departamento Flexible · Espacio 17” de Estudio Moraschi en Casa FOA Córdoba, Edición Pocito Social Life (2026), espacio que obtuvo la Medalla de Oro.",
     dimensions: "Medidas variables: 1.10 × 0.60 m",
     materials: "Biomateriales, raíces cultivadas y tejido ensamblado con cobre.",
     images: imgs("archivo-biologico", 6, 1, true),

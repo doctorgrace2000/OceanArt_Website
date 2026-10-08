@@ -41,9 +41,9 @@ export default function OrderConfirmation({ id }: { id: string }) {
             variant="whatsapp"
             href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(`Hola Ocean Art! Consulto por mi pedido ${id}.`)}`}
           >
-            <WhatsAppIcon /> escribir por WhatsApp
+            <WhatsAppIcon /> Escribir por WhatsApp
           </Button>
-          <Button variant="outline" href="/tienda">volver a la tienda</Button>
+          <Button variant="outline" href="/tienda">Volver a la tienda</Button>
         </div>
       </div>
     );
@@ -87,6 +87,7 @@ export default function OrderConfirmation({ id }: { id: string }) {
         <dl className="mt-5 grid gap-4 sm:grid-cols-2">
           <BankRow label="Titular" value={site.bank.holder} />
           <BankRow label="Banco" value={site.bank.bank} />
+          <BankRow label="Cuenta" value={site.bank.account} />
           <BankRow label="CBU / CVU" value={site.bank.cbu} copy />
           <BankRow label="Alias" value={site.bank.alias} copy />
           <BankRow label="CUIT / CUIL" value={site.bank.cuit} copy />
@@ -106,10 +107,10 @@ export default function OrderConfirmation({ id }: { id: string }) {
         </p>
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <Button variant="whatsapp" size="lg" href={waUrl} className="flex-1">
-            <WhatsAppIcon /> avisar por WhatsApp
+            <WhatsAppIcon /> Avisar por WhatsApp
           </Button>
           <Button variant="outline" size="lg" href={mailto} className="flex-1">
-            <MailIcon /> enviar por email
+            <MailIcon /> Enviar por email
           </Button>
         </div>
         <p className="mt-3 text-center text-xs text-stone">
@@ -154,7 +155,7 @@ export default function OrderConfirmation({ id }: { id: string }) {
       </section>
 
       <p className="mt-8 text-center text-sm">
-        <Link href="/tienda" className="text-navy hover:underline">seguir viendo obras</Link>
+        <Link href="/tienda" className="text-navy hover:underline">Seguir viendo obras</Link>
       </p>
     </div>
   );

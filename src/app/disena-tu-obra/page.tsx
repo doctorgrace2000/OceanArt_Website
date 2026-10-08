@@ -20,12 +20,12 @@ const STEPS = [
 export default function DisenaTuObraPage() {
   return (
     <>
-      <PageBanner title="diseña tu obra" image="/img/agua-3.jpg" />
+      <PageBanner title="Diseña tu obra" image="/img/agua-3.jpg" />
 
       <Container className="py-14">
         <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
           <div>
-            <SectionTitle align="left" hand="cómo trabajamos">Del boceto a tu pared</SectionTitle>
+            <SectionTitle align="left" hand="Cómo trabajamos">Del boceto a tu pared</SectionTitle>
             <ol className="mt-8 space-y-6">
               {STEPS.map(([title, text], i) => (
                 <li key={title} className="flex gap-4">

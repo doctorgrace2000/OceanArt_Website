@@ -27,7 +27,7 @@ export default function CheckoutForm() {
       <div className="rounded-2xl border border-dashed border-foam p-12 text-center">
         <p className="text-lg">Tu carrito está vacío.</p>
         <div className="mt-6">
-          <Button href="/tienda">ver obras</Button>
+          <Button href="/tienda">Ver obras</Button>
         </div>
       </div>
     );
@@ -117,7 +117,7 @@ export default function CheckoutForm() {
               checked={method === "retiro"}
               onChange={() => setMethod("retiro")}
               title="Retiro en el taller"
-              subtitle="General Rodríguez, Buenos Aires · sin cargo"
+              subtitle="General Rodríguez, Buenos Aires · Sin cargo"
             />
             <RadioCard
               checked={method === "envio"}
@@ -165,10 +165,10 @@ export default function CheckoutForm() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button type="submit" size="lg" disabled={submitting} className="sm:min-w-64">
-            {submitting ? "registrando pedido…" : "confirmar pedido"}
+            {submitting ? "Registrando pedido…" : "Confirmar pedido"}
           </Button>
           <Link href="/carrito" className="text-center text-sm text-navy hover:underline">
-            volver al carrito
+            Volver al carrito
           </Link>
         </div>
       </div>
@@ -195,7 +195,7 @@ export default function CheckoutForm() {
           </div>
           <div className="flex justify-between">
             <dt className="text-stone">Envío</dt>
-            <dd className="text-stone">{method === "retiro" ? "sin cargo" : "a coordinar"}</dd>
+            <dd className="text-stone">{method === "retiro" ? "Sin cargo" : "A coordinar"}</dd>
           </div>
           <div className="flex justify-between pt-2 text-base">
             <dt className="font-medium">Total a transferir</dt>

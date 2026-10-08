@@ -15,7 +15,7 @@ export default function CartView() {
 
   return (
     <Container className="py-10 md:py-14">
-      <h1 className="text-3xl font-medium tracking-tight text-navy">tu carrito</h1>
+      <h1 className="text-3xl font-medium tracking-tight text-navy">Tu carrito</h1>
 
       {!hydrated ? (
         <p className="mt-10 text-stone">Cargando…</p>
@@ -23,7 +23,7 @@ export default function CartView() {
         <div className="mt-10 rounded-2xl border border-dashed border-foam p-12 text-center">
           <p className="text-lg text-ink">Todavía no agregaste ninguna obra.</p>
           <div className="mt-6">
-            <Button href="/tienda">ver obras disponibles</Button>
+            <Button href="/tienda">Ver obras disponibles</Button>
           </div>
         </div>
       ) : (
@@ -63,7 +63,7 @@ export default function CartView() {
                       onClick={() => remove(product.slug)}
                       className="inline-flex items-center gap-1 text-sm text-stone hover:text-red-700"
                     >
-                      <TrashIcon width={16} height={16} /> quitar
+                      <TrashIcon width={16} height={16} /> Quitar
                     </button>
                   </div>
                 </div>
@@ -82,7 +82,7 @@ export default function CartView() {
               </div>
               <div className="flex justify-between">
                 <dt className="text-stone">Envío</dt>
-                <dd className="text-right text-stone">a coordinar</dd>
+                <dd className="text-right text-stone">A coordinar</dd>
               </div>
               <div className="flex justify-between border-t border-foam pt-3 text-base">
                 <dt className="font-medium">Total</dt>
@@ -94,10 +94,10 @@ export default function CartView() {
               WhatsApp según tamaño y destino.
             </p>
             <Button href="/checkout" size="lg" className="mt-6 w-full">
-              finalizar compra
+              Finalizar compra
             </Button>
             <Link href="/tienda" className="mt-3 block text-center text-sm text-navy hover:underline">
-              seguir viendo obras
+              Seguir viendo obras
             </Link>
           </aside>
         </div>

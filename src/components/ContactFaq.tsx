@@ -47,7 +47,7 @@ export default function ContactFaq() {
     <Container className="py-16 md:py-20">
       <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr]">
         <div>
-          <SectionTitle align="left" hand="escribinos">Contacto</SectionTitle>
+          <SectionTitle align="left" hand="Escribinos">Contacto</SectionTitle>
           <ul className="mt-6 space-y-4 text-[16px]">
             <li className="flex items-center gap-3">
               <WhatsAppIcon className="text-navy" />
@@ -72,13 +72,13 @@ export default function ContactFaq() {
           </ul>
           <div className="mt-8">
             <Button variant="whatsapp" href={whatsappUrl("Hola Ocean Art! Quería hacerles una consulta.")}>
-              <WhatsAppIcon /> escribir por WhatsApp
+              <WhatsAppIcon /> Escribir por WhatsApp
             </Button>
           </div>
         </div>
 
         <div id="como-comprar" className="scroll-mt-24">
-          <SectionTitle align="left" hand="preguntas frecuentes">Cómo comprar</SectionTitle>
+          <SectionTitle align="left" hand="Preguntas frecuentes">Cómo comprar</SectionTitle>
           <div className="mt-6 divide-y divide-foam">
             {FAQ.map(([q, a]) => (
               <details key={q} className="group py-4">

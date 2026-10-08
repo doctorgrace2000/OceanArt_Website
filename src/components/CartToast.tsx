@@ -25,7 +25,7 @@ export default function CartToast() {
       <div className="min-w-0 flex-1 text-sm">
         <p className="truncate font-medium text-navy">{lastAdded.name}</p>
         <p className="text-stone">
-          agregada al carrito · {count} {count === 1 ? "obra" : "obras"}
+          Agregada al carrito · {count} {count === 1 ? "obra" : "obras"}
         </p>
       </div>
       <Link
@@ -33,7 +33,7 @@ export default function CartToast() {
         onClick={dismissToast}
         className="rounded-pill bg-navy px-3.5 py-2 text-xs font-medium text-white hover:bg-navy-dark"
       >
-        ver carrito
+        Ver carrito
       </Link>
       <button type="button" onClick={dismissToast} aria-label="Cerrar" className="text-stone hover:text-navy">
         <CloseIcon width={18} height={18} />

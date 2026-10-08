@@ -53,15 +53,15 @@ export default function CustomOrderForm() {
       </div>
       <div>
         <label className="field-label" htmlFor="size">Medidas aproximadas</label>
-        <input id="size" name="size" className="field" placeholder="ej. 150 × 100 cm" />
+        <input id="size" name="size" className="field" placeholder="Ej. 150 × 100 cm" />
       </div>
       <div className="sm:col-span-2">
         <label className="field-label" htmlFor="space">¿Dónde va a ir?</label>
-        <input id="space" name="space" className="field" placeholder="living, dormitorio, local, hall de entrada…" />
+        <input id="space" name="space" className="field" placeholder="Living, dormitorio, local, hall de entrada…" />
       </div>
       <div className="sm:col-span-2">
         <label className="field-label" htmlFor="colors">Colores o inspiración</label>
-        <input id="colors" name="colors" className="field" placeholder="líquenes, verdes y ocres, mar, corteza…" />
+        <input id="colors" name="colors" className="field" placeholder="Líquenes, verdes y ocres, mar, corteza…" />
       </div>
       <div className="sm:col-span-2">
         <label className="field-label" htmlFor="idea">Contanos tu idea *</label>
@@ -69,7 +69,7 @@ export default function CustomOrderForm() {
       </div>
       <div>
         <label className="field-label" htmlFor="budget">Presupuesto estimado (opcional)</label>
-        <input id="budget" name="budget" className="field" placeholder="ej. hasta $500.000" />
+        <input id="budget" name="budget" className="field" placeholder="Ej. hasta $500.000" />
       </div>
       <div>
         <label className="field-label" htmlFor="name">Tu nombre *</label>
@@ -88,7 +88,7 @@ export default function CustomOrderForm() {
 
       <div className="sm:col-span-2">
         <Button type="submit" variant="whatsapp" size="lg" className="w-full">
-          <WhatsAppIcon /> enviar por WhatsApp
+          <WhatsAppIcon /> Enviar por WhatsApp
         </Button>
       </div>
     </form>

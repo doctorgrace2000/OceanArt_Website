@@ -16,10 +16,10 @@ import { useCart } from "@/lib/cart";
 import { site, whatsappUrl } from "@/lib/site";
 
 const NAV = [
-  { href: "/", label: "inicio" },
-  { href: "/tienda", label: "tienda" },
-  { href: "/disena-tu-obra", label: "diseña tu obra" },
-  { href: "/info", label: "info" },
+  { href: "/", label: "Inicio" },
+  { href: "/tienda", label: "Tienda" },
+  { href: "/disena-tu-obra", label: "Diseña tu obra" },
+  { href: "/info", label: "Info" },
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -146,7 +146,7 @@ export default function Header() {
               ))}
               <li>
                 <Link href="/carrito" onClick={() => setOpen(false)} className="text-ink">
-                  carrito
+                  Carrito
                 </Link>
               </li>
             </ul>

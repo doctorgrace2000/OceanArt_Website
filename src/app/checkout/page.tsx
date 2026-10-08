@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function CheckoutPage() {
   return (
     <Container className="py-10 md:py-14">
-      <h1 className="text-3xl font-medium tracking-tight text-navy">finalizar compra</h1>
+      <h1 className="text-3xl font-medium tracking-tight text-navy">Finalizar compra</h1>
       <p className="mt-2 text-stone">
         Completá tus datos. En el siguiente paso te mostramos los datos para transferir.
       </p>

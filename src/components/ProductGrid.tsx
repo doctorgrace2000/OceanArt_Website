@@ -53,16 +53,16 @@ export default function ProductGrid({
           ))}
         </div>
         <label className="flex items-center gap-2 text-sm text-stone">
-          ordenar
+          Ordenar
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as Sort)}
             className="rounded-pill border border-foam bg-white px-3 py-1.5 text-sm text-ink outline-none focus:border-navy"
           >
-            <option value="destacadas">destacadas</option>
-            <option value="recientes">más recientes</option>
-            <option value="precio-asc">precio: menor a mayor</option>
-            <option value="precio-desc">precio: mayor a menor</option>
+            <option value="destacadas">Destacadas</option>
+            <option value="recientes">Más recientes</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
           </select>
         </label>
       </div>

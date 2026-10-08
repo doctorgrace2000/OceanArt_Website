@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import ContactFaq from "@/components/ContactFaq";
 import { InstagramIcon } from "@/components/Icons";
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
 export default function InfoPage() {
   return (
     <>
-      <PageBanner title="info" image="/img/agua-2.jpg" />
+      <PageBanner title="Info" image="/img/agua-2.jpg" />
       <Container className="py-14 md:py-20">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
@@ -32,17 +31,9 @@ export default function InfoPage() {
             />
           </div>
           <div>
-            <SectionTitle align="left" hand="la persona detrás">Verónica Orlando</SectionTitle>
+            <SectionTitle align="left" hand="La persona detrás">Verónica Orlando</SectionTitle>
             <p className="mt-2 text-[17px] text-ink/70">Artista textil y fundadora de Ocean Art.</p>
             <div className="mt-5 space-y-4 text-[17px] leading-relaxed text-ink/90">
-              <p>
-                Su obra{" "}
-                <Link href="/tienda/archivo-biologico" className="underline underline-offset-2 hover:text-navy">
-                  Archivo Biológico
-                </Link>{" "}
-                participó de “La materia del mundo”, muestra curada por Leila Tschopp en Fundación
-                Cazadores (Buenos Aires, 2026).
-              </p>
               <p>
                 Ocean Art es un proyecto personal que nace desde la búsqueda del disfrute, y con el
                 tiempo se fue transformando en la interpretación artística. Cada obra fue pensada,
@@ -50,8 +41,8 @@ export default function InfoPage() {
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button href={site.instagram}><InstagramIcon /> seguir en Instagram</Button>
-              <Button href="/tienda" variant="outline">ver obras</Button>
+              <Button href={site.instagram}><InstagramIcon /> Seguir en Instagram</Button>
+              <Button href="/tienda" variant="outline">Ver obras</Button>
             </div>
           </div>
         </div>
@@ -87,7 +78,7 @@ export default function InfoPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
             <div className="lg:sticky lg:top-28 lg:self-start">
-              <SectionTitle align="left" hand="recorrido">Exposiciones y premios</SectionTitle>
+              <SectionTitle align="left" hand="Recorrido">Exposiciones y premios</SectionTitle>
               <p className="mt-4 text-[17px] leading-relaxed text-ink/85">
                 Las obras de Ocean Art participaron en muestras colectivas, ferias y espacios de
                 diseño en Argentina, Italia y Austria.
@@ -107,7 +98,7 @@ export default function InfoPage() {
             <ol className="divide-y divide-foam">
               {exhibitionsByYear().map(({ year, items }) => (
                 <li key={year ?? "s/f"} className="grid gap-4 py-7 first:pt-0 sm:grid-cols-[88px_1fr]">
-                  <p className="font-hand text-3xl leading-none text-sea">{year ?? "otras"}</p>
+                  <p className="font-hand text-3xl leading-none text-sea">{year ?? "Otras"}</p>
                   <ul className="space-y-5">
                     {items.map((e, i) => (
                       <li key={`${e.venue}-${e.title ?? i}`}>
