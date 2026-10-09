@@ -337,7 +337,8 @@ export const products: Product[] = [
     price: 180000,
     availability: "unico",
     short: "Lámpara colgante tejida a crochet en yute verde.",
-    description: "Lámpara tejida a mano a crochet en yute.",
+    description:
+      "Lámpara tejida a mano a crochet en yute. Trabajo realizado en conjunto con Vermel Estudio (@vermel_estudio).",
     dimensions: "60 cm de alto · Ø 25 cm",
     materials: "Yute tejido a mano a crochet.",
     images: ["/obras/lampara-tejida-verde/portada.jpg", "/obras/lampara-tejida-verde/1.jpg"].map(obra),
@@ -368,7 +369,7 @@ export const products: Product[] = [
     availability: "unico",
     short: "Dos flores de pétalos lilas sobre una base de tallos enroscados.",
     description:
-      "Escultura textil de la colección Jardín imaginario: dos flores de pétalos lilas y centro violeta que nacen de una base de tallos verdes enroscados.",
+      "Escultura textil de la colección Jardín imaginario: dos flores de pétalos lilas y centro violeta que nacen de una base de tallos verdes enroscados. Las flores fueron realizadas por Vermel Estudio (@vermel_estudio).",
     materials: "Lana y técnicas textiles sobre estructura interna.",
     images: imgs("escultura-flor-1", 4, 1, true),
   },
@@ -381,7 +382,7 @@ export const products: Product[] = [
     availability: "unico",
     short: "Flor de pétalos circulares y centro violeta, con tallo y base verdes.",
     description:
-      "Escultura textil de la colección Jardín imaginario: una flor de pétalos circulares y centro violeta en relieve, sostenida por un tallo que se enrosca en una base verde.",
+      "Escultura textil de la colección Jardín imaginario: una flor de pétalos circulares y centro violeta en relieve, sostenida por un tallo que se enrosca en una base verde. La flor fue realizada por Vermel Estudio (@vermel_estudio).",
     materials: "Lana y técnicas textiles sobre estructura interna.",
     images: imgs("escultura-flor-2", 3, 1, true),
   },
@@ -394,7 +395,7 @@ export const products: Product[] = [
     availability: "unico",
     short: "Flor de pétalos lilas filiformes y centro violeta en relieve.",
     description:
-      "Escultura textil de la colección Jardín imaginario: una flor de pétalos lilas largos y finos alrededor de un centro violeta en relieve, sobre una base de tallos verdes.",
+      "Escultura textil de la colección Jardín imaginario: una flor de pétalos lilas largos y finos alrededor de un centro violeta en relieve, sobre una base de tallos verdes. La flor fue realizada por Vermel Estudio (@vermel_estudio).",
     materials: "Lana y técnicas textiles sobre estructura interna.",
     images: imgs("escultura-flor-3", 7, 1, true),
   },
@@ -486,7 +487,8 @@ export const products: Product[] = [
     price: 420000,
     availability: "unico",
     short: "Lámpara colgante tejida a crochet en yute crudo.",
-    description: "Lámpara tejida a mano a crochet en yute.",
+    description:
+      "Lámpara tejida a mano a crochet en yute. Trabajo realizado en conjunto con Vermel Estudio (@vermel_estudio).",
     dimensions: "1,40 m de alto · Ø 25 cm",
     materials: "Yute tejido a mano a crochet.",
     images: ["/obras/lampara-tejida-cruda/portada.jpg", "/obras/lampara-tejida-cruda/1.jpg"].map(obra),

@@ -70,8 +70,8 @@ export default function OrderConfirmation({ id }: { id: string }) {
       <ol className="mt-10 grid gap-4 sm:grid-cols-3">
         {[
           ["1", "Transferí", `${formatPrice(order.subtotal)} a la cuenta de abajo.`],
-          ["2", "Avisanos", "Mandanos el comprobante por WhatsApp con un toque."],
-          ["3", "Coordinamos", order.delivery.method === "retiro" ? "El retiro en el taller." : "El envío a tu domicilio."],
+          ["2", "Avisanos", "Mandanos el comprobante por WhatsApp."],
+          ["3", "Coordinamos", "Retiro por el taller o envío a domicilio a coordinar."],
         ].map(([n, t, d]) => (
           <li key={n} className="rounded-2xl border border-foam p-4">
             <span className="font-hand text-2xl text-sea">{n}.</span>
