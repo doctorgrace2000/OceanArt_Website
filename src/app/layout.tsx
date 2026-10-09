@@ -37,6 +37,8 @@ export const metadata: Metadata = {
     description: site.description,
     images: [{ url: "/img/agua-2.jpg", width: 2400, height: 1800, alt: site.name }],
   },
+  // Verificación de Google Search Console
+  verification: { google: "QHWxix9Y-90EFdDrf6vXNUQDV67pbvkpiPJq0NX7sks" },
 };
 
 export const viewport: Viewport = {
