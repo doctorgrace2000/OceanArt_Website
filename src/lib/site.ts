@@ -10,7 +10,12 @@ export const site = {
   tagline: "Creaciones inspiradas en la naturaleza",
   description:
     "Estudio de arte textil en Buenos Aires. Tapices, alfombras, instalaciones y objetos hechos a mano con tufting, inspiradas en líquenes, hongos, raíces y agua.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  // En Vercel, si no se cargó NEXT_PUBLIC_SITE_URL, se usa el dominio de producción del proyecto.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
   whatsapp: digits(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5491152401299"),
   instagram:
     process.env.NEXT_PUBLIC_INSTAGRAM_URL ??
