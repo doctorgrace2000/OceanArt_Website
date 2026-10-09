@@ -7,7 +7,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
   const [active, setActive] = useState(0);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex min-w-0 flex-col gap-3">
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-foam bg-white">
         <Image
           key={images[active]}
