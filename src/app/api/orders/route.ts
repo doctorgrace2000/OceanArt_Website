@@ -104,9 +104,15 @@ export async function POST(req: Request) {
 async function notifyByEmail(order: Order): Promise<void> {
   const key = process.env.RESEND_API_KEY;
   const to = process.env.ORDER_NOTIFY_EMAIL;
-  if (!key || !to) return;
+  if (!key || !to) {
+    // Queda en los logs de Vercel para saber que el aviso está apagado.
+    console.warn(
+      `[order] ${order.id} email omitido: falta ${!key ? "RESEND_API_KEY" : ""}${!key && !to ? " y " : ""}${!to ? "ORDER_NOTIFY_EMAIL" : ""}`,
+    );
+    return;
+  }
   try {
-    await fetch("https://api.resend.com/emails", {
+    const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -117,7 +123,14 @@ async function notifyByEmail(order: Order): Promise<void> {
         text: buildOrderEmailText(order),
       }),
     });
+    const body = await res.text();
+    if (!res.ok) {
+      // Resend devuelve el motivo en el cuerpo (clave inválida, destinatario no permitido, etc.)
+      console.error(`[order] ${order.id} email rechazado por Resend (HTTP ${res.status}): ${body}`);
+      return;
+    }
+    console.log(`[order] ${order.id} email enviado a ${to}: ${body}`);
   } catch (err) {
-    console.error("[order] email notification failed", err);
+    console.error(`[order] ${order.id} email falló`, err);
   }
 }
