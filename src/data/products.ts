@@ -228,7 +228,7 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 120000,
+    price: 320000,
     availability: "unico",
     short: "Piezas de musgo para componer en piso o pared.",
     description:
