@@ -72,7 +72,7 @@ function imgs(folder: string, count: number, source = 1, keepSource = false): st
 }
 
 const TUFTING =
-  "Lana y fibras acrílicas tufteadas a mano sobre tela base; terminación con respaldo de algodón.";
+  "Lana y fibras acrílicas tufteadas a mano sobre tela base.";
 
 /**
  * Catálogo. Los precios son valores de ejemplo para que el flujo de compra
@@ -81,8 +81,8 @@ const TUFTING =
 const ORCHID_MATERIALS =
   "Lana y fibras acrílicas tufteadas a mano sobre tela base, con relieves en distintos largos de pelo. Base antideslizante.";
 
-const ORCHID_CARE =
-  " Se puede usar en piso o colgar en pared. Aspirar sin cepillo giratorio; limpiar manchas con paño húmedo y jabón neutro.";
+const ORCHID_USE =
+  " Se puede usar en piso o colgar en pared.";
 
 /** El orden del array es el de la tienda y los carruseles: agrupado por colorimetría. */
 export const products: Product[] = [
@@ -93,14 +93,14 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 435000,
+    price: 470000,
     availability: "a-pedido",
     featured: true,
     short: "Alfombra orquídea lila con pétalos moteados y centro violeta.",
     description:
-      "Alfombra con la silueta de una orquídea Phalaenopsis: pétalos lilas con moteado blanco y negro y un labelo violeta profundo en relieve." +
-      ORCHID_CARE,
-    dimensions: "95 × 85 cm aprox.",
+      "Silueta de una orquídea Phalaenopsis: pétalos lilas con moteado crudo y morado, junto con un labelo violeta profundo en relieve, trabajado en distintas alturas. Técnica tufting." +
+      ORCHID_USE,
+    dimensions: "60 × 70 cm",
     materials: ORCHID_MATERIALS,
     images: imgs("orquidea-moteada", 6, 1, true),
   },
@@ -110,14 +110,14 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 435000,
+    price: 470000,
     availability: "a-pedido",
     featured: true,
     short: "Alfombra orquídea lila con manchas y centro bordó en relieve.",
     description:
-      "Orquídea de pétalos redondeados en lila claro, con manchas oscuras y un labelo bordó que sobresale del plano." +
-      ORCHID_CARE,
-    dimensions: "95 × 85 cm aprox.",
+      "Silueta de una orquídea de pétalos redondeados en lila claro, con manchas oscuras y un labelo bordó que sobresale del plano, trabajado en distintas alturas. Técnica tufting." +
+      ORCHID_USE,
+    dimensions: "60 × 70 cm",
     materials: ORCHID_MATERIALS,
     images: imgs("orquidea-lila", 5, 1, true),
   },
@@ -127,13 +127,13 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 400000,
+    price: 450000,
     availability: "a-pedido",
     short: "Alfombra orquídea blanca con nervaduras violetas.",
     description:
-      "La versión más serena de la serie: pétalos blancos recorridos por nervaduras violetas finas, con el centro bordado en relieve." +
-      ORCHID_CARE,
-    dimensions: "95 × 85 cm aprox.",
+      "Silueta de una orquídea de pétalos blancos recorridos por finas nervaduras violetas, con un centro en relieve trabajado en distintas alturas. Técnica tufting." +
+      ORCHID_USE,
+    dimensions: "60 × 70 cm",
     materials: ORCHID_MATERIALS,
     images: imgs("orquidea-blanca", 5, 1, true),
   },
@@ -143,13 +143,13 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 400000,
+    price: 450000,
     availability: "a-pedido",
     short: "Alfombra orquídea blanca con moteado y centro bordó.",
     description:
-      "Pétalos blancos con moteado bordó denso y un centro oscuro en relieve. Combina muy bien con maderas y pisos claros." +
-      ORCHID_CARE,
-    dimensions: "95 × 85 cm aprox.",
+      "Silueta de una orquídea de pétalos blancos con moteado bordó denso y un centro oscuro en relieve, trabajado en distintas alturas. Técnica tufting." +
+      ORCHID_USE,
+    dimensions: "60 × 70 cm",
     materials: ORCHID_MATERIALS,
     images: imgs("orquidea-bordo", 2, 1, true),
   },
@@ -163,9 +163,9 @@ export const products: Product[] = [
     availability: "a-pedido",
     short: "Alfombra orquídea púrpura de pétalos alargados.",
     description:
-      "Orquídea de pétalos largos y puntiagudos en púrpura y lila, con manchas bordó y bordes crudos. La más gráfica de la colección." +
-      ORCHID_CARE,
-    dimensions: "100 × 80 cm aprox.",
+      "Silueta de una orquídea de pétalos largos y puntiagudos en púrpura y lila, con manchas bordó y bordes crudos, trabajada en distintas alturas. Técnica tufting." +
+      ORCHID_USE,
+    dimensions: "60 × 50 cm",
     materials: ORCHID_MATERIALS,
     images: imgs("orquidea-purpura", 3, 1, true),
   },
@@ -181,7 +181,7 @@ export const products: Product[] = [
     availability: "unico",
     short: "Alfombra de musgos en verdes, amarillos y tierras.",
     description:
-      "Un manto de musgos tufteados en verdes, amarillos y tierras, con distintas alturas de pelo y un borde orgánico. Forma pareja con Verde Musgo II: juntas componen una sola pieza.",
+      "Alfombra trabajada en distintas alturas de lana, simulando el musgo y las distintas tonalidades de verdes naturales. Técnica tufting.",
     dimensions: "1.22 × 0.67 m",
     materials: TUFTING,
     images: imgs("verde-musgo", 6, 1, true),
@@ -196,7 +196,7 @@ export const products: Product[] = [
     availability: "unico",
     short: "Alfombra de musgos, pareja de Verde Musgo.",
     description:
-      "Musgos tufteados en verdes, amarillos y tierras sobre una base de silueta orgánica, con distintas alturas de pelo. Funciona sola o junto a Verde Musgo, con la que forma una sola pieza.",
+      "Alfombra trabajada en distintas alturas de lana, simulando el musgo y las distintas tonalidades de verdes naturales. Técnica tufting.",
     dimensions: "1.35 × 0.60 m",
     materials: TUFTING,
     images: imgs("verde-musgo-2", 7, 1, true),
@@ -207,13 +207,13 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 650000,
+    price: 590000,
     availability: "unico",
     short: "Verde Musgo y Verde Musgo II juntas, con precio especial.",
     description:
-      "Las dos piezas Verde Musgo pensadas para estar juntas: se encuentran en el centro y componen un solo manto de musgos en verdes, amarillos y tierras. Llevando el dúo, el precio es especial.",
+      "Las dos piezas Verde Musgo pensadas para estar juntas: se encuentran en el centro y componen un solo manto de musgos en verdes, amarillos y tierras.",
     dimensions: "Verde Musgo 1.22 × 0.67 m · Verde Musgo II 1.35 × 0.60 m",
-    materials: TUFTING,
+    materials: TUFTING + " Lanas teñidas con yerba mate y tintes naturales.",
     images: [
       "/obras/duo-verde-musgo/portada.jpg",
       "/obras/duo-verde-musgo/1.jpg",
@@ -235,7 +235,10 @@ export const products: Product[] = [
       "Un conjunto de piezas de musgo tufteado de formas libres, en verdes y amarillos, que se pueden agrupar o separar para armar tu propia composición.",
     dimensions: "Piezas de 0.55 × 0.26 m y 0.46 × 0.30 m",
     materials: TUFTING,
-    images: imgs("set-verde-musgo", 10, 1, true),
+    images: [
+      "/obras/set-verde-musgo/portada.jpg",
+      ...[1, 3, 5, 6, 7, 8, 9, 10].map((n) => `/obras/set-verde-musgo/${n}.jpg`),
+    ].map(obra),
   },
   {
     slug: "duo-alfombras-verdes",
@@ -258,13 +261,17 @@ export const products: Product[] = [
     year: 2026,
     category: "tapiz",
     price: null,
-    availability: "en-proceso",
+    availability: "unico",
     short: "Territorio textil que funciona como mapa sensible de la naturaleza.",
     description:
       "Este proyecto parte de la observación de ecosistemas mínimos, y su capacidad de expandirse en diferentes soportes, es una superficie de registro donde la trama textil oscila entre lo orgánico y lo cartográfico. Propone un territorio textil que funciona como mapa sensible de la naturaleza.",
     dimensions: "240 × 150 cm",
     materials: "Tufting, lana.",
-    images: imgs("tapiz-verde", 8, 1),
+    images: [
+      "/obras/tapiz-verde/portada.jpg",
+      "/obras/tapiz-verde/9.jpg",
+      ...[2, 3, 4, 5, 6, 7, 8].map((n) => `/obras/tapiz-verde/${n}.jpg`),
+    ].map(obra),
   },
   {
     slug: "banco-musgo",
@@ -273,11 +280,11 @@ export const products: Product[] = [
     category: "objeto",
     price: 350000,
     availability: "a-pedido",
-    short: "Banco de madera maciza con asiento de musgo tufteado.",
+    short: "Banco de madera de eucaliptus con funda de tufting en lana.",
     description:
-      "Banco de madera clara con asiento redondo tapizado en tufting que imita un cojín de musgo, con parches en distintos verdes y alturas de pelo. Cada asiento es único. Apto para interior y exterior cubierto.",
+      "Banco de madera de eucaliptus con funda de tufting realizada en lana, que simula un cojín de musgo en distintos verdes y alturas. Cada funda es única.",
     dimensions: "0.44 × 0.30 m",
-    materials: "Estructura de madera maciza; asiento de lana y fibras acrílicas tufteadas a mano.",
+    materials: "Madera de eucaliptus; funda de tufting realizada en lana.",
     images: imgs("banco-musgo", 7, 1, true),
   },
   {
@@ -287,11 +294,11 @@ export const products: Product[] = [
     category: "objeto",
     price: 350000,
     availability: "unico",
-    short: "Banco de madera con asiento redondo de musgo en verdes y amarillo.",
+    short: "Banco de eucaliptus con funda redonda de tufting en verdes y amarillo.",
     description:
-      "Banco de madera clara con asiento redondo tapizado en tufting que imita un cojín de musgo, con un recorrido de amarillo intenso sobre verdes. Cada asiento es único.",
+      "Banco de madera de eucaliptus con funda redonda de tufting realizada en lana, que simula un cojín de musgo con un recorrido de amarillo intenso sobre verdes. Cada funda es única.",
     dimensions: "0.44 × 0.30 m",
-    materials: "Estructura de madera maciza; asiento de lana y fibras acrílicas tufteadas a mano.",
+    materials: "Madera de eucaliptus; funda de tufting realizada en lana.",
     images: imgs("banco-musgo-2", 4, 1, true),
   },
   {
@@ -301,11 +308,11 @@ export const products: Product[] = [
     category: "objeto",
     price: 350000,
     availability: "unico",
-    short: "Banco de madera con asiento cuadrado de musgo en amarillos y verdes.",
+    short: "Banco de eucaliptus con funda cuadrada de tufting en amarillos y verdes.",
     description:
-      "Banco de madera clara con asiento cuadrado tapizado en tufting, como un cojín de musgo en amarillos y verdes. Cada asiento es único.",
+      "Banco de madera de eucaliptus con funda cuadrada de tufting realizada en lana, que simula un cojín de musgo en amarillos y verdes. Cada funda es única.",
     dimensions: "0.44 × 0.30 m",
-    materials: "Estructura de madera maciza; asiento de lana y fibras acrílicas tufteadas a mano.",
+    materials: "Madera de eucaliptus; funda de tufting realizada en lana.",
     images: imgs("banco-musgo-3", 3, 1, true),
   },
   {
@@ -313,28 +320,41 @@ export const products: Product[] = [
     name: "Trío de bancos Musgo",
     year: 2026,
     category: "objeto",
-    price: 1050000,
+    price: 870000,
     availability: "a-pedido",
     short: "Juego de tres bancos Musgo con asientos en verdes distintos.",
     description:
-      "Tres bancos Musgo pensados para convivir: mismos pies de madera, asientos con composiciones de musgo distintas. Ideal para living, galería o espacio de trabajo.",
+      "Tres bancos de madera de eucaliptus con fundas de tufting realizadas en lana, cada una con una composición de musgo distinta. Ideal para living, galería o espacio de trabajo.",
     dimensions: "Cada banco 0.44 × 0.30 m",
-    materials: "Estructura de madera maciza; asientos de lana y fibras acrílicas tufteadas a mano.",
+    materials: "Madera de eucaliptus; fundas de tufting realizadas en lana.",
     images: imgs("trio-bancos", 5, 1),
+  },
+  {
+    slug: "lampara-tejida-verde",
+    name: "Lámpara Tejida Verde",
+    year: 2026,
+    category: "objeto",
+    price: 180000,
+    availability: "unico",
+    short: "Lámpara colgante tejida a crochet en yute verde.",
+    description: "Lámpara tejida a mano a crochet en yute.",
+    dimensions: "60 cm de alto · Ø 25 cm",
+    materials: "Yute tejido a mano a crochet.",
+    images: ["/obras/lampara-tejida-verde/portada.jpg", "/obras/lampara-tejida-verde/1.jpg"].map(obra),
   },
   {
     slug: "nido",
     name: "Nido",
     year: 2026,
     category: "objeto",
-    price: 180000,
+    price: 220000,
     availability: "unico",
     featured: true,
-    short: "Objeto colgante tejido en verdes, para interior o exterior cubierto.",
+    short: "Objeto colgante en técnica coiling, con soga teñida a mano.",
     description:
-      "Columna de formas orgánicas tejidas que se cuelga del techo y proyecta su propia sombra. Funciona sola o en grupos de distintas alturas.",
+      "Pieza realizada en técnica coiling con soga teñida a mano de forma artesanal. Se cuelga del techo y proyecta su propia sombra; funciona sola o en grupos de distintas alturas.",
     dimensions: "160 cm de alto aprox.",
-    materials: "Fibras acrílicas y sintéticas tejidas sobre estructura interna.",
+    materials: "Soga teñida a mano artesanalmente, técnica coiling.",
     images: imgs("nido", 4, 1, true),
   },
 
@@ -344,7 +364,7 @@ export const products: Product[] = [
     name: "Base Modular I",
     year: 2026,
     category: "objeto",
-    price: 120000,
+    price: 150000,
     availability: "unico",
     short: "Dos flores de pétalos lilas sobre una base de tallos enroscados.",
     description:
@@ -385,7 +405,7 @@ export const products: Product[] = [
     name: "Tapiz Trametes Versicolor 1",
     year: 2025,
     category: "tapiz",
-    price: 720000,
+    price: null,
     availability: "unico",
     featured: true,
     short: "Colonia de hongos cola de pavo en anillos concéntricos.",
@@ -431,14 +451,14 @@ export const products: Product[] = [
     name: "Tapiz Corteza",
     year: 2025,
     category: "tapiz",
-    price: 410000,
+    price: 750000,
     availability: "unico",
     featured: true,
-    short: "Corteza de árbol con líquenes naranjas y musgo.",
+    short: "Tapiz que simula una corteza, con detalles en hilo de cobre.",
     description:
-      "Surcos verticales de corteza en tierras y grises, con brotes de liquen naranja y pequeños musgos bordados que sobresalen del plano.",
+      "Tapiz trabajado en tufting en tonos marrones, ocre y crudo, simulando una corteza. Detalles tejidos a mano en hilo de cobre.",
     dimensions: "110 × 95 cm aprox.",
-    materials: TUFTING,
+    materials: TUFTING + " Detalles tejidos a mano en hilo de cobre.",
     images: imgs("tapiz-corteza", 4, 4, true),
   },
 
@@ -448,7 +468,7 @@ export const products: Product[] = [
     name: "Na' alehu",
     year: 2026,
     category: "alfombra",
-    price: 320000,
+    price: null,
     availability: "unico",
     featured: true,
     short: "Alfombra tufteada en lanas teñidas a mano.",
@@ -457,6 +477,19 @@ export const products: Product[] = [
     dimensions: "2 × 1,80 m.",
     materials: "Lana teñida a mano, tufteada.",
     images: imgs("cruda", 5, 4),
+  },
+  {
+    slug: "lampara-tejida-cruda",
+    name: "Lámpara Tejida Cruda",
+    year: 2026,
+    category: "objeto",
+    price: 420000,
+    availability: "unico",
+    short: "Lámpara colgante tejida a crochet en yute crudo.",
+    description: "Lámpara tejida a mano a crochet en yute.",
+    dimensions: "1,40 m de alto · Ø 25 cm",
+    materials: "Yute tejido a mano a crochet.",
+    images: ["/obras/lampara-tejida-cruda/portada.jpg", "/obras/lampara-tejida-cruda/1.jpg"].map(obra),
   },
   {
     slug: "liquen-xanthoparmelia",
@@ -479,16 +512,16 @@ export const products: Product[] = [
     slug: "amazonicas",
     name: "Euryale Amazónica",
     year: 2024,
-    category: "instalacion",
+    category: "tapiz",
     price: null,
     availability: "unico",
     featured: true,
-    short: "Hojas de nenúfar gigante suspendidas del techo.",
+    short: "Tapiz de hoja de nenúfar gigante con nervaduras en relieve.",
     description:
-      "Instalación de hojas de Victoria amazónica vistas desde abajo: nervaduras en verde lima sobre fondos violeta y borde rojo, con tallos trenzados que caen hasta el piso.",
+      "Tapiz trabajado en tufting, con nervaduras en técnica de embarrilado de sogas, imitando la nervadura de la hoja.",
     dimensions: "2.60 × 0.91 m",
     materials: "Tufting, embarrilado, soga, lana, soporte metálico.",
-    images: imgs("amazonicas", 4, 1, true),
+    images: imgs("amazonicas", 3, 1, true),
   },
   {
     slug: "euryale-amazonica-3",
@@ -517,7 +550,7 @@ export const products: Product[] = [
     short: "Liquen amarillo de gran formato, con relieves y densidades variables.",
     description:
       "Interpretación textil del liquen Pleopsidium flavum, que crece en rocas de alta montaña. El tapiz trabaja distintos largos de pelo para generar un relieve que cambia con la luz. Se cuelga directamente sobre la pared con un sistema oculto incluido.",
-    dimensions: "Ø 120 cm aprox.",
+    dimensions: "Ø 91 cm",
     materials: TUFTING,
     images: imgs("tapiz-pleopsidium-flavum", 4, 1),
   },
@@ -526,7 +559,7 @@ export const products: Product[] = [
     name: "Cuadro Pleopsidium Flavum",
     year: 2023,
     category: "tapiz",
-    price: 290000,
+    price: 230000,
     availability: "unico",
     short: "Detalle de liquen enmarcado en madera clara.",
     description:
@@ -557,15 +590,16 @@ export const products: Product[] = [
     name: "Primordio",
     year: 2025,
     category: "instalacion",
-    price: 540000,
+    price: null,
     availability: "unico",
     featured: true,
     short: "Cortina de cordones tejidos en amarillos y ocres.",
     description:
       "Decenas de cordones tejidos a mano cuelgan de una estructura superior formando una cortina que se mueve con el aire. Se puede instalar como separador de ambientes o pieza mural.",
-    dimensions: "90 × 140 cm aprox.",
+    dimensions: "43 × 90 cm",
     materials: "Cordones de lana y fibras acrílicas tejidos a mano.",
     images: imgs("primordio", 5, 1, true),
+    inStock: false,
   },
   {
     slug: "instalacion-ficus",
@@ -577,8 +611,8 @@ export const products: Product[] = [
     short: "Raíces aéreas tejidas que caen desde el techo.",
     description:
       "Las raíces del ficus macrophylla recreadas en cordones tejidos de distintos grosores, que descienden desde una estructura superior y se enredan en el piso. Pensada para halls, locales y espacios de doble altura.",
-    dimensions: "A medida del espacio.",
-    materials: "Cordones de yute, lana y fibras tejidas a mano.",
+    dimensions: "2,50 × 2,50 × 2,40 m",
+    materials: "Embarrilado de lana, yute, paja de seda, vellón e hilo de cobre.",
     images: imgs("instalacion-ficus", 4, 1, true),
   },
   {
@@ -602,7 +636,7 @@ export const products: Product[] = [
     name: "Tapiz Ocean",
     year: 2026,
     category: "tapiz",
-    price: 390000,
+    price: null,
     availability: "a-pedido",
     featured: true,
     short: "Corrientes de azul, verde y tierra en formato horizontal.",
@@ -618,11 +652,11 @@ export const products: Product[] = [
     name: "Botellas Ocean",
     year: 2026,
     category: "objeto",
-    price: 95000,
+    price: null,
     availability: "a-pedido",
     short: "Damajuanas de vidrio intervenidas con tufting.",
     description:
-      "Objetos intervenidos: damajuanas recuperadas vestidas con fibras tufteadas en la paleta Ocean. Cada una es distinta. Precio por unidad.",
+      "Objetos intervenidos: damajuanas recuperadas vestidas con fibras tufteadas en la paleta Ocean. Cada una es distinta.",
     dimensions: "35 a 45 cm de alto.",
     materials: "Vidrio recuperado, lana y fibras acrílicas tufteadas a mano.",
     images: [

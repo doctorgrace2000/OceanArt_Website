@@ -44,11 +44,11 @@ export default function ProductGrid({
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0">
           <Chip active={filter === "todas"} onClick={() => setFilter("todas")}>
-            Todas <span className="opacity-60">{products.length}</span>
+            Todas
           </Chip>
           {CATEGORIES.filter((c) => counts[c]).map((c) => (
             <Chip key={c} active={filter === c} onClick={() => setFilter(c)}>
-              {CATEGORY_PLURAL[c]} <span className="opacity-60">{counts[c]}</span>
+              {CATEGORY_PLURAL[c]}
             </Chip>
           ))}
         </div>

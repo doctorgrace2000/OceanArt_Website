@@ -62,7 +62,7 @@ export default function HomePage() {
               pensada para dialogar con el espacio.
             </p>
           </div>
-          <p className="mt-8 text-center font-hand text-2xl text-navy md:text-3xl">
+          <p className="mt-8 text-balance text-center text-2xl font-light tracking-tight text-navy md:text-3xl">
             Lo vivo como inspiración, lo textil como lenguaje.
           </p>
         </Container>

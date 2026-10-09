@@ -63,9 +63,11 @@ export default function AddToCart({ product }: { product: Product }) {
         >
           <WhatsAppIcon /> Cotizar por WhatsApp
         </Button>
-        <p className="text-center text-sm text-stone">
-          Esta pieza se adapta al espacio: contanos medidas y te pasamos un presupuesto.
-        </p>
+        {product.inStock === false && (
+          <p className="text-center text-sm text-stone">
+            Dependiendo del tamaño, suele ser 10 días hábiles de producción.
+          </p>
+        )}
       </div>
     );
   }
@@ -87,7 +89,7 @@ export default function AddToCart({ product }: { product: Product }) {
           <CartIcon /> {soldOutForYou ? "Ya está en tu carrito" : "Añadir al carrito"}
         </Button>
       </div>
-      {product.availability === "a-pedido" && (
+      {product.availability === "a-pedido" && product.inStock === false && (
         <p className="text-center text-sm text-stone">
           Dependiendo del tamaño, suele ser 10 días hábiles de producción.
         </p>
