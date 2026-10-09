@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Nunito_Sans } from "next/font/google";
 import "./globals.css";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartToast />
         </CartProvider>
       </body>
+      <GoogleAnalytics gaId="G-QHHQ84V33M" />
     </html>
   );
 }
