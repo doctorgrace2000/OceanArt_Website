@@ -2,17 +2,11 @@
 
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
-import { CheckIcon, MailIcon, WhatsAppIcon } from "@/components/Icons";
+import { CheckIcon, WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import CopyButton from "@/components/ui/CopyButton";
 import { formatDate, formatPrice } from "@/lib/format";
-import {
-  buildOrderWhatsAppMessage,
-  deliveryLabel,
-  getLocalOrder,
-  orderWhatsAppUrl,
-  type Order,
-} from "@/lib/orders";
+import { deliveryLabel, getLocalOrder, type Order } from "@/lib/orders";
 import { site, whatsappDisplay } from "@/lib/site";
 
 const noopSubscribe = () => () => {};
@@ -49,8 +43,7 @@ export default function OrderConfirmation({ id }: { id: string }) {
     );
   }
 
-  const waUrl = orderWhatsAppUrl(order);
-  const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`Pedido ${order.id}`)}&body=${encodeURIComponent(buildOrderWhatsAppMessage(order))}`;
+  const waUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent("Hola Ocean Art! Te envío el comprobante de pago.")}`;
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -103,19 +96,14 @@ export default function OrderConfirmation({ id }: { id: string }) {
       <section className="mt-6 rounded-2xl border border-foam p-6 md:p-8">
         <h2 className="text-lg font-medium text-navy">Avisanos que transferiste</h2>
         <p className="mt-1 text-sm text-ink/80">
-          Se abre WhatsApp con el detalle del pedido ya escrito. Adjuntá el comprobante y listo.
+          Se abre WhatsApp con el mensaje listo. Adjuntá el comprobante y envialo.
         </p>
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-          <Button variant="whatsapp" size="lg" href={waUrl} className="flex-1">
+        <div className="mt-5">
+          <Button variant="whatsapp" size="lg" href={waUrl} className="w-full">
             <WhatsAppIcon /> Avisar por WhatsApp
           </Button>
-          <Button variant="outline" size="lg" href={mailto} className="flex-1">
-            <MailIcon /> Enviar por email
-          </Button>
         </div>
-        <p className="mt-3 text-center text-xs text-stone">
-          WhatsApp {whatsappDisplay()} · {site.email}
-        </p>
+        <p className="mt-3 text-center text-xs text-stone">WhatsApp {whatsappDisplay()}</p>
       </section>
 
       {/* Detalle */}
