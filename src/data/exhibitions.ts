@@ -28,6 +28,7 @@ export const exhibitions: Exhibition[] = [
     place: "Buenos Aires",
     kind: "Feria de diseño",
     detail: "Presentación de la colección Jardín imaginario",
+    awards: ["Premio al mejor stand de arte"],
   },
   {
     year: 2026,
