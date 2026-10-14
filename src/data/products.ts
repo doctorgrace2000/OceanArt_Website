@@ -93,7 +93,7 @@ export const products: Product[] = [
     year: 2026,
     category: "alfombra",
     alsoIn: ["tapiz"],
-    price: 470000,
+    price: 485000,
     availability: "a-pedido",
     featured: true,
     inStock: false,
