@@ -96,6 +96,7 @@ export const products: Product[] = [
     price: 470000,
     availability: "a-pedido",
     featured: true,
+    inStock: false,
     short: "Alfombra orquídea lila con pétalos moteados y centro violeta.",
     description:
       "Silueta de una orquídea Phalaenopsis: pétalos lilas con moteado crudo y morado, junto con un labelo violeta profundo en relieve, trabajado en distintas alturas. Técnica tufting." +
