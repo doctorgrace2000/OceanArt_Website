@@ -105,7 +105,7 @@ export default async function ProductPage({ params }: Props) {
           {product.availability === "en-proceso" ? (
             <p className="mt-4 text-[15px] font-medium text-sea">Obra en proceso</p>
           ) : (
-            product.inStock !== false && (
+            product.price !== null && product.inStock !== false && (
               <p className="mt-4 text-[15px] font-medium text-sea">Disponible para entrega inmediata</p>
             )
           )}
