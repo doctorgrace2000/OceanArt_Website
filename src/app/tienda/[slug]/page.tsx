@@ -5,6 +5,7 @@ import AddToCart from "@/components/AddToCart";
 import { ArrowLeftIcon, BankIcon, PinIcon } from "@/components/Icons";
 import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
+import TrackViewContent from "@/components/TrackViewContent";
 import { Container } from "@/components/ui/Section";
 import {
   bundlesWith,
@@ -67,6 +68,7 @@ export default async function ProductPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <TrackViewContent slug={product.slug} />
       <Link href="/tienda" className="inline-flex items-center gap-1 text-sm text-stone hover:text-navy">
         <ArrowLeftIcon width={16} height={16} /> Volver a la tienda
       </Link>

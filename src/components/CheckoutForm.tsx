@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { BankIcon, WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
+import { trackPixel } from "@/lib/metaPixel";
 import { saveOrderLocally, type DeliveryMethod, type Order, type OrderInput } from "@/lib/orders";
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -19,6 +20,21 @@ export default function CheckoutForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // InitiateCheckout del píxel de Meta, una vez por visita al checkout con carrito.
+  const checkoutTracked = useRef(false);
+  useEffect(() => {
+    if (!hydrated || lines.length === 0 || checkoutTracked.current) return;
+    checkoutTracked.current = true;
+    trackPixel("InitiateCheckout", {
+      content_ids: lines.map((l) => l.slug),
+      contents: lines.map((l) => ({ id: l.slug, quantity: l.qty })),
+      content_type: "product",
+      num_items: lines.reduce((n, l) => n + l.qty, 0),
+      value: subtotal,
+      currency: "ARS",
+    });
+  }, [hydrated, lines, subtotal]);
 
   if (!hydrated) return <p className="text-stone">Cargando…</p>;
 
@@ -88,6 +104,19 @@ export default function CheckoutForm() {
         throw new Error(body.error ?? "No pudimos registrar el pedido.");
       }
       saveOrderLocally(body.order);
+      // Purchase del píxel de Meta: el pedido quedó registrado (el pago es por transferencia).
+      trackPixel(
+        "Purchase",
+        {
+          content_ids: body.order.items.map((i) => i.slug),
+          contents: body.order.items.map((i) => ({ id: i.slug, quantity: i.qty })),
+          content_type: "product",
+          num_items: body.order.items.reduce((n, i) => n + i.qty, 0),
+          value: body.order.subtotal,
+          currency: "ARS",
+        },
+        body.order.id,
+      );
       clear();
       router.push(`/pedido/${body.order.id}`);
     } catch (err) {

@@ -6,6 +6,7 @@ import CartToast from "@/components/CartToast";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import MetaPixel from "@/components/MetaPixel";
 import { CartProvider } from "@/lib/cart";
 import { site } from "@/lib/site";
 
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </CartProvider>
       </body>
       <GoogleAnalytics gaId="G-QHHQ84V33M" />
+      <MetaPixel />
     </html>
   );
 }

@@ -6,6 +6,7 @@ import QuantityStepper from "@/components/QuantityStepper";
 import { CartIcon, WhatsAppIcon } from "@/components/Icons";
 import { isPurchasable, maxQty, type Product } from "@/data/products";
 import { useCart } from "@/lib/cart";
+import { productParams, trackPixel } from "@/lib/metaPixel";
 import { whatsappUrl } from "@/lib/site";
 
 export default function AddToCart({ product }: { product: Product }) {
@@ -84,7 +85,10 @@ export default function AddToCart({ product }: { product: Product }) {
           size="lg"
           className="flex-1"
           disabled={soldOutForYou}
-          onClick={() => add(product, qty)}
+          onClick={() => {
+            add(product, qty);
+            trackPixel("AddToCart", productParams(product, qty));
+          }}
         >
           <CartIcon /> {soldOutForYou ? "Ya está en tu carrito" : "Añadir al carrito"}
         </Button>
