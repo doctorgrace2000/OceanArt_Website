@@ -5,9 +5,10 @@ import { Container } from "@/components/ui/Section";
 import { CATEGORIES, products, type Category } from "@/data/products";
 
 export const metadata: Metadata = {
-  title: "Tienda",
+  title: "Tienda de arte textil: tapices y alfombras tufting",
   description:
-    "Obras textiles disponibles: tapices, alfombras, instalaciones y objetos hechos a mano.",
+    "Comprá obras de arte textil hechas a mano con tufting: tapices, alfombras tufting, instalaciones y objetos inspirados en la naturaleza. Envíos a todo el país.",
+  alternates: { canonical: "/tienda" },
 };
 
 type Props = { searchParams: Promise<{ categoria?: string }> };

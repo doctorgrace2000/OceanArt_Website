@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { categoryLabel, type Product } from "@/data/products";
+import { CATEGORY_LABEL, categoryLabel, type Product } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 
 export default function ProductCard({
@@ -22,7 +22,7 @@ export default function ProductCard({
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-foam bg-white transition group-hover:border-navy/30">
         <Image
           src={product.images[0]}
-          alt={product.name}
+          alt={`${product.name}, ${CATEGORY_LABEL[product.category].toLowerCase()} de tufting`}
           fill
           priority={priority}
           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"

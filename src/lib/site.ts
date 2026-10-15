@@ -9,7 +9,30 @@ export const site = {
   legalName: "Ocean Art · Verónica Orlando",
   tagline: "Creaciones inspiradas en la naturaleza",
   description:
-    "Estudio de arte textil en Buenos Aires. Tapices, alfombras, instalaciones y objetos hechos a mano con tufting, inspiradas en líquenes, hongos, raíces y agua.",
+    "Arte textil y tufting hecho a mano en Buenos Aires. Obras de arte inspiradas en la naturaleza: tapices, alfombras tufting, instalaciones y piezas a medida de Verónica Orlando.",
+  keywords: [
+    "tufting",
+    "tufting Argentina",
+    "tufting Buenos Aires",
+    "arte textil",
+    "artista textil",
+    "obras de arte",
+    "obras de arte textil",
+    "inspiración naturaleza",
+    "arte inspirado en la naturaleza",
+    "alfombras tufting",
+    "alfombras de diseño",
+    "alfombras artesanales",
+    "alfombras a medida",
+    "tapices",
+    "tapices de tufting",
+    "tapices modernos",
+    "tapiz de pared",
+    "decoración textil",
+    "instalaciones textiles",
+    "diseño de interiores",
+    "Verónica Orlando",
+  ],
   // En Vercel, si no se cargó NEXT_PUBLIC_SITE_URL, se usa el dominio de producción del proyecto.
   url:
     process.env.NEXT_PUBLIC_SITE_URL ??

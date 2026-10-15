@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CollectionCarousel from "@/components/CollectionCarousel";
@@ -10,6 +11,10 @@ import { Container, SectionTitle } from "@/components/ui/Section";
 import { collection } from "@/data/collection";
 import { featuredProducts } from "@/data/products";
 import { site } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   const featured = featuredProducts();

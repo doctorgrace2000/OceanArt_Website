@@ -9,12 +9,14 @@ import TrackViewContent from "@/components/TrackViewContent";
 import { Container } from "@/components/ui/Section";
 import {
   bundlesWith,
+  CATEGORY_LABEL,
   categoryLabel,
   getProduct,
   products,
   relatedProducts,
 } from "@/data/products";
 import { formatPrice } from "@/lib/format";
+import { site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,10 +28,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return {};
+  const kind = CATEGORY_LABEL[product.category];
   return {
-    title: product.name,
-    description: product.short,
-    openGraph: { images: [{ url: product.images[0], alt: product.name }] },
+    title: `${product.name} · ${kind} de tufting`,
+    description: `${product.short} Obra de arte textil hecha a mano con tufting en Buenos Aires, inspirada en la naturaleza.`,
+    alternates: { canonical: `/tienda/${product.slug}` },
+    openGraph: {
+      title: `${product.name} · ${kind} de tufting`,
+      description: product.short,
+      images: [{ url: product.images[0], alt: `${product.name}, ${kind.toLowerCase()} de tufting` }],
+    },
   };
 }
 
@@ -45,11 +53,16 @@ export default async function ProductPage({ params }: Props) {
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: product.images,
+    image: product.images.map((src) => `${site.url}${src}`),
+    url: `${site.url}/tienda/${product.slug}`,
+    sku: product.slug,
+    category: categoryLabel(product),
+    material: product.materials,
     brand: { "@type": "Brand", name: "Ocean Art" },
     ...(product.price !== null && {
       offers: {
         "@type": "Offer",
+        url: `${site.url}/tienda/${product.slug}`,
         priceCurrency: "ARS",
         price: product.price,
         availability:
@@ -74,7 +87,10 @@ export default async function ProductPage({ params }: Props) {
       </Link>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
-        <ProductGallery images={product.images} name={product.name} />
+        <ProductGallery
+          images={product.images}
+          name={`${product.name}, ${CATEGORY_LABEL[product.category].toLowerCase()} de tufting`}
+        />
 
         <div className="lg:sticky lg:top-24 lg:self-start">
           <p className="text-sm text-stone">

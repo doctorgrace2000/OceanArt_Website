@@ -5,9 +5,10 @@ import PageBanner from "@/components/ui/PageBanner";
 import { Container, SectionTitle } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
-  title: "Diseña tu obra",
+  title: "Alfombras y tapices de tufting a medida",
   description:
-    "Pedí una pieza textil a medida: tapices, alfombras, instalaciones y objetos diseñados para tu espacio.",
+    "Encargá una obra de arte textil a medida: alfombras tufting, tapices e instalaciones diseñadas para tu espacio, con la forma, los colores y las medidas que imagines.",
+  alternates: { canonical: "/disena-tu-obra" },
 };
 
 const STEPS = [

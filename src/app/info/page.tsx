@@ -9,9 +9,10 @@ import { awardCount, exhibitions, exhibitionsByYear } from "@/data/exhibitions";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Info",
+  title: "Verónica Orlando, artista textil",
   description:
-    "Quiénes somos, dónde está el taller de Ocean Art y cómo comprar o encargar una obra textil.",
+    "Conocé a Verónica Orlando, artista textil y fundadora de Ocean Art: biografía, exposiciones, premios y el taller de tufting en General Rodríguez, Buenos Aires.",
+  alternates: { canonical: "/info" },
 };
 
 export default function InfoPage() {
