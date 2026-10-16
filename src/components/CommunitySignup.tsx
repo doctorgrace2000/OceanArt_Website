@@ -2,10 +2,9 @@
 
 import { useId, useState, type FormEvent } from "react";
 import Button from "@/components/ui/Button";
+import { isValidEmail } from "@/lib/email";
 import { trackPixel } from "@/lib/metaPixel";
 import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** Marca en el navegador de que ya se sumó, para no volver a mostrarle el pop-up. */
 export const JOINED_KEY = "oa-community-joined";
@@ -32,7 +31,7 @@ export default function CommunitySignup({
     const rawPhone = get("phone");
     const phone = rawPhone ? normalizeArPhone(rawPhone) : "";
     if (name.length < 2) return setError("Ingresá tu nombre.");
-    if (!EMAIL_RE.test(email)) return setError("Revisá el email.");
+    if (!isValidEmail(email)) return setError("Revisá el email.");
     if (phone === null) return setError(AR_PHONE_ERROR);
     setError(null);
     setStatus("sending");

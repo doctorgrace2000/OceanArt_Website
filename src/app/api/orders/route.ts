@@ -9,11 +9,11 @@ import {
   type OrderInput,
   type OrderItem,
 } from "@/lib/orders";
+import { isValidEmail } from "@/lib/email";
 import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const METHODS: DeliveryMethod[] = ["retiro", "envio"];
 
 function bad(error: string, status = 400) {
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
   const email = str(body.customer?.email, 160);
   const phone = normalizeArPhone(str(body.customer?.phone, 40));
   if (name.length < 2) return bad("Falta el nombre.");
-  if (!EMAIL_RE.test(email)) return bad("Email inválido.");
+  if (!isValidEmail(email)) return bad("Email inválido.");
   if (!phone) return bad(AR_PHONE_ERROR);
 
   // --- entrega

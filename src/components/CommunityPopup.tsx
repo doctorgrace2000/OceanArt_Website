@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import CommunitySignup, { JOINED_KEY } from "@/components/CommunitySignup";
@@ -95,20 +94,18 @@ export default function CommunityPopup() {
         aria-modal="true"
         aria-labelledby="community-popup-title"
         tabIndex={-1}
-        className={`relative max-h-[calc(100svh-2rem)] w-full max-w-lg overflow-y-auto rounded-3xl p-5 shadow-2xl shadow-navy/30 outline-none transition duration-300 sm:p-10 ${shown ? "translate-y-0 scale-100" : "translate-y-3 scale-[0.98]"}`}
+        className={`relative max-h-[calc(100svh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl bg-mist px-6 pb-7 pt-10 shadow-2xl shadow-navy/30 outline-none transition duration-300 sm:px-8 ${shown ? "translate-y-0 scale-100" : "translate-y-3 scale-[0.98]"}`}
       >
-        <Image src="/img/agua-3.jpg" alt="" fill sizes="512px" className="-z-10 object-cover" />
-
         <button
           type="button"
           onClick={close}
           aria-label="Cerrar"
-          className="absolute right-7 top-7 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-navy shadow transition hover:bg-white sm:right-12 sm:top-12"
+          className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full text-navy/70 transition hover:bg-white hover:text-navy"
         >
           <CloseIcon width={18} height={18} />
         </button>
 
-        <div className="rounded-2xl bg-mist/95 px-6 pb-7 pt-9 backdrop-blur-sm sm:px-8">
+        <div>
           <div className="text-center">
             <p className="font-hand text-xl text-sea">Sumate</p>
             <h2 id="community-popup-title" className="mt-1 text-2xl font-medium tracking-tight text-navy sm:text-3xl">

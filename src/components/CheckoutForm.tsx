@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { BankIcon, WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
 import { useCart } from "@/lib/cart";
+import { isValidEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/format";
 import { trackPixel } from "@/lib/metaPixel";
 import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
@@ -60,7 +61,7 @@ export default function CheckoutForm() {
     const notes = get("notes");
 
     if (name.length < 2) e.name = "Ingresá tu nombre completo.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Ingresá un email válido.";
+    if (!isValidEmail(email)) e.email = "Ingresá un email válido.";
     if (!phone) e.phone = AR_PHONE_ERROR;
 
     const delivery: OrderInput["delivery"] = { method };

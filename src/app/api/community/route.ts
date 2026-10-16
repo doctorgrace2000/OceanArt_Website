@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
+import { isValidEmail } from "@/lib/email";
 import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function bad(error: string, status = 400) {
   return NextResponse.json({ error }, { status });
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   const phone = rawPhone ? normalizeArPhone(rawPhone) : "";
 
   if (name.length < 2) return bad("Ingresá tu nombre.");
-  if (!EMAIL_RE.test(email)) return bad("Revisá el email.");
+  if (!isValidEmail(email)) return bad("Revisá el email.");
   if (phone === null) return bad(AR_PHONE_ERROR);
 
   const subscriber = {
