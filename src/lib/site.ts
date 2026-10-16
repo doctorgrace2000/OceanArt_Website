@@ -8,8 +8,11 @@ export const site = {
   name: "Ocean Art",
   legalName: "Ocean Art · Verónica Orlando",
   tagline: "Creaciones inspiradas en la naturaleza",
+  taglineEn: "Creations inspired by nature",
   description:
     "Arte textil y tufting hecho a mano en Buenos Aires. Obras de arte inspiradas en la naturaleza: tapices, alfombras tufting, instalaciones y piezas a medida de Verónica Orlando.",
+  descriptionEn:
+    "Handmade textile art and tufting from Buenos Aires, Argentina. Nature-inspired artworks: tapestries, tufted rugs, installations and custom pieces by Verónica Orlando.",
   keywords: [
     "tufting",
     "tufting Argentina",
@@ -45,6 +48,7 @@ export const site = {
     "https://www.instagram.com/oceanart.veronicaorlando",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "oceanartufting@gmail.com",
   location: "General Rodríguez, Provincia de Buenos Aires",
+  locationEn: "General Rodríguez, Buenos Aires, Argentina",
   bank: {
     holder: process.env.NEXT_PUBLIC_BANK_HOLDER ?? "Verónica Orlando",
     bank: process.env.NEXT_PUBLIC_BANK_NAME ?? "Banco Supervielle",

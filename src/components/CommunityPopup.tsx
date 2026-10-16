@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import CommunitySignup, { JOINED_KEY } from "@/components/CommunitySignup";
 import { CloseIcon } from "@/components/Icons";
+import { useI18n } from "@/i18n/client";
+import { stripLocale } from "@/i18n/config";
 
 const DELAY_MS = 40_000;
 const START_KEY = "oa-visit-start";
@@ -33,7 +35,8 @@ function write(storage: () => Storage, key: string, value: string) {
  * Para verla al instante: agregá ?comunidad a cualquier URL.
  */
 export default function CommunityPopup() {
-  const pathname = usePathname();
+  const pathname = stripLocale(usePathname());
+  const { t } = useI18n();
   const [due, setDue] = useState(false);
   const [closed, setClosed] = useState(false);
   const [shown, setShown] = useState(false);
@@ -99,7 +102,7 @@ export default function CommunityPopup() {
         <button
           type="button"
           onClick={close}
-          aria-label="Cerrar"
+          aria-label={t("Cerrar", "Close")}
           className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full text-navy/70 transition hover:bg-white hover:text-navy"
         >
           <CloseIcon width={18} height={18} />
@@ -107,12 +110,15 @@ export default function CommunityPopup() {
 
         <div>
           <div className="text-center">
-            <p className="font-hand text-xl text-sea">Sumate</p>
+            <p className="font-hand text-xl text-sea">{t("Sumate", "Join us")}</p>
             <h2 id="community-popup-title" className="mt-1 text-2xl font-medium tracking-tight text-navy sm:text-3xl">
-              Comunidad Ocean Art
+              {t("Comunidad Ocean Art", "Ocean Art Community")}
             </h2>
             <p className="mx-auto mt-3 max-w-xs leading-relaxed text-ink/85">
-              Enterate antes que nadie de muestras, eventos, talleres y descuentos.
+              {t(
+                "Enterate antes que nadie de muestras, eventos, talleres y descuentos.",
+                "Be the first to hear about exhibitions, events, workshops and discounts.",
+              )}
             </p>
           </div>
           <div className="mt-6">

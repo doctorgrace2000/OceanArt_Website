@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -12,18 +12,55 @@ import {
   MenuIcon,
   WhatsAppIcon,
 } from "@/components/Icons";
+import { Link, useI18n } from "@/i18n/client";
+import { localizePath, stripLocale, type Locale } from "@/i18n/config";
 import { useCart } from "@/lib/cart";
 import { site, whatsappUrl } from "@/lib/site";
 
 const NAV = [
-  { href: "/", label: "Inicio" },
-  { href: "/tienda", label: "Tienda" },
-  { href: "/disena-tu-obra", label: "Diseña tu obra" },
-  { href: "/info", label: "Info" },
+  { href: "/", es: "Inicio", en: "Home" },
+  { href: "/tienda", es: "Tienda", en: "Shop" },
+  { href: "/disena-tu-obra", es: "Diseña tu obra", en: "Custom pieces" },
+  { href: "/info", es: "Info", en: "About" },
 ] as const;
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
+/** ES / EN: lleva a la misma página en el otro idioma. */
+function LanguageSwitch({ path, className = "" }: { path: string; className?: string }) {
+  const { locale, t } = useI18n();
+  const options: { code: Locale; label: string; name: string }[] = [
+    { code: "es", label: "ES", name: "Español" },
+    { code: "en", label: "EN", name: "English" },
+  ];
+  return (
+    <div
+      role="group"
+      aria-label={t("Idioma", "Language")}
+      className={`flex items-center text-[13px] font-medium tracking-[0.12em] ${className}`}
+    >
+      {options.map((o, i) => (
+        <span key={o.code} className="flex items-center">
+          {i > 0 && <span aria-hidden className="mx-1.5 h-3 w-px bg-navy/25" />}
+          {o.code === locale ? (
+            <span aria-current="true" className="text-navy">{o.label}</span>
+          ) : (
+            <NextLink
+              href={localizePath(path, o.code)}
+              hrefLang={o.code}
+              lang={o.code}
+              aria-label={o.name}
+              className="text-navy/40 transition hover:text-navy"
+            >
+              {o.label}
+            </NextLink>
+          )}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 function SocialLinks({ className = "" }: { className?: string }) {
@@ -44,11 +81,15 @@ function SocialLinks({ className = "" }: { className?: string }) {
 
 function CartLink({ onClick }: { onClick?: () => void }) {
   const { count } = useCart();
+  const { t } = useI18n();
   return (
     <Link
       href="/carrito"
       onClick={onClick}
-      aria-label={`Carrito, ${count} ${count === 1 ? "obra" : "obras"}`}
+      aria-label={t(
+        `Carrito, ${count} ${count === 1 ? "obra" : "obras"}`,
+        `Cart, ${count} ${count === 1 ? "piece" : "pieces"}`,
+      )}
       className="relative text-navy transition hover:text-sea"
     >
       <CartIcon width={26} height={26} />
@@ -62,7 +103,8 @@ function CartLink({ onClick }: { onClick?: () => void }) {
 }
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname = stripLocale(usePathname());
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
 
   // Bloquear el scroll del fondo mientras el menú mobile está abierto.
@@ -77,7 +119,7 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-navy/10 bg-white shadow-[0_2px_16px_rgba(1,43,85,0.08)]">
       <div className="mx-auto grid h-[var(--header-h)] max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:px-8">
         {/* Izquierda: menú en dos líneas (desktop) / hamburguesa (mobile) */}
-        <nav aria-label="Principal" className="hidden md:block">
+        <nav aria-label={t("Principal", "Main")} className="hidden md:block">
           <ul className="flex items-center gap-x-6 whitespace-nowrap text-[17px] leading-tight tracking-wide lg:gap-x-8">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
@@ -92,7 +134,7 @@ export default function Header() {
                         : "border-transparent text-ink hover:border-foam hover:text-navy"
                     }`}
                   >
-                    {item.label}
+                    {t(item.es, item.en)}
                   </Link>
                 </li>
               );
@@ -102,7 +144,7 @@ export default function Header() {
         <button
           type="button"
           className="md:hidden justify-self-start text-navy"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-label={open ? t("Cerrar menú", "Close menu") : t("Abrir menú", "Open menu")}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -110,7 +152,7 @@ export default function Header() {
         </button>
 
         {/* Centro: logo */}
-        <Link href="/" aria-label="Ocean Art, inicio" className="justify-self-center">
+        <Link href="/" aria-label={t("Ocean Art, inicio", "Ocean Art, home")} className="justify-self-center">
           <Image
             src="/img/logo-azul.png"
             alt="Ocean Art"
@@ -121,8 +163,9 @@ export default function Header() {
           />
         </Link>
 
-        {/* Derecha: redes + carrito */}
-        <div className="flex items-center justify-end gap-6">
+        {/* Derecha: idioma + redes + carrito */}
+        <div className="flex items-center justify-end gap-5 md:gap-6">
+          <LanguageSwitch path={pathname} />
           <SocialLinks className="hidden md:flex" />
           <CartLink />
         </div>
@@ -131,7 +174,7 @@ export default function Header() {
       {/* Menú mobile */}
       {open && (
         <div className="fixed inset-x-0 top-[var(--header-h)] bottom-0 z-30 bg-white md:hidden">
-          <nav aria-label="Principal móvil" className="flex h-full flex-col px-6 py-8">
+          <nav aria-label={t("Principal móvil", "Mobile main")} className="flex h-full flex-col px-6 py-8">
             <ul className="space-y-5 text-2xl">
               {NAV.map((item) => (
                 <li key={item.href}>
@@ -140,19 +183,19 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     className={isActive(pathname, item.href) ? "font-semibold text-navy" : "text-ink"}
                   >
-                    {item.label}
+                    {t(item.es, item.en)}
                   </Link>
                 </li>
               ))}
               <li>
                 <Link href="/carrito" onClick={() => setOpen(false)} className="text-ink">
-                  Carrito
+                  {t("Carrito", "Cart")}
                 </Link>
               </li>
             </ul>
             <div className="mt-auto">
               <SocialLinks />
-              <p className="mt-4 text-sm text-stone">{site.location}</p>
+              <p className="mt-4 text-sm text-stone">{t(site.location, site.locationEn)}</p>
             </div>
           </nav>
         </div>

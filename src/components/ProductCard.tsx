@@ -1,10 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
-import { CATEGORY_LABEL, categoryLabel, type Product } from "@/data/products";
-import { formatPrice } from "@/lib/format";
+import { categoryLabel, categoryName, type Product } from "@/data/products";
+import { Link, useI18n } from "@/i18n/client";
 
 export default function ProductCard({
-  product,
+  product: source,
   priority = false,
   className = "",
 }: {
@@ -12,6 +13,8 @@ export default function ProductCard({
   priority?: boolean;
   className?: string;
 }) {
+  const { locale, t, price, product: localize } = useI18n();
+  const product = localize(source);
   const sold = product.availability === "vendido";
   return (
     <Link
@@ -22,7 +25,10 @@ export default function ProductCard({
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-foam bg-white transition group-hover:border-navy/30">
         <Image
           src={product.images[0]}
-          alt={`${product.name}, ${CATEGORY_LABEL[product.category].toLowerCase()} de tufting`}
+          alt={t(
+            `${product.name}, ${categoryName(product.category).toLowerCase()} de tufting`,
+            `${product.name}, tufted ${categoryName(product.category, "en").toLowerCase()}`,
+          )}
           fill
           priority={priority}
           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
@@ -35,12 +41,12 @@ export default function ProductCard({
             {product.name}
           </h3>
           <p className="text-sm text-stone">
-            {categoryLabel(product)}
+            {categoryLabel(product, locale)}
             {product.year ? ` · ${product.year}` : ""}
           </p>
         </div>
         <p className="shrink-0 text-[15px] text-navy">
-          {product.price === null ? "Consultar" : formatPrice(product.price)}
+          {product.price === null ? t("Consultar", "Inquire") : price(product.price)}
         </p>
       </div>
     </Link>

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { getProduct, isPurchasable, maxQty } from "@/data/products";
+import { localizeProduct } from "@/data/products.en";
+import { asLocale, pick } from "@/i18n/config";
+import { currencyFor, toCurrency } from "@/lib/format";
 import {
   buildOrderEmailText,
   generateOrderId,
@@ -10,7 +13,7 @@ import {
   type OrderItem,
 } from "@/lib/orders";
 import { isValidEmail } from "@/lib/email";
-import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
+import { normalizePhone, phoneError } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
@@ -37,46 +40,61 @@ export async function POST(req: Request) {
     return bad("Cuerpo inválido.");
   }
 
+  // En inglés: precios en USD y pago a coordinar (sin datos bancarios)
+  const locale = asLocale(str(body.locale, 5));
+  const t = (es: string, en: string) => pick(locale, es, en);
+  const english = locale === "en";
+
   // --- cliente
   const name = str(body.customer?.name, 120);
   const email = str(body.customer?.email, 160);
-  const phone = normalizeArPhone(str(body.customer?.phone, 40));
-  if (name.length < 2) return bad("Falta el nombre.");
-  if (!isValidEmail(email)) return bad("Email inválido.");
-  if (!phone) return bad(AR_PHONE_ERROR);
+  const phone = normalizePhone(str(body.customer?.phone, 40), locale);
+  if (name.length < 2) return bad(t("Falta el nombre.", "Please enter your name."));
+  if (!isValidEmail(email)) return bad(t("Email inválido.", "Please check your email."));
+  if (!phone) return bad(phoneError(locale));
 
   // --- entrega
   const method = body.delivery?.method;
-  if (!method || !METHODS.includes(method)) return bad("Método de entrega inválido.");
+  if (!method || !METHODS.includes(method)) return bad(t("Método de entrega inválido.", "Invalid delivery method."));
   const delivery: Order["delivery"] = { method };
   if (method === "envio") {
     delivery.address = str(body.delivery?.address, 200);
     delivery.city = str(body.delivery?.city, 100);
     delivery.province = str(body.delivery?.province, 100);
     delivery.zip = str(body.delivery?.zip, 20) || undefined;
-    if (!delivery.address || !delivery.city || !delivery.province) {
-      return bad("Faltan datos de la dirección de envío.");
+    if (english) delivery.country = str(body.delivery?.country, 100);
+    if (!delivery.address || !delivery.city || (english ? !delivery.country : !delivery.province)) {
+      return bad(t("Faltan datos de la dirección de envío.", "Some shipping address details are missing."));
     }
+    if (english && !delivery.province) delivery.province = undefined;
   }
 
   // --- items (precios desde el catálogo)
-  if (!Array.isArray(body.items) || body.items.length === 0) return bad("El carrito está vacío.");
-  if (body.items.length > 20) return bad("Demasiados items.");
+  if (!Array.isArray(body.items) || body.items.length === 0) {
+    return bad(t("El carrito está vacío.", "Your cart is empty."));
+  }
+  if (body.items.length > 20) return bad(t("Demasiados items.", "Too many items."));
 
   const items: OrderItem[] = [];
   for (const raw of body.items) {
     const slug = str(raw?.slug, 80);
     const qty = Number(raw?.qty);
     const product = getProduct(slug);
-    if (!product) return bad(`La obra "${slug}" no existe.`);
+    if (!product) return bad(t(`La obra "${slug}" no existe.`, `The piece "${slug}" does not exist.`));
+    const pieceName = localizeProduct(product, locale).name;
     if (!isPurchasable(product) || product.price === null) {
-      return bad(`"${product.name}" no se puede comprar online; cotizala por WhatsApp.`);
+      return bad(
+        t(
+          `"${pieceName}" no se puede comprar online; cotizala por WhatsApp.`,
+          `"${pieceName}" can't be bought online; ask us for a quote on WhatsApp.`,
+        ),
+      );
     }
     if (!Number.isInteger(qty) || qty < 1 || qty > maxQty(product)) {
-      return bad(`Cantidad inválida para "${product.name}".`);
+      return bad(t(`Cantidad inválida para "${pieceName}".`, `Invalid quantity for "${pieceName}".`));
     }
-    if (items.some((i) => i.slug === slug)) return bad("Items repetidos.");
-    items.push({ slug, name: product.name, qty, unitPrice: product.price });
+    if (items.some((i) => i.slug === slug)) return bad(t("Items repetidos.", "Duplicate items."));
+    items.push({ slug, name: pieceName, qty, unitPrice: toCurrency(product.price, locale) });
   }
 
   const subtotal = items.reduce((n, i) => n + i.unitPrice * i.qty, 0);
@@ -84,13 +102,15 @@ export async function POST(req: Request) {
   const order: Order = {
     id: generateOrderId(),
     createdAt: new Date().toISOString(),
+    locale,
+    currency: currencyFor(locale),
     customer: { name, email, phone },
     delivery,
     notes: str(body.notes, 1000) || undefined,
     items,
     subtotal,
-    payment: "transferencia",
-    status: "pendiente-transferencia",
+    payment: english ? "a-coordinar" : "transferencia",
+    status: english ? "pendiente-coordinacion" : "pendiente-transferencia",
   };
 
   // Aviso por email al taller (opcional): se activa con RESEND_API_KEY + ORDER_NOTIFY_EMAIL.

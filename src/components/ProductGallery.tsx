@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useI18n } from "@/i18n/client";
 
 export default function ProductGallery({ images, name }: { images: string[]; name: string }) {
+  const { t } = useI18n();
   const [active, setActive] = useState(0);
 
   return (
@@ -12,7 +14,10 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
         <Image
           key={images[active]}
           src={images[active]}
-          alt={`${name}, imagen ${active + 1} de ${images.length}`}
+          alt={t(
+            `${name}, imagen ${active + 1} de ${images.length}`,
+            `${name}, image ${active + 1} of ${images.length}`,
+          )}
           fill
           priority
           sizes="(min-width: 1024px) 55vw, 100vw"
@@ -26,7 +31,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
               key={src}
               type="button"
               onClick={() => setActive(i)}
-              aria-label={`Ver imagen ${i + 1}`}
+              aria-label={t(`Ver imagen ${i + 1}`, `View image ${i + 1}`)}
               aria-current={i === active}
               className={`relative h-20 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition ${
                 i === active ? "border-navy" : "border-transparent opacity-70 hover:opacity-100"

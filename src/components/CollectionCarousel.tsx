@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/Icons";
 import { categoryLabel, type Product } from "@/data/products";
-import { formatPrice } from "@/lib/format";
+import { Link, useI18n } from "@/i18n/client";
 
 const AUTOPLAY_MS = 4500;
 
@@ -19,7 +18,9 @@ const targetLeft = (track: HTMLElement, slide: HTMLElement) => {
   return x - (parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0);
 };
 
-export default function CollectionCarousel({ products }: { products: Product[] }) {
+export default function CollectionCarousel({ products: source }: { products: Product[] }) {
+  const { locale, t, price, product: localize } = useI18n();
+  const products = source.map(localize);
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -73,7 +74,7 @@ export default function CollectionCarousel({ products }: { products: Product[] }
         ref={trackRef}
         onScroll={onScroll}
         role="region"
-        aria-label="Piezas de la colección"
+        aria-label={t("Piezas de la colección", "Pieces in the collection")}
         className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[10vw] pb-2 sm:-mx-6 sm:gap-5 sm:scroll-px-6 sm:px-6 lg:-mx-8 lg:scroll-px-8 lg:px-8"
       >
         {products.map((product, i) => (
@@ -97,12 +98,12 @@ export default function CollectionCarousel({ products }: { products: Product[] }
             <div className="mt-4 flex items-start justify-between gap-3 px-1">
               <div className="min-w-0">
                 <p className="font-hand text-xl leading-none text-sea">
-                  {categoryLabel(product)}
+                  {categoryLabel(product, locale)}
                 </p>
                 <h3 className="mt-1 truncate text-lg font-medium text-navy">{product.name}</h3>
               </div>
               <p className="shrink-0 pt-1 text-[15px] text-ink">
-                {product.price === null ? "Consultar" : formatPrice(product.price)}
+                {product.price === null ? t("Consultar", "Inquire") : price(product.price)}
               </p>
             </div>
           </Link>
@@ -110,7 +111,7 @@ export default function CollectionCarousel({ products }: { products: Product[] }
       </div>
 
       <div className="mt-6 flex items-center justify-between">
-        <div className="flex items-center gap-1.5" role="tablist" aria-label="Ir a la pieza">
+        <div className="flex items-center gap-1.5" role="tablist" aria-label={t("Ir a la pieza", "Go to piece")}>
           {products.map((product, i) => (
             <button
               key={product.slug}
@@ -129,7 +130,7 @@ export default function CollectionCarousel({ products }: { products: Product[] }
           <button
             type="button"
             onClick={() => goTo(active - 1)}
-            aria-label="Anterior"
+            aria-label={t("Anterior", "Previous")}
             className="rounded-full border border-navy/15 bg-white p-2.5 text-navy transition hover:bg-navy hover:text-white"
           >
             <ArrowLeftIcon />
@@ -137,7 +138,7 @@ export default function CollectionCarousel({ products }: { products: Product[] }
           <button
             type="button"
             onClick={() => goTo(active + 1)}
-            aria-label="Siguiente"
+            aria-label={t("Siguiente", "Next")}
             className="rounded-full border border-navy/15 bg-white p-2.5 text-navy transition hover:bg-navy hover:text-white"
           >
             <ArrowRightIcon />

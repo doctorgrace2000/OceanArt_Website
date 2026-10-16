@@ -1,3 +1,5 @@
+import { CATEGORY_LABEL_EN, CATEGORY_PLURAL_EN } from "@/data/products.en";
+import type { Locale } from "@/i18n/config";
 import { obra } from "@/lib/obras";
 
 export type Category = "tapiz" | "alfombra" | "instalacion" | "objeto";
@@ -53,9 +55,15 @@ export const categoriesOf = (p: Product): Category[] => [p.category, ...(p.alsoI
 
 export const inCategory = (p: Product, c: Category): boolean => categoriesOf(p).includes(c);
 
+export const categoryName = (c: Category, locale: Locale = "es"): string =>
+  (locale === "en" ? CATEGORY_LABEL_EN : CATEGORY_LABEL)[c];
+
+export const categoryPlural = (c: Category, locale: Locale = "es"): string =>
+  (locale === "en" ? CATEGORY_PLURAL_EN : CATEGORY_PLURAL)[c];
+
 /** "Alfombra / Tapiz" cuando la obra está en más de una categoría. */
-export const categoryLabel = (p: Product): string =>
-  categoriesOf(p).map((c) => CATEGORY_LABEL[c]).join(" / ");
+export const categoryLabel = (p: Product, locale: Locale = "es"): string =>
+  categoriesOf(p).map((c) => categoryName(c, locale)).join(" / ");
 
 /**
  * Genera las rutas de una obra: primero `portada.jpg` (foto de frente, fondo

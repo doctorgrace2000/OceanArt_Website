@@ -1,6 +1,7 @@
 "use client";
 
 import { MinusIcon, PlusIcon } from "@/components/Icons";
+import { useI18n } from "@/i18n/client";
 
 export default function QuantityStepper({
   value,
@@ -15,12 +16,13 @@ export default function QuantityStepper({
   onChange: (v: number) => void;
   size?: "sm" | "md";
 }) {
+  const { t } = useI18n();
   const btn = size === "sm" ? "h-8 w-8" : "h-10 w-10";
   return (
     <div className="inline-flex items-center rounded-pill border border-foam">
       <button
         type="button"
-        aria-label="Quitar uno"
+        aria-label={t("Quitar uno", "Remove one")}
         disabled={value <= min}
         onClick={() => onChange(value - 1)}
         className={`${btn} flex items-center justify-center text-navy disabled:opacity-30`}
@@ -32,7 +34,7 @@ export default function QuantityStepper({
       </span>
       <button
         type="button"
-        aria-label="Agregar uno"
+        aria-label={t("Agregar uno", "Add one")}
         disabled={value >= max}
         onClick={() => onChange(value + 1)}
         className={`${btn} flex items-center justify-center text-navy disabled:opacity-30`}

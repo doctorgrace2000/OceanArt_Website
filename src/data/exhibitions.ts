@@ -151,3 +151,41 @@ export function exhibitionsByYear(): { year: number | null; items: Exhibition[] 
 }
 
 export const awardCount = exhibitions.reduce((n, e) => n + (e.awards?.length ?? 0), 0);
+
+// --- Inglés -------------------------------------------------------------------
+// Traducciones de los textos que se repiten. Los nombres propios (lugares, títulos
+// de muestras) quedan igual. Si falta una traducción, se muestra en español.
+
+const EN: Record<string, string> = {
+  // Tipo de participación
+  "Muestra colectiva": "Group exhibition",
+  "Feria de diseño": "Design fair",
+  "Obra en espacio de diseño": "Work in a design space",
+  "Intervención artística": "Art intervention",
+  // Lugares
+  "Viena, Austria": "Vienna, Austria",
+  "Piamonte, Italia": "Piedmont, Italy",
+  // Detalles
+  "Curada por Leila Tschopp": "Curated by Leila Tschopp",
+  "Presentación de la colección Jardín imaginario": "Launch of the Imaginary Garden collection",
+  "Estudio Zarzamora y Cler Studio": "Estudio Zarzamora and Cler Studio",
+  // Premios
+  "Premio al mejor stand de arte": "Best art stand award",
+  "Medalla de Oro": "Gold Medal",
+  "Premio Atrim al mejor uso en tendencia del color": "Atrim award for best use of color trends",
+  "Premio a la mejor incorporación de nuevos productos": "Award for best introduction of new products",
+  "Premio al mejor arte aplicado": "Best applied art award",
+};
+
+/** La muestra con sus textos en el idioma pedido. */
+export function localizeExhibition(e: Exhibition, locale: "es" | "en"): Exhibition {
+  if (locale !== "en") return e;
+  const tr = (s: string) => EN[s] ?? s;
+  return {
+    ...e,
+    kind: tr(e.kind),
+    place: tr(e.place),
+    detail: e.detail && tr(e.detail),
+    awards: e.awards?.map(tr),
+  };
+}

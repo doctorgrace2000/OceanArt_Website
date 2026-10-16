@@ -27,6 +27,8 @@ const SLUGS = [
 
 export const collection = {
   name: "Jardín imaginario",
+  nameEn: "Imaginary Garden",
   eyebrow: "Nueva colección",
+  eyebrowEn: "New collection",
   products: SLUGS.map((slug) => getProduct(slug)).filter((p): p is Product => Boolean(p)),
 };

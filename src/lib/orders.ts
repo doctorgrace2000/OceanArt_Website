@@ -1,4 +1,5 @@
-import { formatPrice } from "@/lib/format";
+import { pick, type Locale } from "@/i18n/config";
+import { formatMoney, type Currency } from "@/lib/format";
 import { site, whatsappUrl } from "@/lib/site";
 
 export type DeliveryMethod = "retiro" | "envio";
@@ -22,27 +23,41 @@ export interface OrderDelivery {
   city?: string;
   province?: string;
   zip?: string;
+  /** Solo en pedidos en inglés (envío internacional) */
+  country?: string;
 }
 
 export interface Order {
   id: string;
   createdAt: string;
+  /** Idioma en que se hizo el pedido (los pedidos viejos no lo tienen: español) */
+  locale?: Locale;
+  /** Moneda de los importes del pedido (los pedidos viejos no la tienen: pesos) */
+  currency?: Currency;
   customer: OrderCustomer;
   delivery: OrderDelivery;
   notes?: string;
   items: OrderItem[];
   subtotal: number;
-  payment: "transferencia";
-  status: "pendiente-transferencia";
+  /** En español se paga por transferencia; en inglés el pago se coordina con el cliente. */
+  payment: "transferencia" | "a-coordinar";
+  status: "pendiente-transferencia" | "pendiente-coordinacion";
 }
 
 /** Lo que el cliente manda al servidor. */
 export interface OrderInput {
+  locale?: Locale;
   customer: OrderCustomer;
   delivery: OrderDelivery;
   notes?: string;
   items: { slug: string; qty: number }[];
 }
+
+export const orderLocale = (o: Order): Locale => o.locale ?? "es";
+
+/** Importe de un pedido formateado en su moneda. */
+export const orderMoney = (o: Order, amount: number): string =>
+  formatMoney(amount, o.currency ?? "ARS");
 
 export function generateOrderId(now = new Date()): string {
   const stamp = now.getTime().toString(36).toUpperCase();
@@ -50,30 +65,38 @@ export function generateOrderId(now = new Date()): string {
   return `OA-${stamp}-${rand}`;
 }
 
-export function deliveryLabel(d: OrderDelivery): string {
-  if (d.method === "retiro") return `Retiro en el taller (${site.location})`;
-  const parts = [d.address, d.city, d.province, d.zip].filter(Boolean);
-  return `Envío a: ${parts.join(", ")}`;
+export function deliveryLabel(d: OrderDelivery, locale: Locale = "es"): string {
+  if (d.method === "retiro") {
+    return pick(locale, `Retiro en el taller (${site.location})`, `Pickup at our studio (${site.locationEn})`);
+  }
+  const parts = [d.address, d.city, d.province, d.zip, d.country].filter(Boolean);
+  return `${pick(locale, "Envío a", "Ship to")}: ${parts.join(", ")}`;
 }
 
 /** Mensaje que se abre en WhatsApp para avisar del pedido / enviar comprobante. */
 export function buildOrderWhatsAppMessage(order: Order): string {
+  const locale = orderLocale(order);
+  const t = (es: string, en: string) => pick(locale, es, en);
   const lines = [
-    `Hola Ocean Art! Hice el pedido *${order.id}* en la web.`,
+    t(`Hola Ocean Art! Hice el pedido *${order.id}* en la web.`, `Hi Ocean Art! I placed order *${order.id}* on your website.`),
     "",
-    ...order.items.map(
-      (i) => `• ${i.name} × ${i.qty} — ${formatPrice(i.unitPrice * i.qty)}`,
-    ),
+    ...order.items.map((i) => `• ${i.name} × ${i.qty} — ${orderMoney(order, i.unitPrice * i.qty)}`),
     "",
-    `*Total: ${formatPrice(order.subtotal)}*`,
-    deliveryLabel(order.delivery),
+    `*Total: ${orderMoney(order, order.subtotal)}*`,
+    deliveryLabel(order.delivery, locale),
     "",
-    `Nombre: ${order.customer.name}`,
+    `${t("Nombre", "Name")}: ${order.customer.name}`,
     `Email: ${order.customer.email}`,
-    `Tel: ${order.customer.phone}`,
+    `${t("Tel", "Phone")}: ${order.customer.phone}`,
   ];
-  if (order.notes) lines.push(`Notas: ${order.notes}`);
-  lines.push("", "Te envío el comprobante de la transferencia a continuación.");
+  if (order.notes) lines.push(`${t("Notas", "Notes")}: ${order.notes}`);
+  lines.push(
+    "",
+    t(
+      "Te envío el comprobante de la transferencia a continuación.",
+      "I'd like to arrange payment and shipping.",
+    ),
+  );
   return lines.join("\n");
 }
 
@@ -83,18 +106,21 @@ export function orderWhatsAppUrl(order: Order): string {
 
 /** Texto plano para el email de aviso al taller (opcional, vía Resend). */
 export function buildOrderEmailText(order: Order): string {
+  const english = orderLocale(order) === "en";
   return [
-    `Nuevo pedido ${order.id}`,
+    `Nuevo pedido ${order.id}${english ? " (cliente en inglés, precios en USD)" : ""}`,
     `Fecha: ${order.createdAt}`,
     "",
     "Items:",
     ...order.items.map(
       (i) =>
-        `  - ${i.name} (${i.slug}) × ${i.qty} @ ${formatPrice(i.unitPrice)} = ${formatPrice(i.unitPrice * i.qty)}`,
+        `  - ${i.name} (${i.slug}) × ${i.qty} @ ${orderMoney(order, i.unitPrice)} = ${orderMoney(order, i.unitPrice * i.qty)}`,
     ),
     "",
-    `Subtotal: ${formatPrice(order.subtotal)}`,
-    `Pago: transferencia bancaria (pendiente)`,
+    `Subtotal: ${orderMoney(order, order.subtotal)}`,
+    english
+      ? "Pago: a coordinar con el cliente (no se le mostraron los datos bancarios)"
+      : "Pago: transferencia bancaria (pendiente)",
     deliveryLabel(order.delivery),
     "",
     `Cliente: ${order.customer.name}`,

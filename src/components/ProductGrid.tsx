@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { CATEGORIES, CATEGORY_PLURAL, categoriesOf, inCategory, type Category, type Product } from "@/data/products";
+import { CATEGORIES, categoriesOf, categoryPlural, inCategory, type Category, type Product } from "@/data/products";
+import { useI18n } from "@/i18n/client";
 
 type Filter = Category | "todas";
 type Sort = "destacadas" | "precio-asc" | "precio-desc" | "recientes";
@@ -14,6 +15,7 @@ export default function ProductGrid({
   products: Product[];
   initialFilter?: Filter;
 }) {
+  const { locale, t } = useI18n();
   const [filter, setFilter] = useState<Filter>(initialFilter);
   const [sort, setSort] = useState<Sort>("destacadas");
 
@@ -44,31 +46,33 @@ export default function ProductGrid({
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0">
           <Chip active={filter === "todas"} onClick={() => setFilter("todas")}>
-            Todas
+            {t("Todas", "All")}
           </Chip>
           {CATEGORIES.filter((c) => counts[c]).map((c) => (
             <Chip key={c} active={filter === c} onClick={() => setFilter(c)}>
-              {CATEGORY_PLURAL[c]}
+              {categoryPlural(c, locale)}
             </Chip>
           ))}
         </div>
         <label className="flex items-center gap-2 text-sm text-stone">
-          Ordenar
+          {t("Ordenar", "Sort")}
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as Sort)}
             className="rounded-pill border border-foam bg-white px-3 py-1.5 text-sm text-ink outline-none focus:border-navy"
           >
-            <option value="destacadas">Destacadas</option>
-            <option value="recientes">Más recientes</option>
-            <option value="precio-asc">Precio: menor a mayor</option>
-            <option value="precio-desc">Precio: mayor a menor</option>
+            <option value="destacadas">{t("Destacadas", "Featured")}</option>
+            <option value="recientes">{t("Más recientes", "Newest")}</option>
+            <option value="precio-asc">{t("Precio: menor a mayor", "Price: low to high")}</option>
+            <option value="precio-desc">{t("Precio: mayor a menor", "Price: high to low")}</option>
           </select>
         </label>
       </div>
 
       {visible.length === 0 ? (
-        <p className="py-20 text-center text-stone">No hay obras en esta categoría por ahora.</p>
+        <p className="py-20 text-center text-stone">
+          {t("No hay obras en esta categoría por ahora.", "There are no pieces in this category yet.")}
+        </p>
       ) : (
         <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 lg:grid-cols-3">
           {visible.map((p, i) => (

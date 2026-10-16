@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import CollectionCarousel from "@/components/CollectionCarousel";
 import CommunitySignup from "@/components/CommunitySignup";
 import ContactFaq from "@/components/ContactFaq";
@@ -11,13 +10,20 @@ import Button from "@/components/ui/Button";
 import { Container, SectionTitle } from "@/components/ui/Section";
 import { collection } from "@/data/collection";
 import { featuredProducts } from "@/data/products";
+import { Link } from "@/i18n/client";
+import { alternates, asLocale, pick } from "@/i18n/config";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+type Props = { params: Promise<{ lang: string }> };
 
-export default function HomePage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = asLocale((await params).lang);
+  return { alternates: alternates("/", locale) };
+}
+
+export default async function HomePage({ params }: Props) {
+  const locale = asLocale((await params).lang);
+  const t = <T,>(es: T, en: T) => pick(locale, es, en);
   const featured = featuredProducts();
 
   return (
@@ -26,7 +32,7 @@ export default function HomePage() {
       <section className="relative flex h-[calc(100svh-var(--header-h))] min-h-[520px] items-center justify-center overflow-hidden">
         <Image
           src="/img/agua-2.jpg"
-          alt="Superficie del mar"
+          alt={t("Superficie del mar", "The surface of the sea")}
           fill
           priority
           sizes="100vw"
@@ -34,17 +40,19 @@ export default function HomePage() {
         />
         <div className="relative z-10 px-4 text-center">
           <h1 className="text-balance text-3xl font-medium tracking-tight text-navy drop-shadow-[0_1px_8px_rgba(255,255,255,0.5)] sm:text-4xl md:text-5xl">
-            {site.tagline}
+            {t(site.tagline, site.taglineEn)}
           </h1>
-          <p className="mt-4 text-lg text-white drop-shadow md:text-xl">Explorá nuestra colección</p>
+          <p className="mt-4 text-lg text-white drop-shadow md:text-xl">
+            {t("Explorá nuestra colección", "Explore our collection")}
+          </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button href="/tienda" variant="light" className="w-48">Obras disponibles</Button>
-            <Button href="/disena-tu-obra" variant="lightOutline" className="w-48">Diseña tu obra</Button>
+            <Button href="/tienda" variant="light" className="w-48">{t("Obras disponibles", "Available pieces")}</Button>
+            <Button href="/disena-tu-obra" variant="lightOutline" className="w-48">{t("Diseña tu obra", "Design your piece")}</Button>
           </div>
         </div>
         <a
           href="#sobre"
-          aria-label="Bajar"
+          aria-label={t("Bajar", "Scroll down")}
           className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-bounce text-white/90"
         >
           <ChevronDownIcon width={32} height={32} strokeWidth={1.25} />
@@ -54,31 +62,33 @@ export default function HomePage() {
       {/* SOBRE */}
       <section id="sobre" className="scroll-mt-20 py-20 md:py-28">
         <Container className="max-w-4xl">
-          <p className="text-center font-hand text-xl text-sea md:text-2xl">Qué es Ocean Art</p>
+          <p className="text-center font-hand text-xl text-sea md:text-2xl">{t("Qué es Ocean Art", "What is Ocean Art")}</p>
           {/* Frase principal: funciona como título de la sección */}
           <h2 className="mx-auto mt-3 max-w-3xl text-balance text-center text-3xl font-medium leading-snug tracking-tight text-navy sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
-            Un estudio de arte textil donde cada obra nace del encuentro entre la naturaleza, la
-            materia y el diseño.
+            {t(
+              "Un estudio de arte textil donde cada obra nace del encuentro entre la naturaleza, la materia y el diseño.",
+              "A textile art studio where every piece is born from the meeting of nature, material and design.",
+            )}
           </h2>
           <div className="mx-auto mt-10 max-w-3xl space-y-4 text-center text-lg leading-relaxed text-ink/85 md:text-[19px]">
             <p>
-              A través del tufting y otras técnicas textiles contemporáneas, desarrollamos tapices,
-              alfombras e instalaciones que exploran formas orgánicas, texturas y relieves inspirados
-              en paisajes, raíces, organismos y procesos vivos. Cada pieza es artesanal y exclusiva,
-              pensada para dialogar con el espacio.
+              {t(
+                "A través del tufting y otras técnicas textiles contemporáneas, desarrollamos tapices, alfombras e instalaciones que exploran formas orgánicas, texturas y relieves inspirados en paisajes, raíces, organismos y procesos vivos. Cada pieza es artesanal y exclusiva, pensada para dialogar con el espacio.",
+                "Through tufting and other contemporary textile techniques, we create tapestries, rugs and installations that explore organic forms, textures and reliefs inspired by landscapes, roots, organisms and living processes. Each piece is handmade and one of a kind, designed to converse with its space.",
+              )}
             </p>
           </div>
           <p className="mt-8 text-balance text-center text-2xl font-light tracking-tight text-navy md:text-3xl">
-            Lo vivo como inspiración, lo textil como lenguaje.
+            {t("Lo vivo como inspiración, lo textil como lenguaje.", "Living things as inspiration, textile as language.")}
           </p>
         </Container>
         <Container className="mt-14 max-w-3xl">
           <div className="grid grid-cols-2 gap-3 md:gap-4">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image src="/img/agua-3.jpg" alt="Reflejos de sol sobre el agua" fill sizes="(min-width: 768px) 384px, 50vw" className="object-cover" />
+              <Image src="/img/agua-3.jpg" alt={t("Reflejos de sol sobre el agua", "Sunlight glinting on the water")} fill sizes="(min-width: 768px) 384px, 50vw" className="object-cover" />
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image src="/img/agua-1.jpg" alt="Ondas sobre el mar" fill sizes="(min-width: 768px) 384px, 50vw" className="object-cover" />
+              <Image src="/img/agua-1.jpg" alt={t("Ondas sobre el mar", "Ripples on the sea")} fill sizes="(min-width: 768px) 384px, 50vw" className="object-cover" />
             </div>
           </div>
         </Container>
@@ -88,9 +98,9 @@ export default function HomePage() {
       <section id="coleccion" className="scroll-mt-24 border-y border-foam/70 bg-white py-20 md:py-24">
         <Container>
           <div className="max-w-2xl">
-            <p className="font-hand text-xl text-sea md:text-2xl">{collection.eyebrow}</p>
+            <p className="font-hand text-xl text-sea md:text-2xl">{t(collection.eyebrow, collection.eyebrowEn)}</p>
             <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
-              {collection.name}
+              {t(collection.name, collection.nameEn)}
             </h2>
           </div>
           <div className="mt-10">
@@ -110,16 +120,16 @@ export default function HomePage() {
       <section className="pt-20 pb-8 md:pt-24 md:pb-10">
         <Container>
           <div className="flex items-end justify-between gap-4">
-            <SectionTitle align="left">Obras destacadas</SectionTitle>
+            <SectionTitle align="left">{t("Obras destacadas", "Featured pieces")}</SectionTitle>
             <Link href="/tienda" className="hidden items-center gap-1 text-sm text-navy hover:underline sm:inline-flex">
-              Ver todas <ArrowRightIcon width={16} height={16} />
+              {t("Ver todas", "See all")} <ArrowRightIcon width={16} height={16} />
             </Link>
           </div>
           <div className="mt-8">
             <FeaturedCarousel products={featured} />
           </div>
           <div className="mt-6 text-center sm:hidden">
-            <Button href="/tienda" variant="outline">Ver todas las obras</Button>
+            <Button href="/tienda" variant="outline">{t("Ver todas las obras", "See all pieces")}</Button>
           </div>
         </Container>
       </section>
@@ -130,13 +140,15 @@ export default function HomePage() {
           <div className="mx-auto max-w-4xl rounded-2xl bg-mist px-5 py-12 sm:px-10 md:py-16">
             <div className="mx-auto max-w-2xl">
               <div className="text-center">
-                <p className="font-hand text-xl text-sea md:text-2xl">Sumate</p>
+                <p className="font-hand text-xl text-sea md:text-2xl">{t("Sumate", "Join us")}</p>
                 <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
-                  Comunidad Ocean Art
+                  {t("Comunidad Ocean Art", "Ocean Art Community")}
                 </h2>
                 <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink/85">
-                  Enterate antes que nadie de muestras, eventos, talleres y descuentos.
-                  Acompañanos en el proceso creativo detrás de cada obra.
+                  {t(
+                    "Enterate antes que nadie de muestras, eventos, talleres y descuentos. Acompañanos en el proceso creativo detrás de cada obra.",
+                    "Be the first to hear about exhibitions, events, workshops and discounts. Follow the creative process behind each piece.",
+                  )}
                 </p>
               </div>
               <div className="mt-10">

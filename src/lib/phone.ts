@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+
 /** Mensaje de error para un celular argentino mal cargado. */
 export const AR_PHONE_ERROR =
   "Revisá el número: tiene que tener código de área + número (10 dígitos), ej. 11 5555 5555.";
@@ -27,3 +29,23 @@ export function normalizeArPhone(raw: string): string | null {
     ? `+54 9 11 ${d.slice(2, 6)}-${d.slice(6)}`
     : `+54 9 ${d.slice(0, -4)}-${d.slice(-4)}`;
 }
+
+export const INTL_PHONE_ERROR =
+  "Please check the number: include your country code, e.g. +1 555 123 4567.";
+
+/**
+ * En inglés también se aceptan números del exterior, siempre con código de país
+ * (+1 555 123 4567 o 001 555…): entre 8 y 15 dígitos. Los +54 se validan como argentinos.
+ */
+export function normalizePhone(raw: string, locale: Locale): string | null {
+  if (locale !== "en") return normalizeArPhone(raw);
+  const trimmed = raw.trim();
+  const d = trimmed.replace(/\D/g, "");
+  const international = trimmed.startsWith("+") ? d : trimmed.startsWith("00") ? d.slice(2) : null;
+  if (international === null) return null;
+  if (international.startsWith("54")) return normalizeArPhone(international);
+  return /^[1-9]\d{7,14}$/.test(international) ? `+${international}` : null;
+}
+
+export const phoneError = (locale: Locale): string =>
+  locale === "en" ? INTL_PHONE_ERROR : AR_PHONE_ERROR;

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { isValidEmail } from "@/lib/email";
-import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
+import { asLocale, pick } from "@/i18n/config";
+import { normalizePhone, phoneError } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
@@ -31,12 +32,14 @@ export async function POST(req: Request) {
 
   const name = str(body.name, 120);
   const email = str(body.email, 160).toLowerCase();
+  const locale = asLocale(str(body.locale, 5));
+  const t = (es: string, en: string) => pick(locale, es, en);
   const rawPhone = str(body.phone, 40);
-  const phone = rawPhone ? normalizeArPhone(rawPhone) : "";
+  const phone = rawPhone ? normalizePhone(rawPhone, locale) : "";
 
-  if (name.length < 2) return bad("Ingresá tu nombre.");
-  if (!isValidEmail(email)) return bad("Revisá el email.");
-  if (phone === null) return bad(AR_PHONE_ERROR);
+  if (name.length < 2) return bad(t("Ingresá tu nombre.", "Please enter your name."));
+  if (!isValidEmail(email)) return bad(t("Revisá el email.", "Please check your email."));
+  if (phone === null) return bad(phoneError(locale));
 
   const subscriber = {
     createdAt: new Date().toISOString(),
@@ -63,11 +66,11 @@ export async function POST(req: Request) {
     const text = await res.text();
     if (!res.ok || !text.includes('"ok":true')) {
       console.error(`[community] la planilla rechazó el alta (HTTP ${res.status}): ${text}`);
-      return bad("No pudimos guardar tus datos. Probá de nuevo en un rato.", 502);
+      return bad(t("No pudimos guardar tus datos. Probá de nuevo en un rato.", "We couldn't save your details. Please try again shortly."), 502);
     }
   } catch (err) {
     console.error("[community] la planilla falló", err);
-    return bad("No pudimos guardar tus datos. Probá de nuevo en un rato.", 502);
+    return bad(t("No pudimos guardar tus datos. Probá de nuevo en un rato.", "We couldn't save your details. Please try again shortly."), 502);
   }
 
   return NextResponse.json({ ok: true }, { status: 201 });

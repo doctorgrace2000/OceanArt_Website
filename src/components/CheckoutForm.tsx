@@ -1,16 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { BankIcon, WhatsAppIcon } from "@/components/Icons";
 import Button from "@/components/ui/Button";
+import { Link, useI18n } from "@/i18n/client";
 import { useCart } from "@/lib/cart";
 import { isValidEmail } from "@/lib/email";
-import { formatPrice } from "@/lib/format";
+import { currencyFor, toCurrency } from "@/lib/format";
 import { trackPixel } from "@/lib/metaPixel";
-import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
+import { normalizePhone, phoneError } from "@/lib/phone";
 import { saveOrderLocally, type DeliveryMethod, type Order, type OrderInput } from "@/lib/orders";
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -18,6 +18,8 @@ type FieldErrors = Partial<Record<string, string>>;
 export default function CheckoutForm() {
   const router = useRouter();
   const { lines, subtotal, hydrated, clear } = useCart();
+  const { locale, t, href, price, product: localize } = useI18n();
+  const english = locale === "en";
   const [method, setMethod] = useState<DeliveryMethod>("retiro");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -33,19 +35,19 @@ export default function CheckoutForm() {
       contents: lines.map((l) => ({ id: l.slug, quantity: l.qty })),
       content_type: "product",
       num_items: lines.reduce((n, l) => n + l.qty, 0),
-      value: subtotal,
-      currency: "ARS",
+      value: toCurrency(subtotal, locale),
+      currency: currencyFor(locale),
     });
-  }, [hydrated, lines, subtotal]);
+  }, [hydrated, lines, subtotal, locale]);
 
-  if (!hydrated) return <p className="text-stone">Cargando…</p>;
+  if (!hydrated) return <p className="text-stone">{t("Cargando…", "Loading…")}</p>;
 
   if (lines.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-foam p-12 text-center">
-        <p className="text-lg">Tu carrito está vacío.</p>
+        <p className="text-lg">{t("Tu carrito está vacío.", "Your cart is empty.")}</p>
         <div className="mt-6">
-          <Button href="/tienda">Ver obras</Button>
+          <Button href="/tienda">{t("Ver obras", "See pieces")}</Button>
         </div>
       </div>
     );
@@ -57,12 +59,12 @@ export default function CheckoutForm() {
 
     const name = get("name");
     const email = get("email");
-    const phone = normalizeArPhone(get("phone")) ?? "";
+    const phone = normalizePhone(get("phone"), locale) ?? "";
     const notes = get("notes");
 
-    if (name.length < 2) e.name = "Ingresá tu nombre completo.";
-    if (!isValidEmail(email)) e.email = "Ingresá un email válido.";
-    if (!phone) e.phone = AR_PHONE_ERROR;
+    if (name.length < 2) e.name = t("Ingresá tu nombre completo.", "Please enter your full name.");
+    if (!isValidEmail(email)) e.email = t("Ingresá un email válido.", "Please enter a valid email.");
+    if (!phone) e.phone = phoneError(locale);
 
     const delivery: OrderInput["delivery"] = { method };
     if (method === "envio") {
@@ -70,14 +72,20 @@ export default function CheckoutForm() {
       delivery.city = get("city");
       delivery.province = get("province");
       delivery.zip = get("zip");
-      if (!delivery.address) e.address = "Ingresá calle y número.";
-      if (!delivery.city) e.city = "Ingresá la localidad.";
-      if (!delivery.province) e.province = "Ingresá la provincia.";
+      if (!delivery.address) e.address = t("Ingresá calle y número.", "Please enter your street address.");
+      if (!delivery.city) e.city = t("Ingresá la localidad.", "Please enter your city.");
+      if (english) {
+        delivery.country = get("country");
+        if (!delivery.country) e.country = "Please enter your country.";
+      } else if (!delivery.province) {
+        e.province = "Ingresá la provincia.";
+      }
     }
 
     if (Object.keys(e).length) return { input: null, errors: e };
     return {
       input: {
+        locale,
         customer: { name, email, phone },
         delivery,
         notes: notes || undefined,
@@ -103,7 +111,7 @@ export default function CheckoutForm() {
       });
       const body = (await res.json()) as { order?: Order; error?: string };
       if (!res.ok || !body.order) {
-        throw new Error(body.error ?? "No pudimos registrar el pedido.");
+        throw new Error(body.error ?? t("No pudimos registrar el pedido.", "We couldn't place your order."));
       }
       saveOrderLocally(body.order);
       // Purchase del píxel de Meta: el pedido quedó registrado (el pago es por transferencia).
@@ -115,14 +123,14 @@ export default function CheckoutForm() {
           content_type: "product",
           num_items: body.order.items.reduce((n, i) => n + i.qty, 0),
           value: body.order.subtotal,
-          currency: "ARS",
+          currency: body.order.currency ?? "ARS",
         },
         body.order.id,
       );
       clear();
-      router.push(`/pedido/${body.order.id}`);
+      router.push(href(`/pedido/${body.order.id}`));
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : "Ocurrió un error. Probá de nuevo.");
+      setServerError(err instanceof Error ? err.message : t("Ocurrió un error. Probá de nuevo.", "Something went wrong. Please try again."));
       setSubmitting(false);
     }
   }
@@ -132,56 +140,85 @@ export default function CheckoutForm() {
       <div className="space-y-10">
         {/* Contacto */}
         <fieldset>
-          <legend className="text-lg font-medium text-navy">1. Tus datos</legend>
+          <legend className="text-lg font-medium text-navy">{t("1. Tus datos", "1. Your details")}</legend>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <Field label="Nombre y apellido" name="name" error={errors.name} autoComplete="name" className="sm:col-span-2" />
+            <Field label={t("Nombre y apellido", "Full name")} name="name" error={errors.name} autoComplete="name" className="sm:col-span-2" />
             <Field label="Email" name="email" type="email" error={errors.email} autoComplete="email" />
-            <Field label="Teléfono / WhatsApp" name="phone" type="tel" error={errors.phone} autoComplete="tel" placeholder="+54 9 11 5555-5555" />
+            <Field
+              label={t("Teléfono / WhatsApp", "Phone / WhatsApp")}
+              name="phone"
+              type="tel"
+              error={errors.phone}
+              autoComplete="tel"
+              placeholder={t("+54 9 11 5555-5555", "+1 555 123 4567")}
+            />
           </div>
         </fieldset>
 
         {/* Entrega */}
         <fieldset>
-          <legend className="text-lg font-medium text-navy">2. Entrega</legend>
+          <legend className="text-lg font-medium text-navy">{t("2. Entrega", "2. Delivery")}</legend>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <RadioCard
               checked={method === "retiro"}
               onChange={() => setMethod("retiro")}
-              title="Retiro en el taller"
-              subtitle="General Rodríguez, Buenos Aires · Sin cargo"
+              title={t("Retiro en el taller", "Pickup at our studio")}
+              subtitle={t("General Rodríguez, Buenos Aires · Sin cargo", "General Rodríguez, Buenos Aires, Argentina · Free")}
             />
             <RadioCard
               checked={method === "envio"}
               onChange={() => setMethod("envio")}
-              title="Envío a domicilio"
-              subtitle="Costo a cotizar por WhatsApp según zona"
+              title={t("Envío a domicilio", "Shipping")}
+              subtitle={t("Costo a cotizar por WhatsApp según zona", "International shipping, quoted by size and destination")}
             />
           </div>
           {method === "envio" && (
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <Field label="Calle y número (piso / depto)" name="address" error={errors.address} autoComplete="street-address" className="sm:col-span-2" />
-              <Field label="Localidad" name="city" error={errors.city} autoComplete="address-level2" />
-              <Field label="Provincia" name="province" error={errors.province} autoComplete="address-level1" />
-              <Field label="Código postal" name="zip" autoComplete="postal-code" />
+              <Field
+                label={t("Calle y número (piso / depto)", "Street address (apt / suite)")}
+                name="address"
+                error={errors.address}
+                autoComplete="street-address"
+                className="sm:col-span-2"
+              />
+              <Field label={t("Localidad", "City")} name="city" error={errors.city} autoComplete="address-level2" />
+              <Field
+                label={t("Provincia", "State / Province (optional)")}
+                name="province"
+                error={errors.province}
+                autoComplete="address-level1"
+              />
+              <Field label={t("Código postal", "Postal code")} name="zip" autoComplete="postal-code" />
+              {english && (
+                <Field label="Country" name="country" error={errors.country} autoComplete="country-name" />
+              )}
             </div>
           )}
           <div className="mt-4">
-            <label className="field-label" htmlFor="notes">Notas para el taller (opcional)</label>
-            <textarea id="notes" name="notes" rows={3} className="field" placeholder="Horarios para coordinar, referencias, etc." />
+            <label className="field-label" htmlFor="notes">{t("Notas para el taller (opcional)", "Notes for the studio (optional)")}</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows={3}
+              className="field"
+              placeholder={t("Horarios para coordinar, referencias, etc.", "Best times to reach you, references, etc.")}
+            />
           </div>
         </fieldset>
 
         {/* Pago */}
         <fieldset>
-          <legend className="text-lg font-medium text-navy">3. Pago</legend>
+          <legend className="text-lg font-medium text-navy">{t("3. Pago", "3. Payment")}</legend>
           <div className="mt-4 rounded-2xl border border-navy bg-mist p-5">
             <div className="flex items-start gap-3">
               <BankIcon className="mt-0.5 shrink-0 text-navy" />
               <div>
-                <p className="font-medium text-navy">Transferencia bancaria</p>
+                <p className="font-medium text-navy">{t("Transferencia bancaria", "Payment arranged with you")}</p>
                 <p className="mt-1 text-sm text-ink/80">
-                  Al confirmar te mostramos CBU y alias. Hacés la transferencia y nos enviás el
-                  comprobante por WhatsApp. La obra se reserva 48 h hasta recibir el pago.
+                  {t(
+                    "Al confirmar te mostramos CBU y alias. Hacés la transferencia y nos enviás el comprobante por WhatsApp. La obra se reserva 48 h hasta recibir el pago.",
+                    "Nothing is charged now. After you confirm, we'll contact you by email or WhatsApp within 48 hours to arrange payment and shipping. We hold the piece for you in the meantime.",
+                  )}
                 </p>
               </div>
             </div>
@@ -196,46 +233,51 @@ export default function CheckoutForm() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button type="submit" size="lg" disabled={submitting} className="sm:min-w-64">
-            {submitting ? "Registrando pedido…" : "Confirmar pedido"}
+            {submitting ? t("Registrando pedido…", "Placing order…") : t("Confirmar pedido", "Place order")}
           </Button>
           <Link href="/carrito" className="text-center text-sm text-navy hover:underline">
-            Volver al carrito
+            {t("Volver al carrito", "Back to cart")}
           </Link>
         </div>
       </div>
 
       {/* Resumen */}
       <aside className="h-fit rounded-2xl bg-mist p-6 lg:sticky lg:top-24">
-        <h2 className="text-lg font-medium text-navy">Tu pedido</h2>
+        <h2 className="text-lg font-medium text-navy">{t("Tu pedido", "Your order")}</h2>
         <ul className="mt-4 divide-y divide-foam">
           {lines.map(({ product, qty, lineTotal }) => (
             <li key={product.slug} className="flex items-center gap-3 py-3">
               <Image src={product.images[0]} alt="" width={48} height={60} className="h-15 w-12 rounded-lg object-cover" />
               <div className="min-w-0 flex-1 text-sm">
-                <p className="truncate font-medium">{product.name}</p>
+                <p className="truncate font-medium">{localize(product).name}</p>
                 <p className="text-stone">× {qty}</p>
               </div>
-              <p className="text-sm">{formatPrice(lineTotal)}</p>
+              <p className="text-sm">{price(lineTotal)}</p>
             </li>
           ))}
         </ul>
         <dl className="mt-4 space-y-2 border-t border-foam pt-4 text-sm">
           <div className="flex justify-between">
             <dt className="text-stone">Subtotal</dt>
-            <dd>{formatPrice(subtotal)}</dd>
+            <dd>{price(subtotal)}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-stone">Envío</dt>
-            <dd className="text-stone">{method === "retiro" ? "Sin cargo" : "A coordinar"}</dd>
+            <dt className="text-stone">{t("Envío", "Shipping")}</dt>
+            <dd className="text-stone">
+              {method === "retiro" ? t("Sin cargo", "Free") : t("A coordinar", "To be arranged")}
+            </dd>
           </div>
           <div className="flex justify-between pt-2 text-base">
-            <dt className="font-medium">Total a transferir</dt>
-            <dd className="font-medium text-navy">{formatPrice(subtotal)}</dd>
+            <dt className="font-medium">{t("Total a transferir", "Total")}</dt>
+            <dd className="font-medium text-navy">{price(subtotal)}</dd>
           </div>
         </dl>
         <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-stone">
           <WhatsAppIcon width={14} height={14} className="mt-0.5 shrink-0" />
-          Después de confirmar vas a poder avisarnos por WhatsApp con un solo toque.
+          {t(
+            "Después de confirmar vas a poder avisarnos por WhatsApp con un solo toque.",
+            "After you confirm, you can also message us on WhatsApp with one tap.",
+          )}
         </p>
       </aside>
     </form>

@@ -1,4 +1,6 @@
 import type { Product } from "@/data/products";
+import type { Locale } from "@/i18n/config";
+import { currencyFor, toCurrency } from "@/lib/format";
 
 type Fbq = (cmd: "track", event: string, params?: object, options?: { eventID?: string }) => void;
 
@@ -21,13 +23,16 @@ export function trackPixel(event: string, params?: object, eventID?: string, tri
   }
 }
 
-/** Parámetros de un producto para ViewContent / AddToCart. */
-export function productParams(product: Product, qty = 1) {
+/** Parámetros de un producto para ViewContent / AddToCart (en la moneda del idioma). */
+export function productParams(product: Product, qty = 1, locale: Locale = "es") {
   return {
     content_ids: [product.slug],
     content_name: product.name,
     content_type: "product",
     contents: [{ id: product.slug, quantity: qty }],
-    ...(product.price !== null && { value: product.price * qty, currency: "ARS" }),
+    ...(product.price !== null && {
+      value: toCurrency(product.price, locale) * qty,
+      currency: currencyFor(locale),
+    }),
   };
 }

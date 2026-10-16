@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/client";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type Variant = "primary" | "outline" | "ghost" | "whatsapp" | "light" | "lightOutline";

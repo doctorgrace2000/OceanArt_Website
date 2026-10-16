@@ -2,9 +2,10 @@
 
 import { useId, useState, type FormEvent } from "react";
 import Button from "@/components/ui/Button";
+import { useI18n } from "@/i18n/client";
 import { isValidEmail } from "@/lib/email";
 import { trackPixel } from "@/lib/metaPixel";
-import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
+import { normalizePhone, phoneError } from "@/lib/phone";
 
 /** Marca en el navegador de que ya se sumó, para no volver a mostrarle el pop-up. */
 export const JOINED_KEY = "oa-community-joined";
@@ -18,6 +19,7 @@ export default function CommunitySignup({
   source?: "landing" | "popup";
 }) {
   const id = useId();
+  const { locale, t } = useI18n();
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -29,10 +31,10 @@ export default function CommunitySignup({
     const name = get("name");
     const email = get("email");
     const rawPhone = get("phone");
-    const phone = rawPhone ? normalizeArPhone(rawPhone) : "";
-    if (name.length < 2) return setError("Ingresá tu nombre.");
-    if (!isValidEmail(email)) return setError("Revisá el email.");
-    if (phone === null) return setError(AR_PHONE_ERROR);
+    const phone = rawPhone ? normalizePhone(rawPhone, locale) : "";
+    if (name.length < 2) return setError(t("Ingresá tu nombre.", "Please enter your name."));
+    if (!isValidEmail(email)) return setError(t("Revisá el email.", "Please check your email."));
+    if (phone === null) return setError(phoneError(locale));
     setError(null);
     setStatus("sending");
 
@@ -40,17 +42,17 @@ export default function CommunitySignup({
       const res = await fetch("/api/community", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, website: get("website") }),
+        body: JSON.stringify({ name, email, phone, locale, website: get("website") }),
       });
       const body = (await res.json()) as { error?: string };
-      if (!res.ok) throw new Error(body.error ?? "No pudimos guardar tus datos.");
+      if (!res.ok) throw new Error(body.error ?? t("No pudimos guardar tus datos.", "We couldn't save your details."));
       trackPixel("Lead", { content_name: "Comunidad Ocean Art", content_category: source });
       try {
         localStorage.setItem(JOINED_KEY, "1");
       } catch {}
       setStatus("done");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Ocurrió un error. Probá de nuevo.");
+      setError(err instanceof Error ? err.message : t("Ocurrió un error. Probá de nuevo.", "Something went wrong. Please try again."));
       setStatus("idle");
     }
   }
@@ -58,8 +60,10 @@ export default function CommunitySignup({
   if (status === "done") {
     return (
       <div role="status" className="rounded-2xl bg-white px-6 py-10 text-center shadow-sm">
-        <p className="text-2xl font-medium tracking-tight text-navy">¡Ya sos parte de la comunidad!</p>
-        <p className="mt-2 text-ink/80">Gracias por unirte.</p>
+        <p className="text-2xl font-medium tracking-tight text-navy">
+          {t("¡Ya sos parte de la comunidad!", "You're now part of the community!")}
+        </p>
+        <p className="mt-2 text-ink/80">{t("Gracias por unirte.", "Thank you for joining.")}</p>
       </div>
     );
   }
@@ -70,7 +74,7 @@ export default function CommunitySignup({
   return (
     <form onSubmit={onSubmit} noValidate className={`grid gap-4 ${stacked ? "" : "sm:grid-cols-2"}`}>
       <div className={full}>
-        <label className="field-label" htmlFor={`${id}-name`}>Nombre *</label>
+        <label className="field-label" htmlFor={`${id}-name`}>{t("Nombre *", "Name *")}</label>
         <input id={`${id}-name`} name="name" className="field" required autoComplete="name" />
       </div>
       <div>
@@ -78,8 +82,8 @@ export default function CommunitySignup({
         <input id={`${id}-email`} name="email" type="email" className="field" required autoComplete="email" />
       </div>
       <div>
-        <label className="field-label" htmlFor={`${id}-phone`}>WhatsApp (opcional)</label>
-        <input id={`${id}-phone`} name="phone" type="tel" className="field" autoComplete="tel" placeholder="+54 9 11 5555-5555" />
+        <label className="field-label" htmlFor={`${id}-phone`}>{t("WhatsApp (opcional)", "WhatsApp (optional)")}</label>
+        <input id={`${id}-phone`} name="phone" type="tel" className="field" autoComplete="tel" placeholder={t("+54 9 11 5555-5555", "+1 555 123 4567")} />
       </div>
 
       {/* Campo trampa para bots: oculto para personas */}
@@ -95,7 +99,7 @@ export default function CommunitySignup({
 
       <div className={full}>
         <Button type="submit" size="lg" className="w-full" disabled={status === "sending"}>
-          {status === "sending" ? "Sumándote…" : "Quiero ser parte"}
+          {status === "sending" ? t("Sumándote…", "Joining…") : t("Quiero ser parte", "Join the community")}
         </Button>
       </div>
     </form>

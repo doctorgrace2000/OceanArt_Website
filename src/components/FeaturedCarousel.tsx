@@ -4,8 +4,10 @@ import { useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/Icons";
 import type { Product } from "@/data/products";
+import { useI18n } from "@/i18n/client";
 
 export default function FeaturedCarousel({ products }: { products: Product[] }) {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: 1 | -1) => {
@@ -32,7 +34,7 @@ export default function FeaturedCarousel({ products }: { products: Product[] }) 
         <button
           type="button"
           onClick={() => scroll(-1)}
-          aria-label="Anterior"
+          aria-label={t("Anterior", "Previous")}
           className="rounded-full border border-foam p-2.5 text-navy transition hover:bg-mist"
         >
           <ArrowLeftIcon />
@@ -40,7 +42,7 @@ export default function FeaturedCarousel({ products }: { products: Product[] }) 
         <button
           type="button"
           onClick={() => scroll(1)}
-          aria-label="Siguiente"
+          aria-label={t("Siguiente", "Next")}
           className="rounded-full border border-foam p-2.5 text-navy transition hover:bg-mist"
         >
           <ArrowRightIcon />
