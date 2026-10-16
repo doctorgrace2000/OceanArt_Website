@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { trackPixel } from "@/lib/metaPixel";
+import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
 import { saveOrderLocally, type DeliveryMethod, type Order, type OrderInput } from "@/lib/orders";
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -55,12 +56,12 @@ export default function CheckoutForm() {
 
     const name = get("name");
     const email = get("email");
-    const phone = get("phone");
+    const phone = normalizeArPhone(get("phone")) ?? "";
     const notes = get("notes");
 
     if (name.length < 2) e.name = "Ingresá tu nombre completo.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Ingresá un email válido.";
-    if (phone.replace(/\D/g, "").length < 8) e.phone = "Ingresá un teléfono con código de área.";
+    if (!phone) e.phone = AR_PHONE_ERROR;
 
     const delivery: OrderInput["delivery"] = { method };
     if (method === "envio") {
@@ -134,7 +135,7 @@ export default function CheckoutForm() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="Nombre y apellido" name="name" error={errors.name} autoComplete="name" className="sm:col-span-2" />
             <Field label="Email" name="email" type="email" error={errors.email} autoComplete="email" />
-            <Field label="Teléfono / WhatsApp" name="phone" type="tel" error={errors.phone} autoComplete="tel" placeholder="11 5555 5555" />
+            <Field label="Teléfono / WhatsApp" name="phone" type="tel" error={errors.phone} autoComplete="tel" placeholder="+54 9 11 5555-5555" />
           </div>
         </fieldset>
 

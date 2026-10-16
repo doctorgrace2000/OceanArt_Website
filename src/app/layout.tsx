@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import CartToast from "@/components/CartToast";
+import CommunityPopup from "@/components/CommunityPopup";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <FloatingWhatsApp />
           <CartToast />
+          <CommunityPopup />
         </CartProvider>
       </body>
       <GoogleAnalytics gaId="G-QHHQ84V33M" />

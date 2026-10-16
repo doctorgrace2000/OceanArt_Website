@@ -63,6 +63,39 @@ pnpm dlx vercel --prod # producción
   también llega por email ([resend.com](https://resend.com), 3.000 emails/mes gratis).
 - Además cada pedido queda en los **logs de Vercel** (`[order] {...}`), consultables desde el dashboard.
 
+### Comunidad (suscriptos)
+
+La sección "Comunidad Ocean Art" del inicio guarda cada alta como una fila en una Google Sheet.
+
+1. Creá una Google Sheet nueva (por ejemplo "Comunidad Ocean Art").
+2. Menú **Extensiones → Apps Script**, borrá lo que haya y pegá:
+
+   ```js
+   const SECRET = "inventá-una-clave-larga";
+
+   function doPost(e) {
+     const d = JSON.parse(e.postData.contents);
+     if (d.secret !== SECRET) return out({ ok: false, error: "secret" });
+     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+     if (sheet.getLastRow() === 0) sheet.appendRow(["Nombre", "Email", "WhatsApp", "Fecha de inscripción"]);
+     const emails = sheet.getRange("B:B").getValues().flat();
+     if (emails.includes(d.email)) return out({ ok: true, duplicate: true });
+     sheet.appendRow([d.name, d.email, d.phone ? "'" + d.phone : "", new Date(d.createdAt)]);
+     return out({ ok: true });
+   }
+
+   function out(obj) {
+     return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+   }
+   ```
+
+3. **Implementar → Nueva implementación → Tipo: App web**. "Ejecutar como: yo", "Quién tiene
+   acceso: cualquier usuario". Autorizá los permisos y copiá la URL que termina en `/exec`.
+4. En Vercel cargá `COMMUNITY_SHEET_URL` (esa URL) y `COMMUNITY_SHEET_SECRET` (la misma clave del
+   script) y volvé a desplegar.
+
+Si la planilla no está conectada, las altas igual quedan en los logs de Vercel (`[community] {...}`).
+
 ### Próximos pasos posibles (sin salir de Vercel)
 
 - Guardar pedidos en una base: Vercel Postgres / Neon o Upstash Redis (ambos con plan gratis).

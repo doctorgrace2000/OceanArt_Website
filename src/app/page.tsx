@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CollectionCarousel from "@/components/CollectionCarousel";
+import CommunitySignup from "@/components/CommunitySignup";
 import ContactFaq from "@/components/ContactFaq";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import WhatWeMake from "@/components/WhatWeMake";
@@ -119,6 +120,29 @@ export default function HomePage() {
           </div>
           <div className="mt-6 text-center sm:hidden">
             <Button href="/tienda" variant="outline">Ver todas las obras</Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* COMUNIDAD */}
+      <section id="comunidad" className="scroll-mt-24 py-12 md:py-16">
+        <Container>
+          <div className="mx-auto max-w-4xl rounded-2xl bg-mist px-5 py-12 sm:px-10 md:py-16">
+            <div className="mx-auto max-w-2xl">
+              <div className="text-center">
+                <p className="font-hand text-xl text-sea md:text-2xl">Sumate</p>
+                <h2 className="mt-1 text-3xl font-medium tracking-tight text-navy md:text-4xl">
+                  Comunidad Ocean Art
+                </h2>
+                <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink/85">
+                  Enterate antes que nadie de muestras, eventos, talleres y descuentos.
+                  Acompañanos en el proceso creativo detrás de cada obra.
+                </p>
+              </div>
+              <div className="mt-10">
+                <CommunitySignup />
+              </div>
+            </div>
           </div>
         </Container>
       </section>

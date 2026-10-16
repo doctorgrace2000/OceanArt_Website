@@ -9,6 +9,7 @@ import {
   type OrderInput,
   type OrderItem,
 } from "@/lib/orders";
+import { AR_PHONE_ERROR, normalizeArPhone } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
@@ -39,10 +40,10 @@ export async function POST(req: Request) {
   // --- cliente
   const name = str(body.customer?.name, 120);
   const email = str(body.customer?.email, 160);
-  const phone = str(body.customer?.phone, 40);
+  const phone = normalizeArPhone(str(body.customer?.phone, 40));
   if (name.length < 2) return bad("Falta el nombre.");
   if (!EMAIL_RE.test(email)) return bad("Email inválido.");
-  if (phone.replace(/\D/g, "").length < 8) return bad("Teléfono inválido.");
+  if (!phone) return bad(AR_PHONE_ERROR);
 
   // --- entrega
   const method = body.delivery?.method;
