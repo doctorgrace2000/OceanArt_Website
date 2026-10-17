@@ -357,7 +357,7 @@ export const products: Product[] = [
     name: "Nido",
     year: 2026,
     category: "objeto",
-    price: 220000,
+    price: 330000,
     availability: "unico",
     featured: true,
     short: "Objeto colgante en técnica coiling, con soga teñida a mano.",
