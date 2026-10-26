@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
         source: "/(obras|img)/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
+      {
+        // Que Google no lo cuente como página (sigue pudiendo usarlo como ícono en los resultados)
+        source: "/:icon(favicon.ico|icon.png|apple-icon.png)",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
     ];
   },
 };
